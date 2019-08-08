@@ -1,14 +1,12 @@
 <template>
   <div>
     <div class="row justify-content-center" v-if="$gate.isAdminOrAuthor()">
-      <div class="col-md-12">
-        <passport-clients></passport-clients>
-        <passport-authorized-clients></passport-authorized-clients>
-        <passport-personal-access-tokens></passport-personal-access-tokens>
+      <passport-clients></passport-clients>
+      <passport-authorized-clients></passport-authorized-clients>
+      <passport-personal-access-tokens></passport-personal-access-tokens>
+      <div v-if="!$gate.isAdminOrAuthor()">
+        <NotFound></NotFound>
       </div>
-    </div>
-    <div v-if="!$gate.isAdminOrAuthor()">
-      <NotFound></NotFound>
     </div>
   </div>
 </template>
@@ -20,3 +18,6 @@ export default {
   }
 };
 </script>
+<style>
+</style>
+

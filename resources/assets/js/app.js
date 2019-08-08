@@ -14,6 +14,8 @@ import VueRouter from 'vue-router'
 import VueProgressBar from 'vue-progressbar'
 import swal from 'sweetalert2'
 import VueNumeric from 'vue-numeric'
+import VueLodash from 'vue-lodash'
+import _ from 'lodash'
 // import mdb from 'mdbootstrap'
 
 
@@ -21,6 +23,7 @@ import VueNumeric from 'vue-numeric'
 import Gate from "./Gate";
 // Vue prototype with the sign $ like $Progress 
 Vue.prototype.$gate = new Gate(window.user);
+Object.defineProperty(Vue.prototype, '$_', { value: _ });
 
 // Sweet Alert Message from sweet alert 2
 window.swal = swal;
@@ -34,7 +37,7 @@ const toast = swal.mixin({
 
 window.toast = toast;
 
-
+// const options = { name: 'lodash' } // customize the way you want to call it
 
 
 window.Form = Form;
@@ -46,8 +49,11 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 // Register material design
 Vue.component('material-design', require('material-design-lite'));
 Vue.component('vuenumeric', require('vue-numeric'));
+Vue.component('vueloadash', require('vue-lodash'));
 // Vue.component('mdb', require('mdbootstrap'));
 
+
+// Vue.use(VueLodash) // options is optional
 // use the vue mdbootstrap in every inputs
 // Vue.use(mdb)
 // use the vue numeric in every inputs
@@ -61,8 +67,9 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue') },
     { path: '/assets', component: require('./components/Assets.vue') },
     { path: '/developer', component: require('./components/Developer.vue') },
-    { path: '/invoice', component: require('./components/Invoice.vue') },
+    { path: '/par', component: require('./components/PAR.vue') },
     { path: '/iirup', component: require('./components/IIRUP.vue') },
+    { path: '/', component: require('./components/Dashboard.vue') },
     { path: '*', component: require('./components/404NotFound.vue') }
 ]
 // To remove the home e.g home/dashboard after the refresh page
@@ -141,6 +148,13 @@ const app = new Vue({
 
         printme() {
             window.print();
+        }
+    },
+    computed: {
+        grandTotal: function () {
+            return this.form.assets.reduce(function (carry, product) {
+                return carry + (parseFloat(asset.quantity) * parseFloat(asset.price))
+            }, 0);
         }
     }
 });

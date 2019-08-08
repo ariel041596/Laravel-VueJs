@@ -17,7 +17,16 @@ class CreateAssetsTable extends Migration
             $table->increments('id');
             $table->string('article');
             $table->string('description');
-            $table->string('price');
+            $table->string('property_number');
+            $table->string('unit_of_measure');
+            $table->decimal('price');
+            $table->decimal('quantity');
+            $table->decimal('total_value');
+            $table->date('date');
+            $table->string('accountable_officer');
+            $table->string('remarks');
+            $table->string('account_name');
+            $table->string('service');
             $table->timestamps();
         });
     }

@@ -9,9 +9,12 @@
               class="card-title mt-2"
             >Report on Physical Count of Property, Plant and Equipment (RPCPPE) {{ grandTotal }}</h1>
             <div class="card-tools">
-              <button class="btn btn-primary mt-2" @click="newModal">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
-              </button>
+              <router-link to="/par">
+                <button class="btn btn-primary mt-2">
+                  <!-- @click="newModal"-->
+                  <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+                </button>
+              </router-link>
             </div>
           </div>
           <!-- /.card-header -->
@@ -38,6 +41,7 @@
                   <th>Action</th>
                 </tr>
                 <tr v-for="asset in assets.data" :key="asset.id">
+                  <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                   <!-- <td>{{asset.id}}</td> -->
                   <td>
                     <input type="checkbox" :value="asset.id" v-model="selected">
@@ -65,6 +69,9 @@
                     <a href="#" @click="printingModal(asset)">
                       <i class="fas fa-eye"></i>
                     </a>
+                    <router-link to="/invoice">
+                      <i class="fas fa-arrow-circle-right"></i>
+                    </router-link>
                   </td>
                 </tr>
               </tbody>
@@ -83,6 +90,47 @@
     <!-- /.row -->
     <!-- Modal for Printing -->
     <!-- Add bd-example-modal-lg for LARGE size modal and modal-lg for the second div-->
+
+    <!---------------------->
+    <div
+      id="printThis"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <!-- Modal Content: begins -->
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="gridSystemModalLabel">Your Headings</h4>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <div class="body-message">
+              <h4>Any Heading</h4>
+              <p>And a paragraph with a full sentence or something else...</p>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a href @click.prevent="print" target="_blank" class="btn btn-default">
+              <i class="fa fa-print"></i>
+            </a>
+          </div>
+        </div>
+        <!-- Modal Content: ends -->
+      </div>
+    </div>
+
     <div
       class="modal fade"
       id="printing"
@@ -91,13 +139,16 @@
       aria-labelledby="addNewModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addNewModalLabel">Add New Accountable Officer</h5>
+            <!-- <h5 class="modal-title" id="addNewModalLabel">Add New Accountable Officer</h5> -->
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
+          </div>
+          <div class="widget-user-header text-white">
+            <img src="/img/Header.png" width="75%" style="margin-left: 12%;">
           </div>
           <form @submit.prevent>
             <div class="modal-body">
@@ -117,6 +168,9 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              <a href @click.prevent="print" target="_blank" class="btn btn-default">
+                <i class="fa fa-print"></i>
+              </a>
             </div>
           </form>
         </div>
@@ -410,7 +464,7 @@ export default {
       acctMode: false,
       editmode: false,
       accountcodes: {},
-      assets: {},
+      assets: [],
       form: new Form({
         id: "",
         article: "",
@@ -430,13 +484,9 @@ export default {
   },
   // Computed Properties
   computed: {
-    grandTotal: function() {
-      // console.log(this.data.assets.total_value);
-      // return this.total_value.reduce((total, asset) => {
-      //   return total + this.total_value;
-      // }, 0);
-    }
-
+    // grandTotal() {
+    //   // return this.assets.reduce((sum, val) => sum + val.total_value, 0);
+    // }
     // grandTotal: function() {
     //   let total = [];
     //   Object.entries(this.assets).forEach(([key, val]) => {
@@ -473,6 +523,24 @@ export default {
     //   return total.reduce(function(total, num) {
     //     return total + num;
     //   }, 0);
+    // },
+    printme() {
+      window.print();
+    },
+    // print(elem) {
+    //   var domClone = elem.cloneNode(true);
+
+    //   var $printSection = document.getElementById("printSection");
+
+    //   if (!$printSection) {
+    //     var $printSection = document.createElement("div");
+    //     $printSection.id = "printSection";
+    //     document.body.appendChild($printSection);
+    //   }
+
+    //   $printSection.innerHTML = "";
+    //   $printSection.appendChild(domClone);
+    //   window.print();
     // },
     print() {
       const modal = document.getElementById("printing");
@@ -542,7 +610,8 @@ export default {
       this.editmode = false;
       this.form.reset();
       this.form.clear();
-      $("#addNew").modal("show");
+      $("#invoice").form("show");
+      // $("#addNew").modal("show");
     },
     //Delete User method
     deleteAsset(id) {
@@ -643,6 +712,7 @@ export default {
   },
 
   created() {
+    // console.log(this.$_.isEmpty(null));
     // Progressbar before
     this.loadAcctName();
     this.loadAssets();
@@ -652,6 +722,15 @@ export default {
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
+  },
+  mounted() {
+    axios.get("api/asset").then(response => {
+      this.assets = response.data;
+      this.grandTotal = this.assets.reduce(
+        (sum, curr) => sum + curr.total_value,
+        0
+      );
+    });
   }
 };
 </script>
@@ -671,11 +750,22 @@ export default {
   #print * {
     visibility: visible;
   }
-  .print {
+  #print {
     position: absolute;
     left: 0;
     top: 0;
   }
+}
+
+.widget-user-header {
+  background-position: center center;
+  background-size: contain;
+  height: 130px !important;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+.widget-user .card-footer {
+  padding: 0;
 }
 </style>
 
