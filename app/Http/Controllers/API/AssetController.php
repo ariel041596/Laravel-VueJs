@@ -27,6 +27,13 @@ class AssetController extends Controller
      */
     public function index()
     {
+        // $par = Asset::whereId($id)->first();
+        // return response()->json([
+        //     "par" => $par
+        // ], 200);
+        // return Asset::find($id);
+        
+
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
             return Asset::latest()->paginate(5);
         }
@@ -44,6 +51,7 @@ class AssetController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
+            'number' => 'required|string|max:191', //1
             'article' => 'required|string|max:191', //1
             'description' => 'required|string|max:191', //2
             'property_number' => 'max:191', //3
@@ -62,6 +70,7 @@ class AssetController extends Controller
         ]);
         // Insert the data into databse
         return Asset::create([
+            'number' => $request['number'], //1
             'article' => $request['article'], //1
             'description' => $request['description'], //2
             'property_number' => $request['property_number'], //3
@@ -85,7 +94,41 @@ class AssetController extends Controller
      */
     public function show($id)
     {
-        //
+        // return auth('api')->asset();
+        $asset = Asset::whereId($id)->first();
+        return response()->json([
+            "asset" => $asset   
+        ], 200);
+
+        // $accountabilities = Asset::find($id);
+        // return $accountabilities;
+
+        // $asset = Asset::find($id);
+        // return $asset;
+        // $asset = Asset::with()
+        // ->findOrFail($id);
+
+        // return response()
+        // ->json(['asset' => $asset]);
+
+        // return Asset::latest()->paginate(5);
+
+        // $accountabilities = Asset::find($id)->first();
+        // return response()->json([
+        //     "assets" => $accountabilities
+        // ], 200);
+        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+        //     return Asset::latest()->paginate(5);
+        // }
+
+        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+        //     return Asset::whereId($id)->paginate();
+        // }
+
+        // $asset = Asset::find($id)->paginate();
+        // return $asset;
+        
+        // return Asset;
     }
 
     /**

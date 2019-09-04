@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Asset Management System</title>
+  <title>Property Management System</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
 </head>
@@ -28,7 +28,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
     <!-- SEARCH FORM -->
-      <div class="input-group input-group-sm ml-3">
+      <div class="input-group col-xs-12 col-md-6 col-lg-5 q-pa-md ">
         <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" @click="searchit">
@@ -43,10 +43,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="dashboard" class="brand-link">
+    <a href="/dashboard" class="brand-link">
       <img src="./img/project.png" alt="Asset Management Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Asset Management</span>
+      <span class="brand-text font-weight-light">Property Management</span>
     </a>
 
     <!-- Sidebar -->
@@ -57,7 +57,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="./img/boy.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }} <p>{{ Auth::user()->type}}</p> </a>
+          <router-link to="/profile">
+          <a  class="d-block text-white">{{ Auth::user()->name }} <p>{{ Auth::user()->type}}</p> </a>
+          </router-link>
         </div>
       </div>
 
@@ -93,12 +95,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </router-link>
+            
+
             @can('isAdminOrAuthor')
             <router-link to="/iirup" class="nav-link">
             <i class="nav-icon fas fa-trash-restore-alt"></i>
               <p>
                IIRUP
                 <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </router-link>
+            <router-link to="/inventory" class="nav-link">
+            <i class="nav-icon fas fa-clipboard"></i>
+              <p>
+               ICS
               </p>
             </router-link>
             @endcan
@@ -182,14 +192,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
   <!-- Main Footer -->
-  <footer class="main-footer">
+  <!-- <footer class="main-footer"> -->
     <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
+    <!-- <div class="float-right d-none d-sm-inline"> -->
+      <!-- Anything you want -->
+    <!-- </div> -->
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+    <!-- <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved. -->
+  <!-- </footer> -->
 </div>
 <!-- ./wrapper -->
 @auth

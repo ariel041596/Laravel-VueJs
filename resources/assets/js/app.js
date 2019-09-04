@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 // Importing vue from vue-cli and vfrom in github 
+import Vue from 'vue';
+import Vuex from 'vuex';
 window.Vue = require('vue');
 import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
@@ -16,7 +18,16 @@ import swal from 'sweetalert2'
 import VueNumeric from 'vue-numeric'
 import VueLodash from 'vue-lodash'
 import _ from 'lodash'
-// import mdb from 'mdbootstrap'
+import jspdf from 'jspdf';
+import Vuetify from 'vuetify'
+import StoreData from './store'
+
+Vue.use(Vuetify)
+
+Vue.use(Vuex);
+
+
+// import mdbootstrap from 'mdbootstrap'
 
 
 // import the Gate.js
@@ -27,6 +38,8 @@ Object.defineProperty(Vue.prototype, '$_', { value: _ });
 
 // Sweet Alert Message from sweet alert 2
 window.swal = swal;
+
+const store = new Vuex.Store(StoreData);
 
 const toast = swal.mixin({
     toast: true,
@@ -50,32 +63,40 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('material-design', require('material-design-lite'));
 Vue.component('vuenumeric', require('vue-numeric'));
 Vue.component('vueloadash', require('vue-lodash'));
-// Vue.component('mdb', require('mdbootstrap'));
+// Vue.component('mdbootstrap', require('mdbootstrap'));
+Vue.component('jspdf', require('jspdf'));
+Vue.component('vuetify', require('vuetify'));
 
 
 // Vue.use(VueLodash) // options is optional
 // use the vue mdbootstrap in every inputs
-// Vue.use(mdb)
+// Vue.use(mdbootstrap)
 // use the vue numeric in every inputs
+// Vue.use(material - design)l
 Vue.use(VueNumeric)
 // use the vue router in every components or layout
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+Vue.use(jspdf);
 // routes for vue js
-let routes = [
+const routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue') },
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/profile', component: require('./components/Profile.vue') },
-    { path: '/assets', component: require('./components/Assets.vue') },
+    { path: '/assets', component: require('./components/Assets.vue'), },
     { path: '/developer', component: require('./components/Developer.vue') },
-    { path: '/par', component: require('./components/PAR.vue') },
     { path: '/iirup', component: require('./components/IIRUP.vue') },
+    { path: '/inventory', component: require('./components/ICSList.vue') },
+    { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Dashboard.vue') },
-    { path: '*', component: require('./components/404NotFound.vue') }
-]
+    { path: '*', component: require('./components/404NotFound.vue') },
+    // { path: '/assets/par', component: require('./components/PAR.vue') },
+    { path: '/:id', component: require('./components/PAR.vue') },
+    { path: '/:id', component: require('./components/ICS.vue') },
+];
 // To remove the home e.g home/dashboard after the refresh page
 const router = new VueRouter({
     mode: 'history',
-    routes // short for `routes: routes`
+    routes
 })
 
 
@@ -136,6 +157,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app',
     router,
+    store,
     // Custom method for search function
     data: {
         search: ''

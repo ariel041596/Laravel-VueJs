@@ -4,31 +4,30 @@
     <div class="row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header bg-light">
             <h1
               class="card-title mt-2"
-            >Report on Physical Count of Property, Plant and Equipment (RPCPPE) {{ grandTotal }}</h1>
+            >Report on Physical Count of Property, Plant and Equipment (RPCPPE)</h1>
             <div class="card-tools">
-              <router-link to="/par">
-                <button class="btn btn-primary mt-2">
-                  <!-- @click="newModal"-->
-                  <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
-                </button>
-              </router-link>
+              <!-- <router-link to="/assets/par"> -->
+              <button class="btn btn-primary mt-2" @click="newModal">
+                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+              </button>
+              <!-- </router-link> -->
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover">
+          <div class="card-body table-responsive p-0 mt-0">
+            <table class="table">
               <tbody>
-                <tr>
+                <tr class>
                   <!-- <th>ID</th> -->
                   <th>
-                    <input type="checkbox" v-model="selectAll" @click="select">
+                    <input type="checkbox" v-model="selectAll" @click="select" />
                   </th>
                   <th>Article</th>
-                  <th>Description</th>
-                  <th>Property Number</th>
+                  <th width="20%">Description</th>
+                  <th width="5%">Property Number</th>
                   <th>Unit</th>
                   <th>Price</th>
                   <th>Qty</th>
@@ -36,44 +35,76 @@
                   <th>Date</th>
                   <th>Accountable Officer</th>
                   <th>Remarks</th>
-                  <th>Account Name</th>
+                  <th width="8%">Account Name</th>
                   <th v-if="$gate.isAdminOrAuthor()">Service</th>
                   <th>Action</th>
                 </tr>
-                <tr v-for="asset in assets.data" :key="asset.id">
-                  <!-- <tr v-for="asset in assets" :key="asset.id"> -->
-                  <!-- <td>{{asset.id}}</td> -->
-                  <td>
-                    <input type="checkbox" :value="asset.id" v-model="selected">
-                  </td>
-                  <td>{{asset.article | upText}}</td>
-                  <td>{{asset.description | upText}}</td>
-                  <td>{{asset.property_number}}</td>
-                  <td>{{asset.unit_of_measure}}</td>
-                  <td>{{asset.price | numberComma }}</td>
-                  <td>{{asset.quantity | numberComma}}</td>
-                  <td>{{asset.total_value | numberComma}}</td>
-                  <td>{{asset.date | myDate}}</td>
-                  <td>{{asset.accountable_officer | upText}}</td>
-                  <td>{{asset.remarks | upText}}</td>
-                  <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                  <td>{{asset.service}}</td>
-                  <!-- <td>{{asset.created_at | myDate}}</td> -->
-                  <td>
-                    <a href="#" @click="editModal(asset)">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#" @click="deleteAsset(asset.id)">
-                      <i class="fas fa-trash red"></i>
-                    </a>
-                    <a href="#" @click="printingModal(asset)">
-                      <i class="fas fa-eye"></i>
-                    </a>
-                    <router-link to="/invoice">
-                      <i class="fas fa-arrow-circle-right"></i>
-                    </router-link>
-                  </td>
-                </tr>
+              </tbody>
+              <tbody>
+                <template v-if="!assets.data.length">
+                  <tr>
+                    <td colspan="15" class="text-center">No Properties Available</td>
+                  </tr>
+                </template>
+                <template v-else>
+                  <tr v-for="asset in assets.data" :key="asset.id">
+                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                    <!-- <td>{{asset.id}}</td> -->
+
+                    <td>
+                      <input type="checkbox" :value="asset.id" v-model="selected" />
+                    </td>
+                    <td>{{asset.article | upText}}</td>
+                    <td>{{asset.description | upText}}</td>
+                    <td>{{asset.property_number}}</td>
+                    <td>{{asset.unit_of_measure}}</td>
+                    <td>{{asset.price | numberComma }}</td>
+                    <td>{{asset.quantity | numberComma}}</td>
+                    <td>{{asset.total_value | numberComma}}</td>
+                    <td>{{asset.date | myDate}}</td>
+                    <td>{{asset.accountable_officer | upText}}</td>
+                    <td>{{asset.remarks | upText}}</td>
+                    <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
+                    <td>{{asset.service}}</td>
+                    <!-- <td>{{asset.created_at | myDate}}</td> -->
+                    <td>
+                      <a
+                        href="#"
+                        @click="editModal(asset)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Edit"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                        <i
+                          class="fas fa-print"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Print PAR"
+                        ></i>
+                      </router-link>
+                      <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                        <i
+                          class="fas fa-print"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Print ICS"
+                        ></i>
+                      </router-link>
+                      <a
+                        href="#"
+                        @click="deleteAsset(asset.id)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Disposed"
+                      >
+                        <i class="fas fa-trash red"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </template>
               </tbody>
             </table>
           </div>
@@ -148,7 +179,8 @@
             </button>
           </div>
           <div class="widget-user-header text-white">
-            <img src="/img/Header.png" width="75%" style="margin-left: 12%;">
+            <img src="/img/Header.png" width="75%" style="margin-left: 12%;" />
+            <!-- <img src="/img/example-logo.jpg" width="75%" style="margin-left: 12%;"> -->
           </div>
           <form @submit.prevent>
             <div class="modal-body">
@@ -162,7 +194,7 @@
                   name="account_name"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('account_name') }"
-                >
+                />
                 <has-error :form="form" field="account_name"></has-error>
               </div>
             </div>
@@ -213,7 +245,7 @@
                   name="account_name"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('account_name') }"
-                >
+                />
                 <has-error :form="form" field="account_name"></has-error>
               </div>
             </div>
@@ -252,17 +284,31 @@
           </div>
           <form @submit.prevent="editmode ? updateAsset() : createAsset()">
             <div class="modal-body">
-              <div class="form-group">
-                <input
-                  v-model="form.article"
-                  type="text"
-                  id="article"
-                  placeholder="Enter article"
-                  name="article"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('article') }"
-                >
-                <has-error :form="form" field="article"></has-error>
+              <div class="row">
+                <div class="col form-group">
+                  <input
+                    v-model="form.number"
+                    type="text"
+                    id="number"
+                    placeholder="Enter PAR/ICS Number"
+                    name="number"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('number') }"
+                  />
+                  <has-error :form="form" field="number"></has-error>
+                </div>
+                <div class="col form-group">
+                  <input
+                    v-model="form.article"
+                    type="text"
+                    id="article"
+                    placeholder="Enter article"
+                    name="article"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('article') }"
+                  />
+                  <has-error :form="form" field="article"></has-error>
+                </div>
               </div>
               <div class="form-group">
                 <textarea
@@ -287,7 +333,7 @@
                     name="property_number"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('property_number') }"
-                  >
+                  />
                   <has-error :form="form" field="property_number"></has-error>
                 </div>
                 <!-- Second col -->
@@ -322,7 +368,7 @@
                     name="price"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('price') }"
-                  >
+                  />
                   <has-error :form="form" field="price"></has-error>
                 </div>
                 <!-- fourth col  Trying to remove the v-model first  -->
@@ -337,7 +383,7 @@
                     name="quantity"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('quantity') }"
-                  >
+                  />
                   <has-error :form="form" field="quantity"></has-error>
                 </div>
               </div>
@@ -355,7 +401,7 @@
                     name="total_value"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('total_value') }"
-                  >
+                  />
                   <has-error :form="form" field="total_value"></has-error>
                 </div>
                 <!-- Second col -->
@@ -368,7 +414,7 @@
                     name="date"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('date') }"
-                  >
+                  />
                   <has-error :form="form" field="date"></has-error>
                 </div>
                 <!-- Third col -->
@@ -381,7 +427,7 @@
                     name="accountable_officer"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
-                  >
+                  />
                   <has-error :form="form" field="accountable_officer"></has-error>
                 </div>
               </div>
@@ -396,7 +442,7 @@
                     name="remarks"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('remarks') }"
-                  >
+                  />
                   <has-error :form="form" field="remarks"></has-error>
                 </div>
                 <!-- Second col -->
@@ -409,7 +455,7 @@
                     class="form-control"
                     :class="{'is-invalid': form.errors.has('account_name')}"
                     list="accountcodes"
-                  >
+                  />
                   <has-error :form="form" field="account_name"></has-error>
                   <datalist id="accountcodes">
                     <option
@@ -436,7 +482,7 @@
                     name="service"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('service') }"
-                  >
+                  />
                   <has-error :form="form" field="service"></has-error>
                 </div>
               </div>
@@ -451,22 +497,37 @@
           </form>
         </div>
       </div>
+
+      <!-- Div for errors -->
+      <div class="errors" v-if="errors">
+        <ul>
+          <li v-for="(fieldError, fieldName) in errors" :key="fieldName">
+            <strong>{{ fieldName }}</strong>
+            {{ fieldError.join('\n') }}
+          </li>
+        </ul>
+      </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+// import validate from 'validate.js'
 export default {
+  name: "list",
   data() {
     return {
+      errors: null,
       selected: [],
       selectAll: false,
       acctMode: false,
       editmode: false,
       accountcodes: {},
-      assets: [],
+      assets: {},
       form: new Form({
         id: "",
+        number: "",
         article: "",
         description: "",
         property_number: "",
@@ -509,6 +570,40 @@ export default {
   },
   // Testing auto computation
   methods: {
+    // needd to import the validate from validate.js
+    add() {
+      this.errors = null;
+      const constraints = this.getConstraints();
+      const errors = validate(this.$data.assets, constraints);
+      if (errors) {
+        this.errors = errors;
+        return;
+      }
+      // else send to the users the data
+    },
+    getConstraints() {
+      return {
+        description: {
+          presense: true,
+          length: {
+            minimum: 3,
+            message: "Must gonna be 3 characters in minimum"
+          }
+        },
+        price: {
+          presense: true,
+          numericallity: true,
+          length: {
+            minimum: 1,
+            message: "Must gonna be 3 characters in minimum"
+          }
+        }
+        // Same as from the top
+      };
+    },
+    // datas() {
+    //   return this.$store.getters.assets;
+    // },
     // grandTotal: function() {
     //   console.log(this.assets.data.total_value);
     //   return this.assets.data.total_value.reduce((total, asset) => {
@@ -610,8 +705,7 @@ export default {
       this.editmode = false;
       this.form.reset();
       this.form.clear();
-      $("#invoice").form("show");
-      // $("#addNew").modal("show");
+      $("#addNew").modal("show");
     },
     //Delete User method
     deleteAsset(id) {
@@ -726,10 +820,6 @@ export default {
   mounted() {
     axios.get("api/asset").then(response => {
       this.assets = response.data;
-      this.grandTotal = this.assets.reduce(
-        (sum, curr) => sum + curr.total_value,
-        0
-      );
     });
   }
 };

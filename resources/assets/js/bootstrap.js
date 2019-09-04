@@ -1,6 +1,6 @@
 
 window._ = require('lodash');
-window.Popper = require('popper.js').default;
+// window.Popper = require('popper.js').default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -14,7 +14,7 @@ try {
     require('bootstrap');
     require('admin-lte');
     require('material-design-lite');
-    // require('mdbootstrap');
+    require('vuetify');
 } catch (e) { }
 
 /**

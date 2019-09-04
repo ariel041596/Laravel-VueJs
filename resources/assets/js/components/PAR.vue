@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="mt-3 row justify-content-center">
       <div class="col-md-12">
         <!-- Main content -->
         <div class="invoice p-3 mb-3">
@@ -8,58 +8,52 @@
           <div class="row">
             <div class="col-12">
               <div class="widget-user-header">
-                <img src="/img/Header.png" width="65%" style="margin-left: 17%;">
+                <img src="/img/Header.png" width="65%" style="margin-left: 17%;" />
+                <!-- <img src="/img/example-logo.jpg" width="65%" style="margin-left: 17%;" /> -->
               </div>
               <p
-                style="font-family:Palatino Linotype; font-size:16px; text-align:center; text-decoration: underline; "
+                style="font-family:Palatino Linotype; font-size:18px; text-align:center; text-decoration: underline; "
               >
                 <strong>PROPERTY ACKNOWLEDGEMENT RECEIPT</strong>
               </p>
+              <div>
+                <p style="font-family:Palatino Linotype; font-size:16px; text-align:left; ">
+                  <strong>Entity Name:</strong> DICT
+                </p>
+                <p style="font-family:Palatino Linotype; font-size:16px;  ">
+                  <strong>Fund Cluster:</strong>
+                  <strong class="float-right" style="text-align:right;">PAR No:______________</strong>
+                </p>
+              </div>
             </div>
             <!-- /.col -->
           </div>
 
           <!-- Table row -->
           <div class="row">
-            <div class="col-12 table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Qty</th>
-                    <th>Product</th>
-                    <th>Serial #</th>
-                    <th>Description</th>
-                    <th>Subtotal</th>
-                  </tr>
-                </thead>
+            <div class="card-body table-responsive p-1" style="text-align:center; font-size:16px;">
+              <table class="table table-hover">
                 <tbody>
                   <tr>
-                    <td>1</td>
-                    <td>Call of Duty</td>
-                    <td>455-981-221</td>
-                    <td>El snort testosterone trophy driving gloves handsome</td>
-                    <td>$64.50</td>
+                    <!-- <th>ID</th> -->
+                    <th width="8%">Qty.</th>
+                    <th width="8%">Unit</th>
+                    <th width="30%">Description</th>
+                    <th>Property No.</th>
+                    <th>Date Acquired</th>
+                    <th>Unit Cost</th>
+                    <th>Total Cost</th>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Need for Speed IV</td>
-                    <td>247-925-726</td>
-                    <td>Wes Anderson umami biodiesel</td>
-                    <td>$50.00</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Monsters DVD</td>
-                    <td>735-845-642</td>
-                    <td>Terry Richardson helvetica tousled street art master</td>
-                    <td>$10.70</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Grown Ups Blue Ray</td>
-                    <td>422-568-642</td>
-                    <td>Tousled lomo letterpress</td>
-                    <td>$25.99</td>
+                </tbody>
+                <tbody>
+                  <tr v-for="asset in assets" :key="asset.id">
+                    <td>{{ asset.quantity }}</td>
+                    <td>{{ asset.unit_of_measure }}</td>
+                    <td>{{ asset.description }}</td>
+                    <td>{{ asset.property_number }}</td>
+                    <td>{{ asset.date || myDate }}</td>
+                    <td>{{ asset.price || numberComma }}</td>
+                    <td>{{ asset.total_value }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -75,19 +69,19 @@
               <img
                 src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/visa.png"
                 alt="Visa"
-              >
+              />
               <img
                 src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/mastercard.png"
                 alt="Mastercard"
-              >
+              />
               <img
                 src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/american-express.png"
                 alt="American Express"
-              >
+              />
               <img
                 src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/paypal2.png"
                 alt="Paypal"
-              >
+              />
 
               <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                 Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
@@ -132,13 +126,17 @@
               <a href @click.prevent="printme" target="_blank" class="btn btn-default">
                 <i class="fa fa-print"></i> Print
               </a>
-              <button type="button" class="btn btn-success float-right">
+              <!-- <button type="button" class="btn btn-success float-right">
                 <i class="fa fa-credit-card"></i>
                 Submit Payment
-              </button>
+              </button>-->
 
-              <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                <i class="fa fa-download"></i> Generate PDF
+              <button type="button" class="btn btn-primary float-right" style="margin-right: 5px; ">
+                <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
+
+                <router-link to="/assets" class="router">
+                  <i class="rpcppe-btn fas fa-undo">&nbsp;</i>Back to RPCPPE
+                </router-link>
               </button>
             </div>
           </div>
@@ -151,15 +149,88 @@
 
 <script>
 export default {
+  name: "par-view",
+  data() {
+    return {
+      show: false,
+      assets: {}
+    };
+  },
+  computed: {
+    // assets() {
+    //   return this.$store.getters.assets;
+    // }
+  },
+  created() {
+    if (this.assets.length) {
+      this.assets = this.asset.find(asset => asset.id == this.$route.params.id);
+    } else {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get(`api/asset/${this.$route.params.id}`)
+          .then(({ data }) => (this.assets = data));
+      }
+    }
+
+    // if (this.$gate.isAdminOrUserOrAuthor()) {
+    //     axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+    //   }
+    // this.loadAssets();
+    // this.loadAssets(id);
+    // this.loadAssets();
+    // this.loadAssets();
+    // use the authentication
+    // axios
+    //   .get(`api/asset/${this.$route.params.id}`)
+    //   .then(({ data }) => (this.asset = data));
+    // .then(response => {
+    //   this.assets = response.data.assets;
+    // }); //Remove the previous (this.users =data.data) into data only
+  },
+  // },
   methods: {
+    // getResults(page = 1) {
+    //   axios.get("api/asset?page=" + page).then(response => {
+    //     this.accountabilities = response.data;
+    //   });
+    // },
+    // loadAssets(id) {
+    //   if (this.assets.length) {
+    //     this.asset = this.assets.find(
+    //       asset => asset.id == this.$route.params.id
+    //     );
+    //   } else {
+    //     axios.get(`api/par/${this.$route.params.id}`).then(response => {
+    //       this.asset = response.data.asset;
+    //     });
+    //   }
+    // },
+    // loadAssets(id) {
+    //   if (this.$gate.isAdminOrUserOrAuthor()) {
+    //     axios
+    //       .get(`api/${this.$route.params.id}`)
+    //       .then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+    //   }
+    // },
     printme() {
       window.print();
+    },
+    exportPDF() {
+      var doc = new jsPDF();
+      doc.save("test.pdf");
     }
   }
 };
 </script>
 
 <style>
+.router:hover {
+  color: aliceblue;
+}
+.router {
+  color: aliceblue;
+}
+
 @media print {
   .nav.nav-tabs li:not(.active) {
     display: none;

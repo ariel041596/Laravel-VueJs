@@ -139,218 +139,6 @@
                 </div>
                 <!-- /.card -->
 
-                <!-- DIRECT CHAT -->
-                <div class="card direct-chat direct-chat-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Direct Chat</h3>
-
-                    <div class="card-tools">
-                      <span
-                        data-toggle="tooltip"
-                        title="3 New Messages"
-                        class="badge badge-primary"
-                      >3</span>
-                      <button type="button" class="btn btn-tool" data-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-tool"
-                        data-toggle="tooltip"
-                        title="Contacts"
-                        data-widget="chat-pane-toggle"
-                      >
-                        <i class="fas fa-comments"></i>
-                      </button>
-                      <button type="button" class="btn btn-tool" data-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <!-- Conversations are loaded here -->
-                    <div class="direct-chat-messages">
-                      <!-- Message. Default to the left -->
-                      <div class="direct-chat-msg">
-                        <div class="direct-chat-info clearfix">
-                          <span class="direct-chat-name float-left">Alexander Pierce</span>
-                          <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                        </div>
-                        <!-- /.direct-chat-info -->
-                        <img class="direct-chat-img" src alt="message user image">
-                        <!-- /.direct-chat-img -->
-                        <div
-                          class="direct-chat-text"
-                        >Is this template really for free? That's unbelievable!</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-
-                      <!-- Message to the right -->
-                      <div class="direct-chat-msg right">
-                        <div class="direct-chat-info clearfix">
-                          <span class="direct-chat-name float-right">Sarah Bullock</span>
-                          <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                        </div>
-                        <!-- /.direct-chat-info -->
-                        <img class="direct-chat-img" src alt="message user image">
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">You better believe it!</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-
-                      <!-- Message. Default to the left -->
-                      <div class="direct-chat-msg">
-                        <div class="direct-chat-info clearfix">
-                          <span class="direct-chat-name float-left">Alexander Pierce</span>
-                          <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                        </div>
-                        <!-- /.direct-chat-info -->
-                        <img class="direct-chat-img" src alt="message user image">
-                        <!-- /.direct-chat-img -->
-                        <div
-                          class="direct-chat-text"
-                        >Working with AdminLTE on a great new app! Wanna join?</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-
-                      <!-- Message to the right -->
-                      <div class="direct-chat-msg right">
-                        <div class="direct-chat-info clearfix">
-                          <span class="direct-chat-name float-right">Sarah Bullock</span>
-                          <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                        </div>
-                        <!-- /.direct-chat-info -->
-                        <img class="direct-chat-img" src alt="message user image">
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">I would love to.</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-                    </div>
-                    <!--/.direct-chat-messages-->
-
-                    <!-- Contacts are loaded here -->
-                    <div class="direct-chat-contacts">
-                      <ul class="contacts-list">
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Count Dracula
-                                <small class="contacts-list-date float-right">2/28/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">How have you been? I was...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Sarah Doe
-                                <small class="contacts-list-date float-right">2/23/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">I will be waiting for...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Nadia Jolie
-                                <small class="contacts-list-date float-right">2/20/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">I'll call you back at...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Nora S. Vans
-                                <small class="contacts-list-date float-right">2/10/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">Where is your new...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                John K.
-                                <small class="contacts-list-date float-right">1/27/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">Can I take a look at...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img class="contacts-list-img" src>
-
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Kenneth M.
-                                <small class="contacts-list-date float-right">1/4/2015</small>
-                              </span>
-                              <span class="contacts-list-msg">Never mind I found...</span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                      </ul>
-                      <!-- /.contacts-list -->
-                    </div>
-                    <!-- /.direct-chat-pane -->
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">
-                    <form action="#" method="post">
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          name="message"
-                          placeholder="Type Message ..."
-                          class="form-control"
-                        >
-                        <span class="input-group-append">
-                          <button type="button" class="btn btn-primary">Send</button>
-                        </span>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- /.card-footer-->
-                </div>
-                <!--/.direct-chat -->
-
                 <!-- TO DO List -->
                 <div class="card">
                   <div class="card-header">
@@ -389,7 +177,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
                         <!-- checkbox -->
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <!-- todo text -->
                         <span class="text">Design a nice theme</span>
                         <!-- Emphasis label -->
@@ -407,7 +195,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <span class="text">Make the theme responsive</span>
                         <small class="badge badge-info">
                           <i class="far fa-clock"></i> 4 hours
@@ -422,7 +210,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <span class="text">Let theme shine like a star</span>
                         <small class="badge badge-warning">
                           <i class="far fa-clock"></i> 1 day
@@ -437,7 +225,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <span class="text">Let theme shine like a star</span>
                         <small class="badge badge-success">
                           <i class="far fa-clock"></i> 3 days
@@ -452,7 +240,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <span class="text">Check your messages and notifications</span>
                         <small class="badge badge-primary">
                           <i class="far fa-clock"></i> 1 week
@@ -467,7 +255,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                           <i class="fas fa-ellipsis-v"></i>
                         </span>
-                        <input type="checkbox" value name>
+                        <input type="checkbox" value name />
                         <span class="text">Let theme shine like a star</span>
                         <small class="badge badge-secondary">
                           <i class="far fa-clock"></i> 1 month
@@ -508,15 +296,6 @@
                       >
                         <i class="fas fa-calendar-times"></i>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        data-widget="collapse"
-                        data-toggle="tooltip"
-                        title="Collapse"
-                      >
-                        <i class="fas fa-minus"></i>
-                      </button>
                     </div>
                     <!-- /.card-tools -->
                   </div>
@@ -547,78 +326,6 @@
                 </div>
                 <!-- /.card -->
 
-                <!-- solid sales graph -->
-                <div class="card bg-info">
-                  <div class="card-header no-border">
-                    <h3 class="card-title">
-                      <i class="fas fa-th mr-1"></i>
-                      Sales Graph
-                    </h3>
-
-                    <div class="card-tools">
-                      <button type="button" class="btn bg-info btn-sm" data-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn bg-info btn-sm" data-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart" id="line-chart" style="height: 250px;"></div>
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer bg-transparent">
-                    <div class="row">
-                      <div class="col-4 text-center">
-                        <input
-                          type="text"
-                          class="knob"
-                          data-readonly="true"
-                          value="20"
-                          data-width="60"
-                          data-height="60"
-                          data-fg-color="#39CCCC"
-                        >
-
-                        <div class="text-white">Mail-Orders</div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-4 text-center">
-                        <input
-                          type="text"
-                          class="knob"
-                          data-readonly="true"
-                          value="50"
-                          data-width="60"
-                          data-height="60"
-                          data-fg-color="#39CCCC"
-                        >
-
-                        <div class="text-white">Online</div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-4 text-center">
-                        <input
-                          type="text"
-                          class="knob"
-                          data-readonly="true"
-                          value="30"
-                          data-width="60"
-                          data-height="60"
-                          data-fg-color="#39CCCC"
-                        >
-
-                        <div class="text-white">In-Store</div>
-                      </div>
-                      <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                  </div>
-                  <!-- /.card-footer -->
-                </div>
-                <!-- /.card -->
-
                 <!-- Calendar -->
                 <div class="card bg-success">
                   <div class="card-header no-border">
@@ -626,32 +333,18 @@
                       <i class="fas fa-calendar-times"></i>
                       Calendar
                     </h3>
-                    <!-- tools card -->
-                    <div class="card-tools">
-                      <!-- button with a dropdown -->
-                      <div class="btn-group">
-                        <button
-                          type="button"
-                          class="btn btn-success btn-sm dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="dropdown-menu float-right" role="menu">
-                          <a href="#" class="dropdown-item">Add new event</a>
-                          <a href="#" class="dropdown-item">Clear events</a>
-                          <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item">View calendar</a>
-                        </div>
-                      </div>
-                      <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-success btn-sm" data-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </div>
-                    <!-- /. tools -->
+                    <calendar-view
+                      id="calendar"
+                      :show-date="showDate"
+                      class="holiday-us-traditional holiday-us-official"
+                    >
+                      <calendar-view-header
+                        slot="header"
+                        slot-scope="t"
+                        :header-props="t.headerProps"
+                        @input="setShowDate"
+                      />
+                    </calendar-view>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body pt-0">
@@ -675,5 +368,33 @@
 </template>
 
 <script>
-export default {};
+import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
+require("vue-simple-calendar/static/css/default.css");
+require("vue-simple-calendar/static/css/holidays-us.css");
+export default {
+  name: "app",
+  data: function() {
+    return { showDate: new Date() };
+  },
+  components: {
+    CalendarView,
+    CalendarViewHeader
+  },
+  methods: {
+    setShowDate(d) {
+      this.showDate = d;
+    }
+  }
+};
 </script>
+
+<style scoped>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  /* color: #2c3e50; */
+  height: 67vh;
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

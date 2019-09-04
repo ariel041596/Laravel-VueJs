@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// this route is for home if not login and has no authorization
+// Route::get('/', function () {
+//     return view('invoice');
+// });
 
 Auth::routes();
 

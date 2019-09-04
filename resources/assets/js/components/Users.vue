@@ -92,7 +92,7 @@
                   name="name"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('name') }"
-                >
+                />
                 <has-error :form="form" field="name"></has-error>
               </div>
               <div class="form-group">
@@ -104,7 +104,7 @@
                   name="email"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('email') }"
-                >
+                />
                 <has-error :form="form" field="email"></has-error>
               </div>
               <div class="form-group">
@@ -141,7 +141,7 @@
                   id="password"
                   class="form-control"
                   :class="{ 'is-invalid': form.errors.has('password') }"
-                >
+                />
                 <has-error :form="form" field="password"></has-error>
               </div>
             </div>
@@ -181,13 +181,18 @@ export default {
       });
     },
     updateUser() {
+      this.$Progress.start();
       this.form
         .put("api/user/" + this.form.id)
         .then(() => {
           $("#addNew").modal("hide");
-          swal.fire("Updated", "Your file has been Updated", "success");
+          // swal.fire("Updated", "Your file has been Updated", "success");
           this.$Progress.finish();
           Fire.$emit("AfterCreate");
+          toast.fire({
+            type: "success",
+            title: "Updated successfully"
+          });
         })
         .catch(() => {
           this.$Progress.fail();
@@ -210,7 +215,7 @@ export default {
     deleteUser(id) {
       swal
         .fire({
-          title: "Deleted successfully",
+          title: "Delete File?",
           text: "You wont be able to revert this",
           type: "warning",
           showCancelButton: "true",
@@ -224,8 +229,10 @@ export default {
             this.form
               .delete("api/user/" + id)
               .then(() => {
-                swal.fire("Deleted", "Your file has been deleted", "success");
-                // this.loadUsers();
+                toast.fire({
+                  type: "success",
+                  title: "Deleted successfully"
+                });
                 Fire.$emit("AfterCreate");
               })
               .catch(() => {
@@ -240,25 +247,26 @@ export default {
         axios.get("api/user").then(({ data }) => (this.users = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
+
     createUser() {
-      // Progressbar before create user
       this.$Progress.start();
       this.form
         .post("api/user")
         .then(() => {
+          $("#addNew").modal("hide");
           // Custom event to fire
+          this.$Progress.finish();
           Fire.$emit("AfterCreate");
           // Sweet Alert message from sweetalert2
           toast.fire({
             type: "success",
             title: "Created successfully"
           });
-
-          this.$Progress.finish();
-          // Hide modal
-          $("#addNew").modal("hide");
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$Progress.fail();
+          this.$$Progress.finish();
+        });
     }
   },
 
@@ -273,13 +281,10 @@ export default {
         })
         .catch(() => {});
     });
-    // Progressbar before
     this.loadUsers();
     Fire.$on("AfterCreate", () => {
       this.loadUsers();
     });
-    // SetInterval Function
-    // setInterval(() => this.loadUsers(), 3000);
   }
 };
 </script>

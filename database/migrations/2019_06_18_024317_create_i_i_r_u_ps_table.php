@@ -15,6 +15,19 @@ class CreateIIRUPsTable extends Migration
     {
         Schema::create('i_i_r_u_ps', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number');
+            $table->string('article');
+            $table->string('description');
+            $table->string('property_number');
+            $table->string('unit_of_measure');
+            $table->decimal('price');
+            $table->decimal('quantity');
+            $table->decimal('total_value');
+            $table->date('date');
+            $table->string('accountable_officer');
+            $table->string('remarks');
+            $table->string('account_name');
+            $table->string('service');
             $table->timestamps();
         });
     }
