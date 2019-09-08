@@ -85,13 +85,13 @@ const routes = [
     { path: '/assets', component: require('./components/Assets.vue'), },
     { path: '/developer', component: require('./components/Developer.vue') },
     { path: '/iirup', component: require('./components/IIRUP.vue') },
-    { path: '/inventory', component: require('./components/ICSList.vue') },
-    { path: 'inventory/:id', component: require('./components/ICS.vue') },
+    // { path: '/inventory', component: require('./components/ICSList.vue') },
+    // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Dashboard.vue') },
-    { path: '*', component: require('./components/404NotFound.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },
-    { path: '/:id', component: require('./components/PAR.vue') },
-    { path: '/:id', component: require('./components/ICS.vue') },
+    // { path: '/:id', component: require('./components/PAR.vue') },
+    // { path: '/:id', component: require('./components/ICS.vue') },
+    // { path: '*', component: require('./components/404NotFound.vue') },
 ];
 // To remove the home e.g home/dashboard after the refresh page
 const router = new VueRouter({

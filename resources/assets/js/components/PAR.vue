@@ -47,13 +47,13 @@
                 </tbody>
                 <tbody>
                   <tr v-for="asset in assets" :key="asset.id">
-                    <td>{{ asset.quantity }}</td>
+                    <td>{{ asset.quantity | numberComma }}</td>
                     <td>{{ asset.unit_of_measure }}</td>
-                    <td>{{ asset.description }}</td>
+                    <td class="text-left">{{ asset.description | upText }}</td>
                     <td>{{ asset.property_number }}</td>
-                    <td>{{ asset.date || myDate }}</td>
-                    <td>{{ asset.price || numberComma }}</td>
-                    <td>{{ asset.total_value }}</td>
+                    <td>{{ asset.date | myDate }}</td>
+                    <td>{{ asset.price | numberComma }}</td>
+                    <td>{{ asset.total_value | numberComma }}</td>
                   </tr>
                 </tbody>
               </table>

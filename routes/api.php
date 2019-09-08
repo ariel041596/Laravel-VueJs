@@ -19,11 +19,11 @@ Route::apiResources(['user' => 'API\UserController']);
 Route::middleware('auth:api')->get('/asset', function (Request $request) {
     return $request->asset();
 });
-Route::middleware('auth:api')->get('/asset/par/{id}', function (Request $request) {
-    return $request->asset();
-});
 // router for Asset Controller
 Route::apiResources(['asset' => 'API\AssetController']);
+Route::middleware('auth:api')->get('/asset/par/{id}', function (Request $request) { //this is not working
+    return $request->asset(); //this is not working
+});                            //this is not working
 // ===============================================End For Assets==========================
 // ===============================================For IRRUP==========================
 // Middleware to get Asset

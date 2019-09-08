@@ -1,52 +1,62 @@
 <template>
   <div class>
-    <!-- /.row -->
-    <div class="row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header bg-light">
-            <h1
-              class="card-title mt-2"
-            >Report on Physical Count of Property, Plant and Equipment (RPCPPE)</h1>
-            <div class="card-tools">
-              <!-- <router-link to="/assets/par"> -->
-              <button class="btn btn-primary mt-2" @click="newModal">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
-              </button>
-              <!-- </router-link> -->
-            </div>
+    <!-- For Admin -->
+    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div class="rpcppe card-header bg-light">
+        <h3 class="card-title mt-2">
+          Report on Physical Count of Property Plant and Equipment (RPCPPE)
+          <button
+            class="btn btn-outline-primary float-right"
+            @click="newModal"
+          >
+            <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+          </button>
+        </h3>
+      </div>
+
+      <!-- /.card-header -->
+      <div class="card-body table-responsive">
+        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0 mt-0">
-            <table class="table">
-              <tbody>
-                <tr class>
-                  <!-- <th>ID</th> -->
-                  <th>
-                    <input type="checkbox" v-model="selectAll" @click="select" />
-                  </th>
-                  <th>Article</th>
-                  <th width="20%">Description</th>
-                  <th width="5%">Property Number</th>
-                  <th>Unit</th>
-                  <th>Price</th>
-                  <th>Qty</th>
-                  <th>Total Value</th>
-                  <th>Date</th>
-                  <th>Accountable Officer</th>
-                  <th>Remarks</th>
-                  <th width="8%">Account Name</th>
-                  <th v-if="$gate.isAdminOrAuthor()">Service</th>
-                  <th>Action</th>
-                </tr>
-              </tbody>
-              <tbody>
-                <template v-if="!assets.data.length">
-                  <tr>
-                    <td colspan="15" class="text-center">No Properties Available</td>
+          <div class="row">
+            <div class="col-sm-12">
+              <table
+                id="example2"
+                class="table table-bordered table-hover dataTable"
+                role="grid"
+                aria-describedby="example2_info"
+              >
+                <tbody>
+                  <tr class>
+                    <!-- <th>ID</th> -->
+                    <th>
+                      <input type="checkbox" v-model="selectAll" @click="select" />
+                    </th>
+                    <th>Article</th>
+                    <th width="20%">Description</th>
+                    <th width="5%">Property Number</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total Value</th>
+                    <th>Date</th>
+                    <th>Accountable Officer</th>
+                    <th>Remarks</th>
+                    <th width="8%">Account Name</th>
+                    <th v-if="$gate.isAdminOrAuthor()">Service</th>
+                    <th>Action</th>
                   </tr>
-                </template>
-                <template v-else>
+                </tbody>
+                <tbody>
+                  <!-- <template v-if="!assets.data.length">
+                    <tr>
+                      <td colspan="15" class="text-center">No Properties Available</td>
+                    </tr>
+                  </template>-->
+                  <!-- <template v-else> -->
                   <tr v-for="asset in assets.data" :key="asset.id">
                     <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                     <!-- <td>{{asset.id}}</td> -->
@@ -104,25 +114,24 @@
                       </a>
                     </td>
                   </tr>
-                </template>
-              </tbody>
-            </table>
+                  <!-- </template> -->
+                </tbody>
+              </table>
+              <div>
+                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              </div>
+            </div>
           </div>
-          <!-- /.card-body -->
-          <!-- Start of Pagination -->
-          <div class="card-footer">
-            <pagination :data="assets" @pagination-change-page="getResults" align="right"></pagination>
-          </div>
-          <!-- End of pagination -->
         </div>
-        <!-- /.card -->
       </div>
+      <!-- /.card-body -->
     </div>
-    <!-- /.row -->
-    <!-- Modal for Printing -->
-    <!-- Add bd-example-modal-lg for LARGE size modal and modal-lg for the second div-->
+    <!-- End for Admin -->
 
-    <!---------------------->
+    <!-- /.row -->
+    <div v-if="!$gate.isAdminOrUserOrAuthor()">
+      <NotFound></NotFound>
+    </div>
     <div
       id="printThis"
       class="modal fade"
@@ -300,6 +309,7 @@
                 <div class="col form-group">
                   <input
                     v-model="form.article"
+                    @change="getProfileid"
                     type="text"
                     id="article"
                     placeholder="Enter article"
@@ -447,22 +457,21 @@
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
-                  <input
-                    type="text"
-                    name="account_name"
-                    v-model="form.account_name"
-                    id="account_name"
+                  <select
                     class="form-control"
+                    id="account_name"
+                    name="account_name"
+                    placeholder="Please select Account"
+                    v-model="form.account_name"
                     :class="{'is-invalid': form.errors.has('account_name')}"
-                    list="accountcodes"
-                  />
-                  <has-error :form="form" field="account_name"></has-error>
-                  <datalist id="accountcodes">
+                  >
+                    <option value>Select Account Name</option>
                     <option
-                      v-for="accountcode in accountcodes.data"
-                      :key="accountcode.id"
-                    >{{accountcode.account_name}}</option>
-                  </datalist>
+                      v-for="account in accountcodes.data"
+                      :key="account.id"
+                    >{{account.account_name}}</option>
+                    <has-error :form="form" field="account_name"></has-error>
+                  </select>
                 </div>
                 <div
                   class="py-2 px-2"
@@ -484,6 +493,26 @@
                     :class="{ 'is-invalid': form.errors.has('service') }"
                   />
                   <has-error :form="form" field="service"></has-error>
+                </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    v-model="form.createdBy"
+                    type="text"
+                    id="createdBy"
+                    placeholder="createdBy"
+                    name="createdBy"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    value="pending"
+                    type="text"
+                    id="status"
+                    placeholder="Status"
+                    name="status"
+                    class="form-control"
+                  />
                 </div>
               </div>
             </div>
@@ -524,6 +553,7 @@ export default {
       acctMode: false,
       editmode: false,
       accountcodes: {},
+      profiles: {},
       assets: {},
       form: new Form({
         id: "",
@@ -539,7 +569,9 @@ export default {
         accountable_officer: "",
         remarks: "",
         account_name: "",
-        service: ""
+        service: "",
+        createdBy: "",
+        status: "pending"
       })
     };
   },
@@ -658,6 +690,11 @@ export default {
         }
       }
     },
+    getProfileid(event) {
+      this.form.article = event.target.value;
+      this.form.createdBy = this.profiles.id;
+    },
+
     updateQuantity(event) {
       this.form.quantity = event.target.value;
       this.form.total_value = this.form.quantity * this.form.price;
@@ -735,6 +772,9 @@ export default {
           }
         });
     },
+    loadUsers() {
+      axios.get("api/profile").then(({ data }) => (this.profiles = data));
+    },
     // LoadUser to display in the tbody
     loadAssets() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
@@ -808,6 +848,7 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
+    this.loadUsers();
     this.loadAcctName();
     this.loadAssets();
     Fire.$on("AfterCreate", () => {
@@ -854,8 +895,12 @@ export default {
   width: 100%;
   background-repeat: no-repeat;
 }
-.widget-user .card-footer {
+.widget-user {
   padding: 0;
+}
+
+.rpcppe {
+  background-color: rgb(23, 162, 184);
 }
 </style>
 

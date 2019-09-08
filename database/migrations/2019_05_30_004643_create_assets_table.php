@@ -28,6 +28,7 @@ class CreateAssetsTable extends Migration
             $table->string('remarks');
             $table->string('account_name');
             $table->string('service');
+            $table->string('createdBy');
             $table->timestamps();
         });
     }

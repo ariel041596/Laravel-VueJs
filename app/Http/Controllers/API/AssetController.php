@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 // use the App\Asset
 use App\Asset;
+use App\User;
+use App\Disposal;
+use \Auth;
 class AssetController extends Controller
 {
     /**
@@ -27,16 +30,60 @@ class AssetController extends Controller
      */
     public function index()
     {
+        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+            // $createdBy = User::where('id', Auth::user()->id);
+            $createdBy = Auth::user()->id;
+            $asset = Asset::where('createdBy', $createdBy)->paginate(); //get or paginate?
+            // return response()->json([
+            //     "asset" => $asset
+            // ],200);
+        // }
         // $par = Asset::whereId($id)->first();
         // return response()->json([
         //     "par" => $par
         // ], 200);
         // return Asset::find($id);
+
+    //     $results = Invoice::with(['customer'])
+    //     ->orderBy('created_at', 'desc')
+    //     ->paginate(15);
+
+    // return response()
+    //     ->json(['results' => $results]);
         
 
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
-            return Asset::latest()->paginate(5);
-        }
+        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+            // $createdBy = User::user()->id;
+            // $asset = Asset::where('createdBy', $createdBy)->get(); 
+            // return response()->json([
+            //             "asset" => $asset
+            //         ],200);
+                
+            // return Asset::latest()->paginate(10);
+        // }
+
+        // return Asset::where('creator', $creator)->paginate();
+
+        // if(\Gate::allows('isAdmin')){
+        //     return Inventories:Asset:Disposal::latest()->paginate(10);
+
+        //     return Inventories::latest()->paginate(10);
+        //     return Asset::latest()->paginate(10);
+        //     return Disposal::latest()->paginate(10);
+            
+        // }else{
+        //     if(\Gate::allows('isAuthor')){
+        //         return Asset::latest()->paginate(10);
+        //     }
+        //     else{
+        //         if(\Gate::allows('isUser')){
+        //             return Disposal::latest()->paginate(10);
+        //         }
+        //     }
+        // }
+        
+       
+
     }
 
 
@@ -48,6 +95,7 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
+    
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
@@ -63,13 +111,16 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'string|max:191', //12
+            'service' => 'string|max:191', //12 
+            'createdBy' => 'max:191', //12 
+            'status' => 'max:191', //13
             
 
             
         ]);
         // Insert the data into databse
         return Asset::create([
+            
             'number' => $request['number'], //1
             'article' => $request['article'], //1
             'description' => $request['description'], //2
@@ -83,6 +134,8 @@ class AssetController extends Controller
             'remarks' => $request['remarks'], //10
             'account_name' => $request['account_name'], //11
             'service' => $request['service'], //12
+            'createdBy' => $request['createdBy'], //12
+            'status' => $request['status'], //13
         ]);
     }
 
@@ -155,8 +208,23 @@ class AssetController extends Controller
     public function destroy($id)
     {
         //
-        $asset = Asset::findOrFail($id);
-        $asset->delete();
-        return ['message' => 'Asset Deleted'];
+        if(\Gate::allows('isAdmin')){
+            $asset = Asset::findOrFail($id);
+            $asset->delete();
+            return ['message' => 'Asset Deleted'];
+        }else{
+            if(\Gate::allows('isUser')){
+                $asset = Disposal::findOrFail($id);
+                $asset->delete();
+                return ['message' => 'Asset Deleted'];
+            }else{
+                if(\Gate::allows('isUser')){
+                    $asset = User::findOrFail($id);
+                    $asset->delete();
+                    return ['message' => 'Asset Deleted'];
+                }
+            }
+        }
+       
     }
 }
