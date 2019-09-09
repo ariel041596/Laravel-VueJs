@@ -2,7 +2,7 @@
   <div class>
     <!-- For Admin -->
     <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="rpcppe card-header bg-light">
+      <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
           Report on Physical Count of Property Plant and Equipment (RPCPPE)
           <button
@@ -45,8 +45,9 @@
                     <th>Date</th>
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
-                    <th width="8%">Account Name</th>
-                    <th v-if="$gate.isAdminOrAuthor()">Service</th>
+                    <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
+                    <th>Service</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -76,7 +77,7 @@
                     <td>{{asset.remarks | upText}}</td>
                     <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                     <td>{{asset.service}}</td>
-                    <!-- <td>{{asset.created_at | myDate}}</td> -->
+                    <td>{{asset.status | upText}}</td>
                     <td>
                       <a
                         href="#"
@@ -373,7 +374,9 @@
               <div class="row">
                 <!-- third col Remove also the v-model-->
                 <div class="col form-group">
+                  <label>Unit Price</label>
                   <input
+                    min="0"
                     currency="P"
                     separator=","
                     :value="form.price"
@@ -390,7 +393,9 @@
                 </div>
                 <!-- fourth col  Trying to remove the v-model first  -->
                 <div class="col form-group">
+                  <label>Quantity</label>
                   <input
+                    min="1"
                     separator=","
                     :value="form.quantity"
                     @change="updateQuantity"
@@ -407,7 +412,9 @@
               <div class="row">
                 <!-- firt col -->
                 <div class="col form-group">
+                  <label>Total Value</label>
                   <input
+                    disabled
                     currency="P"
                     separator=","
                     v-model="form.total_value"
@@ -423,6 +430,7 @@
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
+                  <label>Date Acquired</label>
                   <input
                     v-model="form.date"
                     type="date"
@@ -434,8 +442,10 @@
                   />
                   <has-error :form="form" field="date"></has-error>
                 </div>
-                <!-- Third col -->
+              </div>
+              <div class="row">
                 <div class="col form-group">
+                  <label>Accountable Officer</label>
                   <input
                     v-model="form.accountable_officer"
                     type="text"
@@ -447,10 +457,9 @@
                   />
                   <has-error :form="form" field="accountable_officer"></has-error>
                 </div>
-              </div>
-              <div class="row">
                 <!-- firt col -->
                 <div class="col form-group">
+                  <label>Accountable Officer</label>
                   <input
                     v-model="form.remarks"
                     type="text"
@@ -461,45 +470,6 @@
                     :class="{ 'is-invalid': form.errors.has('remarks') }"
                   />
                   <has-error :form="form" field="remarks"></has-error>
-                </div>
-                <!-- Second col -->
-                <div class="col form-group">
-                  <select
-                    class="form-control"
-                    id="account_name"
-                    name="account_name"
-                    placeholder="Please select Account"
-                    v-model="form.account_name"
-                    :class="{'is-invalid': form.errors.has('account_name')}"
-                  >
-                    <option value>Select Account Name</option>
-                    <option
-                      v-for="account in accountcodes.data"
-                      :key="account.id"
-                    >{{account.account_name}}</option>
-                    <has-error :form="form" field="account_name"></has-error>
-                  </select>
-                </div>
-                <div
-                  class="py-2 px-2"
-                  style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
-                >
-                  <a href="#" @click="addAccModal">
-                    <i class="fas fa-plus" style="color:#fff;"></i>
-                  </a>
-                </div>
-                <!-- Third col -->
-                <div class="col form-group">
-                  <input
-                    v-model="form.service"
-                    type="text"
-                    id="service"
-                    placeholder="Service"
-                    name="service"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('service') }"
-                  />
-                  <has-error :form="form" field="service"></has-error>
                 </div>
                 <div class="col form-group" v-show="false">
                   <input
@@ -522,8 +492,49 @@
                   />
                 </div>
               </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label>Service</label>
+                  <input
+                    v-model="form.service"
+                    type="text"
+                    id="service"
+                    placeholder="Service"
+                    name="service"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('service') }"
+                  />
+                  <has-error :form="form" field="service"></has-error>
+                </div>
+                <div class="col form-group">
+                  <label>Account Name</label>
+                  <select
+                    class="form-control"
+                    id="account_name"
+                    name="account_name"
+                    placeholder="Please select Account"
+                    v-model="form.account_name"
+                    :class="{'is-invalid': form.errors.has('account_name')}"
+                  >
+                    <option value>Select Account Name</option>
+                    <option
+                      v-for="account in accountcodes.data"
+                      :key="account.id"
+                    >{{account.account_name}}</option>
+                    <has-error :form="form" field="account_name"></has-error>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
+              <div
+                class="py-2 px-2"
+                style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
+              >
+                <a href="#" @click="addAccModal">
+                  <i class="fas fa-plus" style="color:#fff;"></i>
+                </a>
+              </div>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               <button v-show="editmode" type="submit" class="btn btn-primary">Update Asset</button>
               <button v-show="!editmode" type="submit" class="btn btn-primary">
@@ -716,13 +727,17 @@ export default {
       });
     },
     updateAsset() {
+      this.$Progress.start();
       this.form
         .put("api/asset/" + this.form.id)
         .then(() => {
           $("#addNew").modal("hide");
-          swal.fire("Updated", "Your file has been Updated", "success");
-          this.$Progress.finish();
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
           Fire.$emit("AfterCreate");
+          this.$Progress.finish();
         })
         .catch(() => {
           this.$Progress.fail();
@@ -735,6 +750,7 @@ export default {
     editModal(asset) {
       this.editmode = true;
       this.form.reset();
+      this.form.clear();
       $("#addNew").modal("show");
       this.form.fill(asset);
     },
@@ -769,12 +785,13 @@ export default {
             this.form
               .delete("api/asset/" + id)
               .then(() => {
+                this.$Progress.start();
                 swal.fire("Deleted", "Your file has been deleted", "success");
-                // this.loadUsers();
                 Fire.$emit("AfterCreate");
+                this.$Progress.finish();
               })
               .catch(() => {
-                swal("Failed", "There was something wrong", "warning");
+                this.$Progress.fail();
               });
           }
         });
@@ -803,18 +820,21 @@ export default {
         .post("api/asset")
         .then(() => {
           // Custom event to fire
+
           Fire.$emit("AfterCreate");
           // Sweet Alert message from sweetalert2
           toast.fire({
             type: "success",
             title: "Created successfully"
           });
-
           this.$Progress.finish();
           // Hide modal
           $("#addNew").modal("hide");
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$Progress.fail();
+          swal("Failed", "There was something wrong", "warning");
+        });
     },
     createAcct() {
       this.$Progress.start();
@@ -910,7 +930,7 @@ export default {
 }
 
 .rpcppe {
-  background-color: rgb(23, 162, 184);
+  background-color: rgb(242, 242, 242);
 }
 </style>
 

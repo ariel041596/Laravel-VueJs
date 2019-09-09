@@ -116,7 +116,7 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'string|max:191', //12 
+            'service' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
             
@@ -198,6 +198,26 @@ class AssetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'number' => 'required|string|max:191', //1
+            'article' => 'required|string|max:191', //1
+            'description' => 'required|string|max:191', //2
+            'property_number' => 'max:191', //3
+            'unit_of_measure' => 'required|string|max:191', //4
+            'price' => 'max:191', //5
+            'quantity' => 'required|max:191', //6
+            'total_value' => 'max:191', //7
+            'date' => 'max:191', //8
+            'accountable_officer' => 'required|string|max:191', //9
+            'remarks' => 'max:191', //10
+            'account_name' => 'required|string|max:191', //11
+            'service' => 'required|string|max:191', //12 
+            'createdBy' => 'max:191', //12 
+            'status' => 'max:191', //13
+            
+
+            
+        ]);
         //
         $asset = Asset::findOrFail($id);
         $asset->update($request->all());
