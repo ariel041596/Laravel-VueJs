@@ -32,11 +32,16 @@ class AssetController extends Controller
     {
         // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
             // $createdBy = User::where('id', Auth::user()->id);
+            if(\Gate::allows('isAdmin')){
+                return Asset::latest()->paginate(10);
+            }
+            else{
             $createdBy = Auth::user()->id;
-            $asset = Asset::where('createdBy', $createdBy)->paginate(); //get or paginate?
+            return Asset::where('createdBy', $createdBy)->latest()->paginate(); //get or paginate?
             // return response()->json([
             //     "asset" => $asset
             // ],200);
+            }
         // }
         // $par = Asset::whereId($id)->first();
         // return response()->json([
@@ -207,24 +212,9 @@ class AssetController extends Controller
      */
     public function destroy($id)
     {
-        //
-        if(\Gate::allows('isAdmin')){
-            $asset = Asset::findOrFail($id);
-            $asset->delete();
-            return ['message' => 'Asset Deleted'];
-        }else{
-            if(\Gate::allows('isUser')){
-                $asset = Disposal::findOrFail($id);
-                $asset->delete();
-                return ['message' => 'Asset Deleted'];
-            }else{
-                if(\Gate::allows('isUser')){
-                    $asset = User::findOrFail($id);
-                    $asset->delete();
-                    return ['message' => 'Asset Deleted'];
-                }
-            }
-        }
-       
+        $asset = Asset::findOrFail($id);
+        $asset->delete();
+        return ['message' => 'Asset Deleted'];
+    
     }
 }

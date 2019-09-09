@@ -295,6 +295,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
+                  <label>PAR/ICS Number</label>
                   <input
                     v-model="form.number"
                     type="text"
@@ -307,6 +308,7 @@
                   <has-error :form="form" field="number"></has-error>
                 </div>
                 <div class="col form-group">
+                  <label>Article</label>
                   <input
                     v-model="form.article"
                     @change="getProfileid"
@@ -321,6 +323,7 @@
                 </div>
               </div>
               <div class="form-group">
+                <label>Description</label>
                 <textarea
                   v-model="form.description"
                   type="text"
@@ -335,6 +338,7 @@
               <div class="row">
                 <!-- first col -->
                 <div class="col form-group">
+                  <label>Property Number</label>
                   <input
                     v-model="form.property_number"
                     type="text"
@@ -348,6 +352,7 @@
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
+                  <label>Unit of Measure</label>
                   <select
                     name="unit_of_measure"
                     v-model="form.unit_of_measure"
@@ -364,6 +369,8 @@
                     <has-error :form="form" field="unit_of_measure"></has-error>
                   </select>
                 </div>
+              </div>
+              <div class="row">
                 <!-- third col Remove also the v-model-->
                 <div class="col form-group">
                   <input
@@ -866,7 +873,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#description {
+  height: 100px;
+}
 @media screen {
   #print {
     display: none;

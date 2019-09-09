@@ -327,31 +327,16 @@
                 <!-- /.card -->
 
                 <!-- Calendar -->
-                <div class="card bg-success">
-                  <div class="card-header no-border">
-                    <h3 class="card-title">
-                      <i class="fas fa-calendar-times"></i>
+                <div id="calendar" class="card">
+                  <div id="calendar-header" class="card-header no-border">
+                    <h3 class="card-title text-white">
+                      <i id="calendar-icon" class="fas fa-calendar-times"></i>&nbsp;
                       Calendar
                     </h3>
-                    <calendar-view
-                      id="calendar"
-                      :show-date="showDate"
-                      class="holiday-us-traditional holiday-us-official"
-                    >
-                      <calendar-view-header
-                        slot="header"
-                        slot-scope="t"
-                        :header-props="t.headerProps"
-                        @input="setShowDate"
-                      />
-                    </calendar-view>
                   </div>
-                  <!-- /.card-header -->
-                  <div class="card-body pt-0">
-                    <!--The calendar -->
-                    <div id="calendar" style="width: 100%"></div>
+                  <div>
+                    <calendar ref="calendar" />
                   </div>
-                  <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
               </section>
@@ -368,17 +353,15 @@
 </template>
 
 <script>
-import { CalendarView, CalendarViewHeader } from "vue-simple-calendar";
-require("vue-simple-calendar/static/css/default.css");
-require("vue-simple-calendar/static/css/holidays-us.css");
+import { Calendar } from "vue-sweet-calendar";
+import "vue-sweet-calendar/dist/SweetCalendar.css";
 export default {
   name: "app",
   data: function() {
     return { showDate: new Date() };
   },
   components: {
-    CalendarView,
-    CalendarViewHeader
+    Calendar
   },
   methods: {
     setShowDate(d) {
@@ -389,6 +372,12 @@ export default {
 </script>
 
 <style scoped>
+#calendar-icon {
+  color: white;
+}
+#calendar-header {
+  background: rgb(68, 83, 184);
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   /* color: #2c3e50; */
