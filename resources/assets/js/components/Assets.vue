@@ -6,7 +6,7 @@
         <h3 class="card-title mt-2">
           Report on Physical Count of Property Plant and Equipment (RPCPPE)
           <button
-            class="btn btn-outline-primary float-right"
+            class="update-create btn float-right"
             @click="newModal"
           >
             <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
@@ -289,7 +289,7 @@
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Asset</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+              <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
           <form @submit.prevent="editmode ? updateAsset() : createAsset()">
@@ -535,9 +535,13 @@
                   <i class="fas fa-plus" style="color:#fff;"></i>
                 </a>
               </div>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button v-show="editmode" type="submit" class="btn btn-primary">Update Asset</button>
-              <button v-show="!editmode" type="submit" class="btn btn-primary">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>
+              <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update Asset
+              </button>
+              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
                 <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
               </button>
             </div>
@@ -894,6 +898,21 @@ export default {
 </script>
 
 <style scoped>
+.update-create {
+  background: rgb(22, 70, 143);
+  color: white;
+  opacity: 0.9;
+}
+.update-create:hover {
+  opacity: 1;
+}
+.modal-close-button {
+  color: white;
+}
+.modal-header {
+  background: rgb(22, 70, 143);
+  color: aliceblue;
+}
 #description {
   height: 100px;
 }

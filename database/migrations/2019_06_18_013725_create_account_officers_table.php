@@ -15,6 +15,9 @@ class CreateAccountOfficersTable extends Migration
     {
         Schema::create('account_officers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('designation');
+            $table->string('service');
             $table->timestamps();
         });
     }

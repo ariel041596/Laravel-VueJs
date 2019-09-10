@@ -12,6 +12,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // router for Usercontroller
 Route::apiResources(['user' => 'API\UserController']);
 // ===============================================End For Users==========================
+// ===============================================For Accountable Officers==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/accountable_officer', function (Request $request) {
+    return $request->accountable_officer();
+});
+// router for Usercontroller
+Route::apiResources(['accountable_officer' => 'API\AccountOfficerController']);
+// ===============================================End For Users==========================
 
 
 // ===============================================For Assets==========================
