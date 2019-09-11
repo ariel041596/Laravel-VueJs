@@ -740,8 +740,8 @@ export default {
             type: "success",
             title: "Updated Successfully"
           });
-          Fire.$emit("AfterCreate");
           this.$Progress.finish();
+          Fire.$emit("AfterCreate");
         })
         .catch(() => {
           this.$Progress.fail();

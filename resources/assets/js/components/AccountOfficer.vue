@@ -1,12 +1,12 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+    <div class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
       <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
           Accountable Officers
           <button class="update-create btn float-right" @click="newModal">
-            <i class="fas fa-cart-plus">&nbsp;</i>Add Accountable Officer
+            <i class="fas fa-user-plus">&nbsp;</i>Add Accountable Officer
           </button>
         </h3>
       </div>
@@ -36,6 +36,7 @@
                     <th>Full Name (Surname, First Name, M.I)</th>
                     <th>Designation</th>
                     <th>Service</th>
+                    <th>Actions</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -53,9 +54,9 @@
                       <input type="checkbox" :value="officer.id" v-model="selected" />
                     </td>
                     <td>{{officer.id}}</td>
-                    <td>{{officer.account_name}}</td>
+                    <td>{{officer.name}}</td>
+                    <td>{{officer.designation}}</td>
                     <td>{{officer.service}}</td>
-                    <td>{{officer.status}}</td>
                     <td>
                       <!-- See for the function of edits and Deletes -->
                       <a
@@ -69,7 +70,7 @@
                       </a>
                       <a
                         href="#"
-                        @click="deleteAsset(officer.id)"
+                        @click="deleteAccountableOfficer(officer.id)"
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Disposed"
@@ -97,7 +98,7 @@
     <!-- End for Admin -->
 
     <!-- /.row -->
-    <div v-if="!$gate.isAdminOrUserOrAuthor()">
+    <div v-if="!$gate.isAdminOrAuthor()">
       <NotFound></NotFound>
     </div>
     <!-- Modal -->
@@ -113,7 +114,11 @@
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
+            <h5
+              v-show="!editmode"
+              class="modal-title"
+              id="addNewModalLabel"
+            >Add New Accountable Officer</h5>
             <h5
               v-show="editmode"
               class="modal-title"
@@ -176,10 +181,10 @@
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
               <button v-show="editmode" type="submit" class="update-create btn">
-                <i class="fas fa-pen">&nbsp;</i>Update Asset
+                <i class="fas fa-pen">&nbsp;</i>Update Accountable Officer
               </button>
               <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+                <i class="fas fa-user-plus">&nbsp;</i>Add Accountable Officer
               </button>
             </div>
           </form>
@@ -220,8 +225,6 @@ export default {
       })
     };
   },
-
-  // Testing auto computation
   methods: {
     select() {
       this.selected = [];
@@ -246,11 +249,39 @@ export default {
             type: "success",
             title: "Updated Successfully"
           });
-          Fire.$emit("AfterCreate");
           this.$Progress.finish();
+          Fire.$emit("AfterCreate");
         })
         .catch(() => {
           this.$Progress.fail();
+        });
+    },
+    deleteAccountableOfficer(id) {
+      swal
+        .fire({
+          title: "Deleted successfully",
+          text: "You wont be able to revert this",
+          type: "warning",
+          showCancelButton: "true",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#33",
+          confirmButtonText: "Delete"
+        })
+        .then(result => {
+          // send request to the server
+          if (result.value) {
+            this.form
+              .delete("api/accountable_officer/" + id)
+              .then(() => {
+                this.$Progress.start();
+                swal.fire("Deleted", "Your file has been deleted", "success");
+                Fire.$emit("AfterCreate");
+                this.$Progress.finish();
+              })
+              .catch(() => {
+                this.$Progress.fail();
+              });
+          }
         });
     },
     // Show modal and hide

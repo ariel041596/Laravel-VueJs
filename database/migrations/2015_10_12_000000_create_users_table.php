@@ -19,10 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            // $table->string('type')->default('user');
-            $table->string('type')->unique();
+            $table->string('type')->default('user');
+            // $table->string('type')->unique(); ----------Note this will be use on production-----
             $table->mediumText('bio')->nullable();
-            $table->string('photo');
+            $table->string('photo')->nullable();;
             $table->rememberToken();
             $table->timestamps();
         });

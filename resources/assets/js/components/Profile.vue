@@ -182,7 +182,7 @@
                       <button
                         @click.prevent="updateInfo"
                         type="submit"
-                        class="btn btn-danger col-lg-2 col-sm-6"
+                        class="update-create btn col-lg-2 col-sm-6"
                       >
                         <i class="fas fa-save"></i>&nbsp;Save
                       </button>
@@ -277,7 +277,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.update-create {
+  background: rgb(22, 70, 143);
+  color: white;
+  opacity: 0.9;
+}
+.update-create:hover {
+  opacity: 1;
+}
 .widget-user-header {
   background-position: center center;
   background-size: cover;

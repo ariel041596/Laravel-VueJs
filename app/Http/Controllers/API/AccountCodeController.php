@@ -27,7 +27,7 @@ class AccountCodeController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
             return AccountCode::latest()->paginate(5);
         }
     }
@@ -44,12 +44,14 @@ class AccountCodeController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
-            'account_name' => 'required|string|max:191', //11
+            'account_code' => 'required|string|max:191', //1
+            'account_name' => 'required|string|max:191', //2
             
         ]);
         // Insert the data into databse
         return AccountCode::create([
-            'account_name' => $request['account_name'], //11
+            'account_code' => $request['account_code'], //1
+            'account_name' => $request['account_name'], //1
         ]);
     }
 

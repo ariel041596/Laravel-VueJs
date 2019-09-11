@@ -88,8 +88,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-            <router-link to="/assets" class="nav-link">
-            <i class="nav-icon fas fa-clipboard"></i>
+            <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-dot-circle"></i>&nbsp;
               <p>
                RPCPPE
                 <!-- <span class="right badge badge-danger">New</span> -->
@@ -98,15 +98,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
 
             @can('isAdminOrAuthor')
-            <router-link to="/iirup" class="nav-link">
-            <i class="nav-icon fas fa-trash-restore-alt"></i>
+            <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-trash-restore-alt"></i>&nbsp;
               <p>
                IIRUP
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </router-link>
-            <router-link to="/inventory" class="nav-link">
-            <i class="nav-icon fas fa-clipboard"></i>
+            <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-clipboard"></i>&nbsp;
               <p>
                ICS
               </p>
@@ -128,14 +128,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/users" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                 <i class="fas fa-users-cog"></i>
+                 <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Users</p>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/accountable-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                 <i class="fas fa-users-cog"></i>
+                 <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Accountable Officers</p>
+                </router-link>
+              </li> 
+              <li class="nav-item">
+                <router-link to="/account-codes" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-code"></i>&nbsp;
+                  <p>Account Codes</p>
                 </router-link>
               </li> 
             </ul>

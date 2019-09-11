@@ -8,6 +8,6 @@ class AccountCode extends Model
 {
     ///  fillable in a form
     protected $fillable = [
-        'account_name'
+        'account_code','account_name',
     ];
 }

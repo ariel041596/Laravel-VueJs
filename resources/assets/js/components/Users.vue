@@ -1,67 +1,91 @@
 <template>
   <div class>
-    <!-- /.row -->
-    <div class="row mt-4" v-if="$gate.isAdminOrAuthor()">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h1 class="card-title mt-2">User Management</h1>
-            <div class="card-tools">
-              <button class="btn btn-primary mt-2" @click="newModal">
-                <i class="fas fa-user-plus">&nbsp;</i>Create User
-              </button>
+    <!-- For Admin -->
+    <div class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
+      <div class="rpcppe card-header">
+        <h3 class="card-title mt-2">
+          User's Management
+          <button class="update-create btn float-right" @click="newModal">
+            <i class="fas fa-user-plus">&nbsp;</i>Create User
+          </button>
+        </h3>
+      </div>
+
+      <!-- /.card-header -->
+      <div class="card-body table-responsive">
+        <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6"></div>
+            <div class="col-sm-12 col-md-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table
+                id="example2"
+                class="table table-bordered table-hover dataTable"
+                role="grid"
+                aria-describedby="example2_info"
+              >
+                <tbody>
+                  <tr class>
+                    <!-- <th>ID</th> -->
+                    <th>
+                      <input type="checkbox" v-model="selectAll" @click="select" />
+                    </th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <th>Registered At</th>
+                    <th>Action</th>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <!-- <template v-if="!assets.data.length">
+                    <tr>
+                      <td colspan="15" class="text-center">No Properties Available</td>
+                    </tr>
+                  </template>-->
+                  <!-- <template v-else> -->
+                  <tr v-for="user in users.data" :key="user.id">
+                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                    <!-- <td>{{asset.id}}</td> -->
+
+                    <td>
+                      <input type="checkbox" :value="user.id" v-model="selected" />
+                    </td>
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.type | upText}}</td>
+                    <td>{{user.created_at | myDate}}</td>
+                    <td>
+                      <a href="#" @click="editModal(user)">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <a href="#" @click="deleteUser(user.id)">
+                        <i class="fas fa-trash red"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <!-- </template> -->
+                </tbody>
+              </table>
+              <div>
+                <pagination :data="users" @pagination-change-page="getResults" align="right"></pagination>
+              </div>
             </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover">
-              <tbody>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Type</th>
-                  <th>Registered At</th>
-                  <th>Action</th>
-                </tr>
-                <tr v-for="user in users.data" :key="user.id">
-                  <!-- pass the data into users or simply add the .data in users -->
-                  <td>{{user.id}}</td>
-                  <td>{{user.name}}</td>
-                  <td>{{user.email}}</td>
-                  <td>{{user.type | upText}}</td>
-                  <td>{{user.created_at | myDate}}</td>
-                  <td>
-                    <a href="#" @click="editModal(user)">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#" @click="deleteUser(user.id)">
-                      <i class="fas fa-trash red"></i>
-                    </a>
-                    <!-- <a href="invoice.blade.php" @click="printme">
-                      <i class="fas fa-print red"></i>
-                    </a>-->
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-          <!-- Start of Pagination -->
-          <div class="card-footer">
-            <pagination :data="users" @pagination-change-page="getResults" align="right"></pagination>
-          </div>
-
-          <!-- End of pagination -->
         </div>
-        <!-- /.card -->
       </div>
+      <!-- /.card-body -->
     </div>
+    <!-- End for Admin -->
+
     <!-- /.row -->
     <div v-if="!$gate.isAdminOrAuthor()">
       <NotFound></NotFound>
     </div>
-
     <!-- Modal -->
     <!-- Add bd-example-modal-lg for LARGE size modal and modal-lg for the second div-->
     <div
@@ -72,18 +96,19 @@
       aria-labelledby="addNewModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
+            <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New User</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update User</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+              <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
           <form @submit.prevent="editmode ? updateUser() : createUser()">
             <div class="modal-body">
               <div class="form-group">
+                <label>Full Name (Last Name, First Name, M.I.)</label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -96,6 +121,7 @@
                 <has-error :form="form" field="name"></has-error>
               </div>
               <div class="form-group">
+                <label>Email</label>
                 <input
                   v-model="form.email"
                   type="email"
@@ -108,6 +134,7 @@
                 <has-error :form="form" field="email"></has-error>
               </div>
               <div class="form-group">
+                <label>Short Description</label>
                 <textarea
                   v-model="form.bio"
                   id="bio"
@@ -118,6 +145,7 @@
                 <has-error :form="form" field="bio"></has-error>
               </div>
               <div class="form-group">
+                <label>User Type</label>
                 <select
                   name="type"
                   v-model="form.type"
@@ -133,6 +161,7 @@
                 </select>
               </div>
               <div class="form-group">
+                <label>Password</label>
                 <input
                   v-model="form.password"
                   type="password"
@@ -146,14 +175,21 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button v-show="editmode" type="submit" class="btn btn-primary">Update User</button>
-              <button v-show="!editmode" type="submit" class="btn btn-primary">Create User</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>
+              <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update User
+              </button>
+              <button v-show="!editmode" type="submit" class="update-create btn">
+                <i class="fas fa-user-plus">&nbsp;</i>Create User
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -161,6 +197,9 @@
 export default {
   data() {
     return {
+      errors: null,
+      selected: [],
+      selectAll: false,
       editmode: false,
       users: {},
       form: new Form({
@@ -175,6 +214,14 @@ export default {
     };
   },
   methods: {
+    select() {
+      this.selected = [];
+      if (!this.selectAll) {
+        for (let asset in this.assets.data) {
+          this.selected.push(this.assets.data[asset].id);
+        }
+      }
+    },
     getResults(page = 1) {
       axios.get("api/user?page=" + page).then(response => {
         this.users = response.data;
@@ -288,10 +335,38 @@ export default {
   }
 };
 </script>
+<style scoped>
+.update-create {
+  background: rgb(22, 70, 143);
+  color: white;
+  opacity: 0.9;
+}
+.update-create:hover {
+  opacity: 1;
+}
+.modal-close-button {
+  color: white;
+}
+.modal-header {
+  background: rgb(22, 70, 143);
+  color: aliceblue;
+}
+#description {
+  height: 100px;
+}
 
-<style>
+.widget-user-header {
+  background-position: center center;
+  background-size: contain;
+  height: 130px !important;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+.widget-user {
+  padding: 0;
+}
+
+.rpcppe {
+  background-color: rgb(242, 242, 242);
+}
 </style>
-
-
-
-// Command for this (npm run watch && php artisan serve)

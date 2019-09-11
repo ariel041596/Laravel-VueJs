@@ -27,7 +27,7 @@ class AccountOfficerController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
             return AccountOfficer::latest()->paginate(5);
         }
     }
@@ -44,12 +44,16 @@ class AccountOfficerController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
-            'accountable_officer' => 'required|string|max:191', //11
+            'name' => 'required|string|max:191', //1
+            'designation' => 'required|string|max:191', //2
+            'service' => 'required|string|max:191', //3
             
         ]);
         // Insert the data into databse
         return AccountOfficer::create([
-            'accountable_officer' => $request['accountable_officer'], //11
+            'name' => $request['name'], //1
+            'designation' => $request['designation'], //1
+            'service' => $request['service'], //1
         ]);
     }
 
