@@ -88,6 +88,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
+            <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-dot-circle"></i>&nbsp;
+              <p>
+               Pendings
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </router-link>
             <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-dot-circle"></i>&nbsp;
               <p>
@@ -156,7 +163,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           <!-- Limimt user to see the developer navbar using can -->
-          @can('isAdminOrAuthor')
+          <!-- @can('isAdminOrAuthor')
           <li class="nav-item">
             <router-link to="/developer" class="nav-link">
             <i class="nav-icon fas fa-cog"></i>
@@ -165,7 +172,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
-          @endcan
+          @endcan -->
           <!-- End can Here -->
           <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}"

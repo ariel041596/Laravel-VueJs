@@ -41,6 +41,14 @@ Route::middleware('auth:api')->get('/asset/par/{id}', function (Request $request
     return $request->asset(); //this is not working
 });                            //this is not working
 // ===============================================End For Assets==========================
+// ===============================================For Assets Pending==========================
+// Middleware to get Asset
+Route::middleware('auth:api')->get('/pending', function (Request $request) {
+    return $request->pending();
+});
+// router for Asset Controller
+Route::apiResources(['pending' => 'API\AssetPendingController']);
+// ===============================================End For Assets Pending==========================
 // ===============================================For IRRUP==========================
 // Middleware to get Asset
 Route::middleware('auth:api')->get('/disposal', function (Request $request) {

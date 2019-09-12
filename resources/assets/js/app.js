@@ -83,17 +83,18 @@ const routes = [
     { path: '/users', component: require('./components/Users.vue') },
     { path: '/profile', component: require('./components/Profile.vue') },
     { path: '/assets', component: require('./components/Assets.vue'), },
-    { path: '/developer', component: require('./components/Developer.vue') },
+    // { path: '/developer', component: require('./components/Developer.vue') },
     { path: '/iirup', component: require('./components/IIRUP.vue') },
     { path: '/accountable-officers', component: require('./components/AccountOfficer.vue') },
     { path: '/account-codes', component: require('./components/AccountCode.vue') },
-    // { path: '/inventory', component: require('./components/ICSList.vue') },
+    { path: '/inventory', component: require('./components/ICSList.vue') },
+    { path: '/pendings', component: require('./components/PendingAssets.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Dashboard.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },
     // { path: '/:id', component: require('./components/PAR.vue') },
     // { path: '/:id', component: require('./components/ICS.vue') },
-    // { path: '*', component: require('./components/404NotFound.vue') },
+    { path: '*', component: require('./components/404NotFound.vue') },
 ];
 // To remove the home e.g home/dashboard after the refresh page
 const router = new VueRouter({

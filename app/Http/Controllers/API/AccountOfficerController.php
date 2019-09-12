@@ -27,11 +27,11 @@ class AccountOfficerController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser') ){
             return AccountOfficer::latest()->paginate(5);
         }
     }
-
+    
 
     /**
      * Store a newly created resource in storage.

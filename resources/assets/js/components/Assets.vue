@@ -446,7 +446,7 @@
               <div class="row">
                 <div class="col form-group">
                   <label>Accountable Officer</label>
-                  <input
+                  <select
                     v-model="form.accountable_officer"
                     type="text"
                     id="accountable_officer"
@@ -454,7 +454,13 @@
                     name="accountable_officer"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
-                  />
+                  >
+                    <option value>Select Accountable Officer</option>
+                    <option
+                      v-for="officer in accountable_officers.data"
+                      :key="officer.id"
+                    >{{officer.name}}</option>
+                  </select>
                   <has-error :form="form" field="accountable_officer"></has-error>
                 </div>
                 <!-- firt col -->
@@ -575,6 +581,7 @@ export default {
       acctMode: false,
       editmode: false,
       accountcodes: {},
+      accountable_officers: {},
       profiles: {},
       assets: {},
       form: new Form({
@@ -800,6 +807,13 @@ export default {
           }
         });
     },
+    loadAccountableOfficers() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get("api/accountable_officer")
+          .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
     loadUsers() {
       axios.get("api/profile").then(({ data }) => (this.profiles = data));
     },
@@ -882,6 +896,7 @@ export default {
     this.loadUsers();
     this.loadAcctName();
     this.loadAssets();
+    this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadAcctName();
