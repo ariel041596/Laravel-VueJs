@@ -1,17 +1,21 @@
 <template>
   <div class>
-    <div class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
-      <div class="card-header">
+    <!-- For Admin -->
+    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
-          Inventory and Custodian Slip
-          <button class="btn btn-primary float-right" @click="newModal">
+          Inventory and Custodian Slip (ICS)
+          <button
+            class="update-create btn float-right"
+            @click="newModal"
+          >
             <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
           </button>
         </h3>
       </div>
 
       <!-- /.card-header -->
-      <div class="card-body">
+      <div class="card-body table-responsive">
         <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
           <div class="row">
             <div class="col-sm-12 col-md-6"></div>
@@ -41,90 +45,92 @@
                     <th>Date</th>
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
-                    <th width="8%">Account Name</th>
-                    <th v-if="$gate.isAdminOrAuthor()">Service</th>
+                    <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
+                    <th>Status</th>
+                    <th>Property Type</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
                 <tbody>
-                  <template v-if="!assets.data.length">
+                  <!-- <template v-if="!assets.data.length">
                     <tr>
                       <td colspan="15" class="text-center">No Properties Available</td>
                     </tr>
-                  </template>
-                  <template v-else>
-                    <tr v-for="asset in assets.data" :key="asset.id">
-                      <!-- <tr v-for="asset in assets" :key="asset.id"> -->
-                      <!-- <td>{{asset.id}}</td> -->
+                  </template>-->
+                  <!-- <template v-else> -->
+                  <tr v-for="asset in assets.data" :key="asset.id">
+                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                    <!-- <td>{{asset.id}}</td> -->
 
-                      <td>
-                        <input type="checkbox" :value="asset.id" v-model="selected" />
-                      </td>
-                      <td>{{asset.article | upText}}</td>
-                      <td>{{asset.description | upText}}</td>
-                      <td>{{asset.property_number}}</td>
-                      <td>{{asset.unit_of_measure}}</td>
-                      <td>{{asset.price | numberComma }}</td>
-                      <td>{{asset.quantity | numberComma}}</td>
-                      <td>{{asset.total_value | numberComma}}</td>
-                      <td>{{asset.date | myDate}}</td>
-                      <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
-                      <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                      <td>{{asset.service}}</td>
-                      <!-- <td>{{asset.created_at | myDate}}</td> -->
-                      <td>
-                        <a
-                          href="#"
-                          @click="editModal(asset)"
+                    <td>
+                      <input type="checkbox" :value="asset.id" v-model="selected" />
+                    </td>
+                    <td>{{asset.article | upText}}</td>
+                    <td>{{asset.description | upText}}</td>
+                    <td>{{asset.property_number}}</td>
+                    <td>{{asset.unit_of_measure}}</td>
+                    <td>{{asset.price | numberComma }}</td>
+                    <td>{{asset.quantity | numberComma}}</td>
+                    <td>{{asset.total_value | numberComma}}</td>
+                    <td>{{asset.date | myDate}}</td>
+                    <td>{{asset.accountable_officer | upText}}</td>
+                    <td>{{asset.remarks | upText}}</td>
+                    <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
+                    <td>{{asset.status | upText}}</td>
+                    <td>{{asset.property_type}}</td>
+                    <td>
+                      <a
+                        href="#"
+                        @click="editModal(asset)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Edit"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                        <i
+                          class="fas fa-print"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Edit"
-                        >
-                          <i class="fas fa-edit"></i>
-                        </a>
-                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
-                          <i
-                            class="fas fa-print"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Print PAR"
-                          ></i>
-                        </router-link>
-                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
-                          <i
-                            class="fas fa-print"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Print ICS"
-                          ></i>
-                        </router-link>
-                        <a
-                          href="#"
-                          @click="deleteAsset(asset.id)"
+                          title="Print PAR"
+                        ></i>
+                      </router-link>
+                      <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                        <i
+                          class="fas fa-print"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Disposed"
-                        >
-                          <i class="fas fa-trash red"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </template>
+                          title="Print ICS"
+                        ></i>
+                      </router-link>
+                      <a
+                        href="#"
+                        @click="deleteAsset(asset.id)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Disposed"
+                      >
+                        <i class="fas fa-trash red"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <!-- </template> -->
                 </tbody>
               </table>
-            </div>
-            <div class="card-footer">
-              <pagination :data="assets" @pagination-change-page="getResults" align="right"></pagination>
+              <div>
+                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- /.card-body -->
     </div>
+    <!-- End for Admin -->
 
     <!-- /.row -->
-    <div v-if="!$gate.isAdminOrAuthor()">
+    <div v-if="!$gate.isAdminOrUserOrAuthor()">
       <NotFound></NotFound>
     </div>
     <div
@@ -283,13 +289,14 @@
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Asset</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+              <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
           <form @submit.prevent="editmode ? updateAsset() : createAsset()">
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
+                  <label>PAR/ICS Number</label>
                   <input
                     v-model="form.number"
                     type="text"
@@ -302,8 +309,10 @@
                   <has-error :form="form" field="number"></has-error>
                 </div>
                 <div class="col form-group">
+                  <label>Article</label>
                   <input
                     v-model="form.article"
+                    @change="getProfileid"
                     type="text"
                     id="article"
                     placeholder="Enter article"
@@ -315,6 +324,7 @@
                 </div>
               </div>
               <div class="form-group">
+                <label>Description</label>
                 <textarea
                   v-model="form.description"
                   type="text"
@@ -329,6 +339,7 @@
               <div class="row">
                 <!-- first col -->
                 <div class="col form-group">
+                  <label>Property Number</label>
                   <input
                     v-model="form.property_number"
                     type="text"
@@ -342,6 +353,7 @@
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
+                  <label>Unit of Measure</label>
                   <select
                     name="unit_of_measure"
                     v-model="form.unit_of_measure"
@@ -358,9 +370,13 @@
                     <has-error :form="form" field="unit_of_measure"></has-error>
                   </select>
                 </div>
+              </div>
+              <div class="row">
                 <!-- third col Remove also the v-model-->
                 <div class="col form-group">
+                  <label>Unit Price</label>
                   <input
+                    min="0"
                     currency="P"
                     separator=","
                     :value="form.price"
@@ -377,7 +393,9 @@
                 </div>
                 <!-- fourth col  Trying to remove the v-model first  -->
                 <div class="col form-group">
+                  <label>Quantity</label>
                   <input
+                    min="1"
                     separator=","
                     :value="form.quantity"
                     @change="updateQuantity"
@@ -394,7 +412,9 @@
               <div class="row">
                 <!-- firt col -->
                 <div class="col form-group">
+                  <label>Total Value</label>
                   <input
+                    disabled
                     currency="P"
                     separator=","
                     v-model="form.total_value"
@@ -410,6 +430,7 @@
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
+                  <label>Date Acquired</label>
                   <input
                     v-model="form.date"
                     type="date"
@@ -421,9 +442,11 @@
                   />
                   <has-error :form="form" field="date"></has-error>
                 </div>
-                <!-- Third col -->
+              </div>
+              <div class="row">
                 <div class="col form-group">
-                  <input
+                  <label>Accountable Officer</label>
+                  <select
                     v-model="form.accountable_officer"
                     type="text"
                     id="accountable_officer"
@@ -431,13 +454,18 @@
                     name="accountable_officer"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
-                  />
+                  >
+                    <option value>Select Accountable Officer</option>
+                    <option
+                      v-for="officer in accountable_officers.data"
+                      :key="officer.id"
+                    >{{officer.name}}</option>
+                  </select>
                   <has-error :form="form" field="accountable_officer"></has-error>
                 </div>
-              </div>
-              <div class="row">
                 <!-- firt col -->
                 <div class="col form-group">
+                  <label>Remarks</label>
                   <input
                     v-model="form.remarks"
                     type="text"
@@ -449,32 +477,40 @@
                   />
                   <has-error :form="form" field="remarks"></has-error>
                 </div>
-                <!-- Second col -->
-                <div class="col form-group">
+                <div class="col form-group" v-show="false">
                   <input
+                    v-model="form.createdBy"
                     type="text"
-                    name="account_name"
-                    v-model="form.account_name"
-                    id="account_name"
+                    id="createdBy"
+                    placeholder="createdBy"
+                    name="createdBy"
                     class="form-control"
-                    :class="{'is-invalid': form.errors.has('account_name')}"
-                    list="accountcodes"
                   />
-                  <has-error :form="form" field="account_name"></has-error>
-                  <datalist id="accountcodes">
-                    <option>{{accountcodes.account_name}}</option>
-                  </datalist>
                 </div>
-                <div
-                  class="py-2 px-2"
-                  style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
-                >
-                  <a href="#" @click="addAccModal">
-                    <i class="fas fa-plus" style="color:#fff;"></i>
-                  </a>
+                <div class="col form-group" v-show="false">
+                  <input
+                    value="pending"
+                    type="text"
+                    id="status"
+                    placeholder="Status"
+                    name="status"
+                    class="form-control"
+                  />
                 </div>
-                <!-- Third col -->
-                <div class="col form-group">
+                <div class="col form-group" v-show="false">
+                  <input
+                    value="INVENTORY"
+                    type="text"
+                    id="property_type"
+                    placeholder="property_type"
+                    name="property_type"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="col form-group">
+                  <label>Service</label>
                   <input
                     v-model="form.service"
                     type="text"
@@ -485,13 +521,60 @@
                     :class="{ 'is-invalid': form.errors.has('service') }"
                   />
                   <has-error :form="form" field="service"></has-error>
+                </div>-->
+                <div class="col form-group" v-if="editmode">
+                  <label>Status</label>
+                  <select
+                    name="status"
+                    v-model="form.status"
+                    id="status"
+                    class="form-control"
+                    :class="{'is-invalid': form.errors.has('status')}"
+                  >
+                    <option value>Select Status</option>
+                    <!-- <option value="approved">Approved</!-->
+                    -->
+                    <option value="fordisposal">For Disposal</option>
+                    <option value="disposed">Disposed</option>
+                    <has-error :form="form" field="status"></has-error>
+                  </select>
+                </div>
+                <div class="col form-group">
+                  <label>Account Name</label>
+                  <select
+                    class="form-control"
+                    id="account_name"
+                    name="account_name"
+                    placeholder="Please select Account"
+                    v-model="form.account_name"
+                    :class="{'is-invalid': form.errors.has('account_name')}"
+                  >
+                    <option value>Select Account Name</option>
+                    <option
+                      v-for="account in accountcodes.data"
+                      :key="account.id"
+                    >{{account.account_name}}</option>
+                    <has-error :form="form" field="account_name"></has-error>
+                  </select>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button v-show="editmode" type="submit" class="btn btn-primary">Update Asset</button>
-              <button v-show="!editmode" type="submit" class="btn btn-primary">
+              <div
+                class="py-2 px-2"
+                style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
+              >
+                <a href="#" @click="addAccModal">
+                  <i class="fas fa-plus" style="color:#fff;"></i>
+                </a>
+              </div>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>
+              <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update Asset
+              </button>
+              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
                 <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
               </button>
             </div>
@@ -516,21 +599,401 @@
 <script>
 // import validate from 'validate.js'
 export default {
-  name: "ics-list",
+  name: "list",
   data() {
     return {
-      invetorys: {}
+      errors: null,
+      selected: [],
+      selectAll: false,
+      acctMode: false,
+      editmode: false,
+      accountcodes: {},
+      accountable_officers: {},
+      profiles: {},
+      assets: {},
+      form: new Form({
+        id: "",
+        number: "",
+        article: "",
+        description: "",
+        property_number: "",
+        unit_of_measure: "",
+        price: "",
+        quantity: "",
+        total_value: "",
+        date: "",
+        accountable_officer: "",
+        remarks: "",
+        account_name: "",
+        // service: "",
+        createdBy: "",
+        status: "pending",
+        property_type: "INVENTORY"
+      })
     };
   },
-  created() {
-    if (this.$gate.isAdminOrUserOrAuthor()) {
-      axios.get("api/inventory").then(({ data }) => (this.invetorys = data)); //Remove the previous (this.users =data.data) into data only
+  // Computed Properties
+  computed: {
+    // grandTotal() {
+    //   // return this.assets.reduce((sum, val) => sum + val.total_value, 0);
+    // }
+    // grandTotal: function() {
+    //   let total = [];
+    //   Object.entries(this.assets).forEach(([key, val]) => {
+    //     total.push(val.total_value);
+    //   });
+    //   return total.reduce(function(total, num) {
+    //     return total + num;
+    //   }, 0);
+    // }
+  },
+
+  // Testing for watch method to add commas while typing
+  watch: {
+    total_value: function(newValue) {
+      const result = newValue
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      Vue.nextTick(() => (this.price = result));
     }
+  },
+  // Testing auto computation
+  methods: {
+    // needd to import the validate from validate.js
+    add() {
+      this.errors = null;
+      const constraints = this.getConstraints();
+      const errors = validate(this.$data.assets, constraints);
+      if (errors) {
+        this.errors = errors;
+        return;
+      }
+      // else send to the users the data
+    },
+    getConstraints() {
+      return {
+        description: {
+          presense: true,
+          length: {
+            minimum: 3,
+            message: "Must gonna be 3 characters in minimum"
+          }
+        },
+        price: {
+          presense: true,
+          numericallity: true,
+          length: {
+            minimum: 1,
+            message: "Must gonna be 3 characters in minimum"
+          }
+        }
+        // Same as from the top
+      };
+    },
+    // datas() {
+    //   return this.$store.getters.assets;
+    // },
+    // grandTotal: function() {
+    //   console.log(this.assets.data.total_value);
+    //   return this.assets.data.total_value.reduce((total, asset) => {
+    //     return total + this.assets.data.total_value;
+    //   }, 0);
+    // },
+    // grandTotal: function() {
+    //   let total = [];
+    //   Object.entries(this.assets).forEach(([key, val]) => {
+    //     total.push(val.total_value);
+    //   });
+    //   return total.reduce(function(total, num) {
+    //     return total + num;
+    //   }, 0);
+    // },
+    printme() {
+      window.print();
+    },
+    // print(elem) {
+    //   var domClone = elem.cloneNode(true);
+
+    //   var $printSection = document.getElementById("printSection");
+
+    //   if (!$printSection) {
+    //     var $printSection = document.createElement("div");
+    //     $printSection.id = "printSection";
+    //     document.body.appendChild($printSection);
+    //   }
+
+    //   $printSection.innerHTML = "";
+    //   $printSection.appendChild(domClone);
+    //   window.print();
+    // },
+    print() {
+      const modal = document.getElementById("printing");
+      const cloned = modal.cloneNode(true);
+      let section = document.getElementById("print");
+      if (!section) {
+        section = document.createElement("div");
+        section.id = "print";
+        document.body.appendChild(section);
+      }
+      section.innerHTML = "";
+      section.appendChild(cloned);
+      window.print();
+    },
+    select() {
+      this.selected = [];
+      if (!this.selectAll) {
+        for (let asset in this.assets.data) {
+          this.selected.push(this.assets.data[asset].id);
+        }
+      }
+    },
+    getProfileid(event) {
+      this.form.article = event.target.value;
+      this.form.createdBy = this.profiles.id;
+    },
+
+    updateQuantity(event) {
+      this.form.quantity = event.target.value;
+      this.form.total_value = this.form.quantity * this.form.price;
+    },
+    updatePrice(event) {
+      this.form.price = event.target.value;
+      this.form.total_value = this.form.quantity * this.form.price;
+    },
+    getResults(page = 1) {
+      axios.get("api/asset?page=" + page).then(response => {
+        this.assets = response.data;
+      });
+    },
+    updateAsset() {
+      this.$Progress.start();
+      this.form
+        .put("api/asset/" + this.form.id)
+        .then(() => {
+          $("#addNew").modal("hide");
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
+          this.$Progress.finish();
+          Fire.$emit("AfterCreate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+    printingModal(asset) {
+      $("#printing").modal("show");
+    },
+    // Show modal and hide
+    editModal(asset) {
+      this.editmode = true;
+      this.form.reset();
+      this.form.clear();
+      $("#addNew").modal("show");
+      this.form.fill(asset);
+    },
+    // Show modal for add Account Name
+    addAccModal() {
+      this.acctMode = true;
+      $("#addNewAcctName").modal("show");
+      $("#addNew").modal("hide");
+    },
+    // Show modal and hide
+    newModal() {
+      this.editmode = false;
+      this.form.reset();
+      this.form.clear();
+      $("#addNew").modal("show");
+    },
+    //Delete User method
+    deleteAsset(id) {
+      swal
+        .fire({
+          title: "Deleted successfully",
+          text: "You wont be able to revert this",
+          type: "warning",
+          showCancelButton: "true",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#33",
+          confirmButtonText: "Delete"
+        })
+        .then(result => {
+          // send request to the server
+          if (result.value) {
+            this.form
+              .delete("api/asset/" + id)
+              .then(() => {
+                this.$Progress.start();
+                swal.fire("Deleted", "Your file has been deleted", "success");
+                Fire.$emit("AfterCreate");
+                this.$Progress.finish();
+              })
+              .catch(() => {
+                this.$Progress.fail();
+              });
+          }
+        });
+    },
+    loadAccountableOfficers() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get("api/accountable_officer")
+          .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
+    loadUsers() {
+      axios.get("api/profile").then(({ data }) => (this.profiles = data));
+    },
+    // LoadUser to display in the tbody
+    loadAssets() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios.get("api/inventory").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
+    // LoadAccountname to display in the options datalist
+    loadAcctName() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get("api/accountcode")
+          .then(({ data }) => (this.accountcodes = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
+    createAsset() {
+      // Progressbar before create user
+      this.$Progress.start();
+      this.form
+        .post("api/asset")
+        .then(() => {
+          // Custom event to fire
+
+          Fire.$emit("AfterCreate");
+          // Sweet Alert message from sweetalert2
+          toast.fire({
+            type: "success",
+            title: "Created successfully"
+          });
+          this.$Progress.finish();
+          // Hide modal
+          $("#addNew").modal("hide");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+          swal("Failed", "There was something wrong", "warning");
+        });
+    },
+    createAcct() {
+      this.$Progress.start();
+      this.form
+        .post("api/accountcode")
+        .then(() => {
+          // Custom event
+          Fire.$emit("AfterCreateAcct");
+          toast.fire({
+            type: "success",
+            title: "Created successfully"
+          });
+          this.$Progress.finish();
+          $("#addNewAcctName").modal("hide");
+          $("#addNew").modal("show");
+        })
+        .catch(() => {});
+    },
+    createAcctOfficer() {
+      // this.$Progress.start();
+      // this.form
+      //   .post("api/accountcode")
+      //   .then(() => {
+      //     // Custom event
+      //     // Fire.$emit("AfterCreateAcct");
+      //     toast.fire({
+      //       type: "success",
+      //       title: "Created successfully"
+      //     });
+      //     this.$Progress.finish();
+      //     $("#addNewAcctName").modal("hide");
+      //     $("#addNew").modal("show");
+      //   })
+      //   .catch(() => {});
+    }
+  },
+
+  created() {
+    // console.log(this.$_.isEmpty(null));
+    // Progressbar before
+    this.loadUsers();
+    this.loadAcctName();
+    this.loadAssets();
+    this.loadAccountableOfficers();
+    Fire.$on("AfterCreate", () => {
+      this.loadAssets();
+      this.loadAcctName();
+    });
+    // SetInterval Function
+    // setInterval(() => this.loadUsers(), 3000);
+  },
+  mounted() {
+    axios.get("api/inventory").then(response => {
+      this.assets = response.data;
+    });
   }
 };
 </script>
 
-<style>
+<style scoped>
+.update-create {
+  background: rgb(22, 70, 143);
+  color: white;
+  opacity: 0.9;
+}
+.update-create:hover {
+  opacity: 1;
+}
+.modal-close-button {
+  color: white;
+}
+.modal-header {
+  background: rgb(22, 70, 143);
+  color: aliceblue;
+}
+#description {
+  height: 100px;
+}
+@media screen {
+  #print {
+    display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print,
+  #print * {
+    visibility: visible;
+  }
+  #print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.widget-user-header {
+  background-position: center center;
+  background-size: contain;
+  height: 130px !important;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+.widget-user {
+  padding: 0;
+}
+
+.rpcppe {
+  background-color: rgb(242, 242, 242);
+}
 </style>
 
 

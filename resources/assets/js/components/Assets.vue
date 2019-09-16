@@ -46,8 +46,8 @@
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
-                    <th>Service</th>
                     <th>Status</th>
+                    <th>Property Type</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -76,8 +76,8 @@
                     <td>{{asset.accountable_officer | upText}}</td>
                     <td>{{asset.remarks | upText}}</td>
                     <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                    <td>{{asset.service}}</td>
                     <td>{{asset.status | upText}}</td>
+                    <td>{{asset.property_type}}</td>
                     <td>
                       <a
                         href="#"
@@ -465,7 +465,7 @@
                 </div>
                 <!-- firt col -->
                 <div class="col form-group">
-                  <label>Accountable Officer</label>
+                  <label>Remarks</label>
                   <input
                     v-model="form.remarks"
                     type="text"
@@ -497,9 +497,19 @@
                     class="form-control"
                   />
                 </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    value="PAR"
+                    type="text"
+                    id="property_type"
+                    placeholder="property_type"
+                    name="property_type"
+                    class="form-control"
+                  />
+                </div>
               </div>
               <div class="row">
-                <div class="col form-group">
+                <!-- <div class="col form-group">
                   <label>Service</label>
                   <input
                     v-model="form.service"
@@ -511,6 +521,23 @@
                     :class="{ 'is-invalid': form.errors.has('service') }"
                   />
                   <has-error :form="form" field="service"></has-error>
+                </div>-->
+                <div class="col form-group" v-if="editmode">
+                  <label>Status</label>
+                  <select
+                    name="status"
+                    v-model="form.status"
+                    id="status"
+                    class="form-control"
+                    :class="{'is-invalid': form.errors.has('status')}"
+                  >
+                    <option value>Select Status</option>
+                    <!-- <option value="approved">Approved</!-->
+                    -->
+                    <option value="fordisposal">For Disposal</option>
+                    <option value="disposed">Disposed</option>
+                    <has-error :form="form" field="status"></has-error>
+                  </select>
                 </div>
                 <div class="col form-group">
                   <label>Account Name</label>
@@ -598,9 +625,10 @@ export default {
         accountable_officer: "",
         remarks: "",
         account_name: "",
-        service: "",
+        // service: "",
         createdBy: "",
-        status: "pending"
+        status: "pending",
+        property_type: "PAR"
       })
     };
   },

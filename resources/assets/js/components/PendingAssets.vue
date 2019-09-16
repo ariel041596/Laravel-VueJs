@@ -4,13 +4,10 @@
     <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
-          Report on Physical Count of Property Plant and Equipment (RPCPPE)
-          <button
-            class="update-create btn float-right"
-            @click="newModal"
-          >
+          Pendings
+          <!-- <button class="update-create btn float-right" @click="newModal">
             <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
-          </button>
+          </button>-->
         </h3>
       </div>
 
@@ -46,8 +43,9 @@
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
-                    <th>Service</th>
+                    <!-- <th>Service</th> -->
                     <th>Status</th>
+                    <th>Property Type</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -58,7 +56,7 @@
                     </tr>
                   </template>-->
                   <!-- <template v-else> -->
-                  <tr v-for="asset in assets.data" :key="asset.id">
+                  <tr v-for="asset in pendings.data" :key="asset.id">
                     <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                     <!-- <td>{{asset.id}}</td> -->
 
@@ -76,8 +74,9 @@
                     <td>{{asset.accountable_officer | upText}}</td>
                     <td>{{asset.remarks | upText}}</td>
                     <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                    <td>{{asset.service}}</td>
+                    <!-- <td>{{asset.service}}</td> -->
                     <td>{{asset.status | upText}}</td>
+                    <td>{{asset.property_type | upText}}</td>
                     <td>
                       <a
                         href="#"
@@ -465,7 +464,7 @@
                 </div>
                 <!-- firt col -->
                 <div class="col form-group">
-                  <label>Accountable Officer</label>
+                  <label>Remarks</label>
                   <input
                     v-model="form.remarks"
                     type="text"
@@ -487,7 +486,7 @@
                     class="form-control"
                   />
                 </div>
-                <div class="col form-group" v-show="false">
+                <!-- <div class="col form-group" v-show="false">
                   <input
                     value="pending"
                     type="text"
@@ -496,22 +495,9 @@
                     name="status"
                     class="form-control"
                   />
-                </div>
+                </div>-->
               </div>
               <div class="row">
-                <div class="col form-group">
-                  <label>Service</label>
-                  <input
-                    v-model="form.service"
-                    type="text"
-                    id="service"
-                    placeholder="Service"
-                    name="service"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('service') }"
-                  />
-                  <has-error :form="form" field="service"></has-error>
-                </div>
                 <div class="col form-group">
                   <label>Account Name</label>
                   <select
@@ -528,6 +514,22 @@
                       :key="account.id"
                     >{{account.account_name}}</option>
                     <has-error :form="form" field="account_name"></has-error>
+                  </select>
+                </div>
+                <div class="col form-group" v-if="editmode">
+                  <label>Status</label>
+                  <select
+                    name="status"
+                    v-model="form.status"
+                    id="status"
+                    class="form-control"
+                    :class="{'is-invalid': form.errors.has('status')}"
+                  >
+                    <option value>Select Status</option>
+                    <option value="approved">Approved</option>
+                    <option value="fordisposal.">For Disposal</option>
+                    <option value="disposed">Disposed</option>
+                    <has-error :form="form" field="status"></has-error>
                   </select>
                 </div>
               </div>
@@ -601,7 +603,8 @@ export default {
         account_name: "",
         service: "",
         createdBy: "",
-        status: "pending"
+        status: "",
+        property_type: ""
       })
     };
   },
@@ -905,6 +908,7 @@ export default {
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadAcctName();
+      this.loadPendingAssets();
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);

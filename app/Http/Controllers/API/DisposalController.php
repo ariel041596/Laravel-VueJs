@@ -4,7 +4,12 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Asset;
+use App\User;
 use App\Disposal;
+use \Auth;
+
 
 class DisposalController extends Controller
 {
@@ -27,8 +32,14 @@ class DisposalController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
-            return Disposal::latest()->paginate(5);
+        // $pending = Asset::asset()->status->pending;
+        if(\Gate::allows('isAdmin')){
+            // return Asset::latest()->paginate(10);
+            return Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate();
+        }else{
+            $createdBy = Auth::user()->id;
+            return Asset::where('createdBy', $createdBy)
+            ->where('status','LIKE',"%fordisposal%")->latest()->paginate(); //get or paginate?
         }
     }
 
@@ -39,6 +50,31 @@ class DisposalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+    {
+        
+    }
+
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        
+    }
+
+    
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'number' => 'required|string|max:191', //1
@@ -53,57 +89,18 @@ class DisposalController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'string|max:191', //12
+            // 'service' => 'required|string|max:191', //12 
+            'property_type' => 'required|string|max:191', //12 
+            'createdBy' => 'max:191', //12 
+            'status' => 'max:191', //13
+            
+
             
         ]);
-        // Insert the data into databse
-        return Disposal::create([
-            'number' => $request['number'], //1
-            'article' => $request['article'], //1
-            'description' => $request['description'], //2
-            'property_number' => $request['property_number'], //3
-            'unit_of_measure' => $request['unit_of_measure'], //4
-            'price' => $request['price'], //5
-            'quantity' => $request['quantity'], //6
-            'total_value' => $request['total_value'], //7
-            'date' => $request['date'], //8 
-            'accountable_officer' => $request['accountable_officer'], //9
-            'remarks' => $request['remarks'], //10
-            'account_name' => $request['account_name'], //11
-            'service' => $request['service'], //12
-        ]);
-    }
-
-      /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // return auth('api')->asset();
-        $disposal = Disposal::whereId($id)->first();
-        return response()->json([
-            "disposal" => $disposal   
-        ], 200);
-    }
-
-    
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
         //
-        $disposal = Disposal::findOrFail($id);
-        $disposal->update($request->all());
-        return ['message' => 'Updated the disposal info'];
+        $asset = Asset::findOrFail($id);
+        $asset->update($request->all());
+        return ['message' => 'Updated the assets info'];
     }
 
     /**

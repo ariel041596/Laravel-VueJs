@@ -33,11 +33,16 @@ class AssetController extends Controller
         // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
             // $createdBy = User::where('id', Auth::user()->id);
             if(\Gate::allows('isAdmin')){
-                return Asset::latest()->paginate(10);
+                // return Asset::latest()->paginate(10);
+                return Asset::where('status','LIKE',"%approved%")
+                ->where('property_type','LIKE',"%PAR%")->latest()->paginate();
+                
             }
             else{
             $createdBy = Auth::user()->id;
-            return Asset::where('createdBy', $createdBy)->latest()->paginate(); //get or paginate?
+            return Asset::where('createdBy', $createdBy)
+            ->where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(); //get or paginate?
             // return response()->json([
             //     "asset" => $asset
             // ],200);
@@ -116,7 +121,8 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'required|string|max:191', //12 
+            // 'service' => 'required|string|max:191', //12 
+            'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
             
@@ -138,7 +144,8 @@ class AssetController extends Controller
             'accountable_officer' => $request['accountable_officer'], //9
             'remarks' => $request['remarks'], //10
             'account_name' => $request['account_name'], //11
-            'service' => $request['service'], //12
+            // 'service' => $request['service'], //12
+            'property_type' => $request['property_type'], //12
             'createdBy' => $request['createdBy'], //12
             'status' => $request['status'], //13
         ]);
@@ -211,7 +218,8 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'required|string|max:191', //12 
+            // 'service' => 'required|string|max:191', //12 
+            'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
             

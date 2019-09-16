@@ -85,10 +85,12 @@ const routes = [
     { path: '/assets', component: require('./components/Assets.vue'), },
     // { path: '/developer', component: require('./components/Developer.vue') },
     { path: '/iirup', component: require('./components/IIRUP.vue') },
+    { path: '/disposed', component: require('./components/AssetDisposed.vue') },
     { path: '/accountable-officers', component: require('./components/AccountOfficer.vue') },
     { path: '/account-codes', component: require('./components/AccountCode.vue') },
     { path: '/inventory', component: require('./components/ICSList.vue') },
     { path: '/pendings', component: require('./components/PendingAssets.vue') },
+    { path: '/users-type', component: require('./components/UsersType.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Dashboard.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },
@@ -116,6 +118,7 @@ Vue.filter('numberComma', function (x) {
 // Moment function | first install npm install moment --save
 Vue.filter('myDate', function (created) {
     return moment(created).format('ll');
+    // return moment(created).format('MM-DD-YYYY');
 });
 
 // Vue Progressbar

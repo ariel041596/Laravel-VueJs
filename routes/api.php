@@ -28,6 +28,14 @@ Route::middleware('auth:api')->get('/account_code', function (Request $request) 
 // router for Usercontroller
 Route::apiResources(['account_code' => 'API\AccountCodeController']);
 // ===============================================End For Account Codes==========================
+// ===============================================For Users Type==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/users_type', function (Request $request) {
+    return $request->users_type();
+});
+// router for Usercontroller
+Route::apiResources(['users_type' => 'API\UsersTypeController']);
+// ===============================================End For Users Type==========================
 
 
 // ===============================================For Assets==========================
@@ -48,7 +56,15 @@ Route::middleware('auth:api')->get('/pending', function (Request $request) {
 });
 // router for Asset Controller
 Route::apiResources(['pending' => 'API\AssetPendingController']);
-// ===============================================End For Assets Pending==========================
+
+// ===============================================For Assets Inventory/ICS==========================
+// Middleware to get Asset
+Route::middleware('auth:api')->get('/inventory', function (Request $request) {
+    return $request->inventory();
+});
+// router for Asset Controller
+Route::apiResources(['inventory' => 'API\AssetInventoryController']);
+// ===============================================End For Assets Inventory ICS==========================
 // ===============================================For IRRUP==========================
 // Middleware to get Asset
 Route::middleware('auth:api')->get('/disposal', function (Request $request) {
@@ -58,16 +74,6 @@ Route::middleware('auth:api')->get('/disposal', function (Request $request) {
 Route::apiResources(['disposal' => 'API\DisposalController']);
 // ===============================================End For IRRUP==========================
 
-
-
-// ===============================================For ICs==========================
-// Middleware to get user
-Route::middleware('auth:api')->get('/inventory', function (Request $request) {
-    return $request->inventory();
-});
-// router for Usercontroller
-Route::apiResources(['inventory' => 'API\InventoryController']);
-// ===============================================End For ICS==========================
 
 
 // ===============================================For Account Code==========================

@@ -30,7 +30,9 @@ class CreateDisposalsTable extends Migration
             $table->string('service'); //14
             $table->string('createdBy'); //15
             $table->string('status'); //16
-            $table->timestamps(); //17
+            $table->string('property_type'); //17
+            $table->string('received_from'); //18
+            $table->timestamps(); //19
         });
     }
 

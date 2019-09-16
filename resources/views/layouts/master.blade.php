@@ -18,7 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper"  id="app">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+  <nav id="navigation-header" class="main-header navbar navbar-expand navbar-light border-bottom bg-light">
 
   <ul class="navbar-nav">
       <li class="nav-item">
@@ -44,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/dashboard" class="brand-link">
-      <img src="./img/project.png" alt="Asset Management Logo" class="brand-image img-circle elevation-3"
+      <img src="./img/LogoGap.jpg" alt="Asset Management Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Property Management</span>
     </a>
@@ -105,17 +105,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
 
             @can('isAdminOrAuthor')
+            <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+            <i class="fas fa-clipboard"></i>&nbsp;
+              <p>
+               ICS
+              </p>
+            </router-link>
             <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-trash-restore-alt"></i>&nbsp;
               <p>
                IIRUP
                 <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </router-link>
-            <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fas fa-clipboard"></i>&nbsp;
-              <p>
-               ICS
               </p>
             </router-link>
             @endcan
@@ -137,6 +137,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <router-link to="/users" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
                  <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Users</p>
+                </router-link>
+                <router-link to="/users-type" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                 <i class="fas fa-users-cog"></i>&nbsp;
+                  <p>Users Type</p>
                 </router-link>
               </li>
               <li class="nav-item">

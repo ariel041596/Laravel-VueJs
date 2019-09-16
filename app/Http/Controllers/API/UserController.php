@@ -49,13 +49,13 @@ class UserController extends Controller
     {
             // Validate the inputs in form
         $this->validate($request, [
-            'name' => 'required|string|max:191',
+            'name' => 'required|string|max:191|unique:users,name,',
             'email' => 'required|string|email|max:191|unique:users,email,',
             // 'email' => 'required|string|email|max:191|unique:users,email,'.$user->id.',user_id',
             // 'email' => 'unique:users,email_address,'.$user->id.',user_id'
             // 'email' => 'unique:users,email_address,'.$user->id
             'password' => 'sometimes|required|string|min:6',
-            'type' => 'required|string|max:191',
+            'type' => 'required|string|max:191|unique:users,type',
         ]);
         // Insert the data into databse
         return User::create([
@@ -152,6 +152,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            'type' => 'required|string|email|max:191|unique:users,type,'.$user->id,
             'password' => 'sometimes|required|string|min:6',
         ]);
 

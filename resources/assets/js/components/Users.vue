@@ -154,9 +154,7 @@
                   :class="{'is-invalid': form.errors.has('type')}"
                 >
                   <option value>Select User Role</option>
-                  <option value="admin">Admin</option>
-                  <option value="user">User</option>
-                  <option value="author">Author</option>
+                  <option v-for="type in users_types.data" :key="type.id">{{type.users_type}}</option>
                   <has-error :form="form" field="bio"></has-error>
                 </select>
               </div>
@@ -201,6 +199,7 @@ export default {
       selected: [],
       selectAll: false,
       editmode: false,
+      users_types: {},
       users: {},
       form: new Form({
         id: "",
@@ -294,6 +293,13 @@ export default {
         axios.get("api/user").then(({ data }) => (this.users = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
+    loadUsersType() {
+      if (this.$gate.isAdminOrAuthor()) {
+        axios
+          .get("api/users_type")
+          .then(({ data }) => (this.users_types = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
 
     createUser() {
       this.$Progress.start();
@@ -319,6 +325,7 @@ export default {
 
   created() {
     // Custom event for search
+    this.loadUsersType();
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios
@@ -330,6 +337,7 @@ export default {
     });
     this.loadUsers();
     Fire.$on("AfterCreate", () => {
+      this.loadUsersType();
       this.loadUsers();
     });
   }

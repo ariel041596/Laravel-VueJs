@@ -8,6 +8,22 @@ class Inventory extends Model
 {
     //  fillable in a form
     protected $fillable = [
-        'number','article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','account_name','service','createdBy','status'
+        'number', //1
+        'article', //2
+        'description', //3 
+        'property_number', //4
+        'unit_of_measure', //5
+        'price', //6
+        'quantity', //7
+        'total_value', //8
+        'date', //9
+        'accountable_officer', //10
+        'remarks', //11
+        'account_name', //12
+        // 'service', //13
+        'createdBy', //14
+        'status', //15
+        'property_type',//16
+        'received_from', //17
     ];
 }

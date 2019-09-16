@@ -53,7 +53,7 @@ class InventoryController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            'service' => 'string|max:191', //12
+            // 'service' => 'string|max:191', //12
             
         ]);
         // Insert the data into databse
@@ -70,7 +70,7 @@ class InventoryController extends Controller
             'accountable_officer' => $request['accountable_officer'], //9
             'remarks' => $request['remarks'], //10
             'account_name' => $request['account_name'], //11
-            'service' => $request['service'], //12
+            // 'service' => $request['service'], //12
         ]);
     }
 

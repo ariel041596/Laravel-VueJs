@@ -5,15 +5,14 @@
         <!-- Widget: user widget style 1 widget-user -->
         <div class="card card-widget widget-user">
           <!-- Add the bg color to the header using any of the bg-* classes -->
-          <div
-            class="widget-user-header text-white"
-            style="background-image:url('/img/wallpaper.jpg')"
-          >
-            <h3 class="widget-user-username">{{this.form.name}}</h3>
-            <h5 class="widget-user-desc">{{this.form.type}}</h5>
-          </div>
+          <!--style="background-image:url('/img/wallpaper.jpg')" -->
+          <div id="profile-background" class="widget-user-header text-white"></div>
           <div class="widget-user-image">
-            <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar" />
+            <img id="img-circle" class="rounded-circle" :src="getProfilePhoto()" alt="User Avatar" />
+            <h3 class="mx-auto d-block widget-user-username">{{this.form.name}}</h3>
+            <h5 class="mx-auto d-block widget-user-desc">
+              <span class="badge badge-secondary">{{this.form.type}}</span>
+            </h5>
           </div>
           <div class="card-footer">
             <div class="row">
@@ -286,13 +285,25 @@ export default {
 .update-create:hover {
   opacity: 1;
 }
-.widget-user-header {
-  background-position: center center;
-  background-size: cover;
+/* .widget-user-header {
+  /* background-position: center center; */
+/* background-size: cover;
   height: 350px !important;
-}
+/* } */
 .widget-user .card-footer {
   padding: 0;
+}
+.widget-user-username,
+.widget-user-desc {
+  text-align: center;
+  color: aliceblue;
+}
+#img-circle {
+  size: 100px;
+}
+#profile-background {
+  height: 300px !important;
+  background: linear-gradient(110deg, #16468f 60%, #ce1126 60%);
 }
 </style>
 
