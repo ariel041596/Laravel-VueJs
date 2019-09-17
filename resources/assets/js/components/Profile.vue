@@ -285,11 +285,6 @@ export default {
 .update-create:hover {
   opacity: 1;
 }
-/* .widget-user-header {
-  /* background-position: center center; */
-/* background-size: cover;
-  height: 350px !important;
-/* } */
 .widget-user .card-footer {
   padding: 0;
 }

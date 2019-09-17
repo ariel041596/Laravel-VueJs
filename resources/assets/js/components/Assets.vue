@@ -5,6 +5,7 @@
       <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
           Report on Physical Count of Property Plant and Equipment (RPCPPE)
+          {{selected}}
           <button
             class="update-create btn float-right"
             @click="newModal"
@@ -525,7 +526,9 @@
                 <div class="col form-group" v-if="editmode">
                   <label>Status</label>
                   <select
+                    type="text"
                     name="status"
+                    placeholder="Status"
                     v-model="form.status"
                     id="status"
                     class="form-control"
@@ -533,11 +536,10 @@
                   >
                     <option value>Select Status</option>
                     <!-- <option value="approved">Approved</!-->
-                    -->
                     <option value="fordisposal">For Disposal</option>
                     <option value="disposed">Disposed</option>
-                    <has-error :form="form" field="status"></has-error>
                   </select>
+                  <has-error :form="form" field="status"></has-error>
                 </div>
                 <div class="col form-group">
                   <label>Account Name</label>
@@ -604,6 +606,7 @@ export default {
     return {
       errors: null,
       selected: [],
+      selected_officer: "",
       selectAll: false,
       acctMode: false,
       editmode: false,
@@ -628,7 +631,8 @@ export default {
         // service: "",
         createdBy: "",
         status: "pending",
-        property_type: "PAR"
+        property_type: "PAR",
+        designation: ""
       })
     };
   },
@@ -745,6 +749,13 @@ export default {
         for (let asset in this.assets.data) {
           this.selected.push(this.assets.data[asset].id);
         }
+      }
+    },
+    selectedOfficer() {
+      for (let officer in this.accountable_officers.data) {
+        this.selected_officer = this.accountable_officers.data[
+          officer
+        ].designation;
       }
     },
     getProfileid(event) {
