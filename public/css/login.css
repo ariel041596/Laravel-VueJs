@@ -1,0 +1,22 @@
+.navbar-brand{
+    text-align: center;
+}
+
+body{
+    background: linear-gradient(-60deg,#C70E1A , #FFFFFF 20%, #03266A );
+}
+
+.container{
+}
+
+#loginbtn{
+    background: rgb(22, 70, 143);
+    color: white;
+    opacity: 0.9;
+}
+#loginbtn:hover {
+    opacity: 1;
+}
+#loginlogo{
+    width: 60%;
+}

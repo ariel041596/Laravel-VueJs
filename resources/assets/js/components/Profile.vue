@@ -9,8 +9,8 @@
           <div id="profile-background" class="widget-user-header text-white"></div>
           <div class="widget-user-image">
             <img id="img-circle" class="rounded-circle" :src="getProfilePhoto()" alt="User Avatar" />
-            <h3 class="mx-auto d-block widget-user-username">{{this.form.name}}</h3>
-            <h5 class="mx-auto d-block widget-user-desc">
+            <h3 class="widget-user-username">{{this.form.name}}</h3>
+            <h5 class="widget-user-desc">
               <span class="badge badge-secondary">{{this.form.type}}</span>
             </h5>
           </div>
@@ -292,13 +292,16 @@ export default {
 .widget-user-desc {
   text-align: center;
   color: aliceblue;
+  margin-left: auto;
 }
 #img-circle {
   size: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #profile-background {
   height: 300px !important;
-  background: linear-gradient(110deg, #16468f 60%, #ce1126 60%);
+  background: linear-gradient(185deg, #16468f 60%, #ce1126 60%);
 }
 </style>
 
