@@ -15,7 +15,7 @@
 </html>
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-7 col-sm-12 ">
+        <div class="col-lg-7 col-md-7 col-sm-12 ">
             <div class="card">
                 <!-- <div class="card-header">{{ __('Login') }}</div> -->
                 <div class="row justify-content-center">
@@ -26,9 +26,9 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-md-3 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-lg-3 col-sm-12 col-md-12 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-sm-4 col-md-8">
+                            <div class="col-lg-8 col-sm-12 col-md-12">
                                 <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
@@ -40,9 +40,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-sm-4 col-md-3 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-lg-3 col-sm-12 col-md-12 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="col-sm-4 col-md-8">
+                            <div class="col-lg-8 col-sm-12 col-md-12">
                                 <input id="password" placeholder="Password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-sm-4 col-md-8 offset-md-4">
+                            <div class="col-sm-4 col-md-8 offset-md-3">
                                 <div class="form-check">
                                     <input class="form-check-input " type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -65,8 +65,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-7 offset-md-4">
+                        <div class="form-group row ">
+                            <div class="col-lg-6 col-sm-12 col-md-12 offset-md-3">
                                 <button id="loginbtn" type="submit" class="btn col-md-6">
                                     {{ __('Login') }}
                                 </button>
