@@ -75,6 +75,7 @@
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-12">
                       <input
+                        readonly
                         type="text"
                         v-model="form.name"
                         class="form-control"

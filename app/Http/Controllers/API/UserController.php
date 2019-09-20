@@ -55,13 +55,16 @@ class UserController extends Controller
             // 'email' => 'unique:users,email_address,'.$user->id.',user_id'
             // 'email' => 'unique:users,email_address,'.$user->id
             'password' => 'sometimes|required|string|min:6',
-            'type' => 'required|string|max:191|unique:users,type',
+            'type' => 'required|string|max:191',
+            // 'class' => 'required|string|max:191',
+            // 'type' => 'required|string|max:191|unique:users,type', // if you want a unique user type since we
         ]);
         // Insert the data into databse
         return User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'type' => $request['type'],
+            // 'class' => $request['class'],
             'bio' => $request['bio'],
             'photo' => $request['photo'],
             'password' => Hash::make($request['password']),

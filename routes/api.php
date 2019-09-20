@@ -58,6 +58,14 @@ Route::middleware('auth:api')->get('/pending', function (Request $request) {
 Route::apiResources(['pending' => 'API\AssetPendingController']);
 
 // ===============================================For Assets Inventory/ICS==========================
+// Middleware to get Asset of an employee
+Route::middleware('auth:api')->get('/accountabilities', function (Request $request) {
+    return $request->accountabilities();
+});
+// router for Asset Controller of an employee
+Route::apiResources(['accountabilities' => 'API\AccountabilityController']);
+
+// ===============================================For Assets of employee==========================
 // Middleware to get Asset
 Route::middleware('auth:api')->get('/inventory', function (Request $request) {
     return $request->inventory();

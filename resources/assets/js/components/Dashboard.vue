@@ -1,7 +1,9 @@
 <template>
   <div class>
     <!-- /.row -->
-    <div class="row mt-2">
+
+    <!-- div for  isAdminOrUserOrAuthor-->
+    <div class="row mt-2" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="col-md-12">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -154,6 +156,10 @@
         <!-- /.content -->
       </div>
     </div>
+    <!-- end div for isAdminOrUserOrAuthor -->
+    <div v-if="!$gate.isAdminOrUserOrAuthor()">
+      <NotFound></NotFound>
+    </div>
   </div>
 </template>
 
@@ -163,15 +169,12 @@ import "vue-sweet-calendar/dist/SweetCalendar.css";
 export default {
   name: "app",
   data: function() {
-    return { showDate: new Date() };
+    return {
+      showDate: new Date()
+    };
   },
   components: {
     Calendar
-  },
-  methods: {
-    setShowDate(d) {
-      this.showDate = d;
-    }
   }
 };
 </script>

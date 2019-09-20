@@ -91,6 +91,7 @@ const routes = [
     { path: '/inventory', component: require('./components/ICSList.vue') },
     { path: '/pendings', component: require('./components/PendingAssets.vue') },
     { path: '/users-type', component: require('./components/UsersType.vue') },
+    { path: '/employee-dashboard', component: require('./components/EmployeeDashboard.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Dashboard.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },

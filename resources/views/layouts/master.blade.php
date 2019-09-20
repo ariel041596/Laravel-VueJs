@@ -68,26 +68,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item">
+            
+
+           
+          @can('isAdminOrAuthor')
+          <li class="nav-item">
+          @can('isAdminOrAuthor')
             <router-link to="/dashboard" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-               Dashboard
-                <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                Dashboard
+                  <!-- <span class="right badge badge-danger">New</span> -->
+                </p>
             </router-link>
+            @endcan
           </li>
+          @endcan
+          
           <!-- //Assetss router -->
+
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-bar"></i>
-              <p>
-                Assets
-                <i class="right fa fa-angle-left "></i>
-              </p>
-            </a>
+            @can('isAdminOrAuthor')
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                  <p>
+                    Assets
+                    <i class="right fa fa-angle-left "></i>
+                  </p>
+              </a>
+            @endcan
             <ul class="nav nav-treeview">
             <li class="nav-item">
+
             <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-dot-circle"></i>&nbsp;
               <p>
@@ -95,6 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </router-link>
+
             <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
             <i class="fas fa-dot-circle"></i>&nbsp;
               <p>
@@ -102,6 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </router-link>
+            
             
 
             @can('isAdminOrAuthor')
@@ -159,6 +173,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           @endcan
           <li class="nav-item">
+          <router-link to="/employee-dashboard" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </router-link>
             <router-link to="/profile" class="nav-link">
             <i class="nav-icon fas fa-user-cog"></i>
               <p>
