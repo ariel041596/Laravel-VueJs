@@ -66,85 +66,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-            
-
-           
-          @can('isAdminOrAuthor')
+          <!-- Dashboard -->
+          @can('isAdmin')
           <li class="nav-item">
-          @can('isAdminOrAuthor')
             <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                 Dashboard
-                  <!-- <span class="right badge badge-danger">New</span> -->
                 </p>
             </router-link>
-            @endcan
           </li>
-          @endcan
-          
-          <!-- //Assetss router -->
+          <!-- End for Dashboard -->
 
+          <!-- Tree view for assets -->
           <li class="nav-item has-treeview">
-            @can('isAdminOrAuthor')
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-chart-bar"></i>
                   <p>
-                    Assets
-                    <i class="right fa fa-angle-left "></i>
+                    Assets <i class="right fa fa-angle-left "></i>
                   </p>
               </a>
-            @endcan
             <ul class="nav nav-treeview">
-            <li class="nav-item">
-
-            <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fas fa-dot-circle"></i>&nbsp;
-              <p>
-               Pendings
-                <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </router-link>
-
-            <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fas fa-dot-circle"></i>&nbsp;
-              <p>
-               RPCPPE
-                <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </router-link>
-            
-            
-
-            @can('isAdminOrAuthor')
-            <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fas fa-clipboard"></i>&nbsp;
-              <p>
-               ICS
-              </p>
-            </router-link>
-            <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fas fa-trash-restore-alt"></i>&nbsp;
-              <p>
-               IIRUP
-                <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-            </router-link>
-            @endcan
-            </li>
+              <li class="nav-item">
+                <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-dot-circle"></i>&nbsp;
+                    <p>Pendings</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-dot-circle"></i>&nbsp;
+                <p>RPCPPE</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-clipboard"></i>&nbsp;
+                <p>ICS</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-trash-restore-alt"></i>&nbsp;
+                 <p>IIRUP</p>
+              </router-link>
+              </li>
             </ul>
           </li>
-          
-          @can('isAdminOrAuthor')
+          @endcan
+          <!-- End for Assets Tree View -->
+
+          <!-- Done For Management Tree View-->
+          @can('isAdmin')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cog"></i>
-              <p>
-                Management
-                <i class="right fa fa-angle-left"></i>
-              </p>
+              <i class="nav-icon fas fa-cog"></i>
+                <p>Management<i class="right fa fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
@@ -152,6 +129,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Users</p>
                 </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to="/users-type" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
                  <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Users Type</p>
@@ -172,20 +151,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           @endcan
+          <!-- end for Management Tree View -->
+          @can('isEmployee')
           <li class="nav-item">
-          <router-link to="/employee-dashboard" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <router-link to="/requests" class="nav-link">
+              <i class="nav-icon fas fa-thumbtack"></i>
               <p>
-                Dashboard
+                Requests Properties
               </p>
             </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/employee-dashboard" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                List of Accountabilities
+              </p>
+            </router-link>
+          </li>
+          @endcan
+          <li class="nav-item">
             <router-link to="/profile" class="nav-link">
-            <i class="nav-icon fas fa-user-cog"></i>
+              <i class="nav-icon fas fa-user-cog"></i>
               <p>
                 Profile
               </p>
             </router-link>
           </li>
+          
           <!-- Limimt user to see the developer navbar using can -->
           <!-- @can('isAdminOrAuthor')
           <li class="nav-item">
@@ -200,19 +193,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- End can Here -->
           <li class="nav-item">
             <a class="nav-link" href="{{ route('logout') }}"
-                          onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();">
-                         <i class="nav-icon fas fa-power-off"></i>
-                      <p>
-                     {{ __('Logout') }}
-                    </p>
-                    </a>
-                    <!-- To create logout button and trigger the method -->
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
+              <i class="nav-icon fas fa-power-off"></i>
+                <p>
+                  {{ __('Logout') }}
+                </p>
+            </a>
+              <!-- To create logout button and trigger the method -->
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
-               </form>
+              </form>
           </li>
-         
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

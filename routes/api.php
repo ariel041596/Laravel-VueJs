@@ -66,6 +66,14 @@ Route::middleware('auth:api')->get('/accountabilities', function (Request $reque
 Route::apiResources(['accountabilities' => 'API\AccountabilityController']);
 
 // ===============================================For Assets of employee==========================
+// Middleware to get Asset of Request for Property
+Route::middleware('auth:api')->get('/requests', function (Request $request) {
+    return $request->requests();
+});
+// router for Asset Controller of an employee
+Route::apiResources(['requests' => 'API\RequestPropertyController']);
+
+// ===============================================For Assets Request for Property==========================
 // Middleware to get Asset
 Route::middleware('auth:api')->get('/inventory', function (Request $request) {
     return $request->inventory();

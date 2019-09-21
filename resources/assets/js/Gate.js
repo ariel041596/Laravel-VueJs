@@ -22,7 +22,6 @@ export default class Gate {
     }
     isEmployee() {
         return this.user.type === 'employee';
-
     }
     isAuditor() {
         return this.user.type === 'auditor';
@@ -38,13 +37,13 @@ export default class Gate {
             return true;
         }
     }
-    isAdminOrUserOrAuthorOrEmployee() {
-        if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author' || this.user.type === 'employee') {
+    isAdminOrUserOrAuthor() {
+        if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author') {
             return true;
         }
     }
-    isAdminOrUserOrAuthor() {
-        if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author') {
+    isAdminOrUserOrAuthorOrEmployee() {
+        if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author' || this.user.type === 'employee') {
             return true;
         }
     }
@@ -53,5 +52,14 @@ export default class Gate {
             return true;
         }
     }
+    isAdminOrUserOrAuthorOrEmployeeOrSupply() {
+        if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author' || this.user.type === 'employee' || this.user.type === 'supply') {
+            return true;
+        }
+    }
 
 }
+
+// Dont forget to register it to the policies 
+// like what the hell I didn't register and make it as 
+// a problem for more than 2days including the nighmare
