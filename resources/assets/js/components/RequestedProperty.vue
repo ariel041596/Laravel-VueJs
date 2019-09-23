@@ -61,18 +61,18 @@
                     <td>
                       <input type="checkbox" :value="asset.id" v-model="selected" />
                     </td>
-                    <td>{{asset.article | upText}}</td>
-                    <td>{{asset.description | upText}}</td>
-                    <td>{{asset.property_number}}</td>
+                    <td>{{asset.entity_name | upText}}</td>
+                    <td>{{asset.service | upText}}</td>
+                    <td>{{asset.request_number}}</td>
                     <td>{{asset.unit_of_measure}}</td>
-                    <td>{{asset.price | numberComma }}</td>
+                    <td>{{asset.description | numberComma }}</td>
                     <td>{{asset.quantity | numberComma}}</td>
-                    <td>{{asset.total_value | numberComma}}</td>
-                    <td>{{asset.date | myDate}}</td>
+                    <td>{{asset.status | numberComma}}</td>
+                    <td>{{asset.remarks | myDate}}</td>
+                    <td>{{asset.purpose | upText}}</td>
                     <td>{{asset.accountable_officer | upText}}</td>
-                    <td>{{asset.remarks | upText}}</td>
-                    <td>{{asset.status | upText}}</td>
-                    <td>{{asset.property_type}}</td>
+                    <td>{{asset.issued_by | upText}}</td>
+                    <td>{{asset.received_by}}</td>
                     <td>
                       <a
                         href="#"
@@ -83,20 +83,12 @@
                       >
                         <i class="fas fa-edit"></i>
                       </a>
-                      <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                      <router-link :to="`${asset.id}`">
                         <i
                           class="fas fa-print"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print PAR"
-                        ></i>
-                      </router-link>
-                      <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title="Print ICS"
+                          title="Print"
                         ></i>
                       </router-link>
                       <a
@@ -414,14 +406,6 @@
               </div>
             </div>
             <div class="modal-footer">
-              <div
-                class="py-2 px-2"
-                style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
-              >
-                <a href="#" @click="addAccModal">
-                  <i class="fas fa-plus" style="color:#fff;"></i>
-                </a>
-              </div>
               <button type="button" class="btn btn-danger" data-dismiss="modal">
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
@@ -468,23 +452,19 @@ export default {
       assets: {},
       form: new Form({
         id: "",
-        number: "",
-        article: "",
-        description: "",
-        property_number: "",
-        unit_of_measure: "",
-        price: "",
-        quantity: "",
-        total_value: "",
-        date: "",
-        accountable_officer: "",
-        remarks: "",
-        account_name: "",
+        entity_name: "",
         service: "",
-        createdBy: "",
+        request_number: "",
+        unit_of_measure: "",
+        description: "",
+        quantity: "",
         status: "pending",
-        property_type: "PAR",
-        designation: ""
+        remarks: "",
+        purpose: "",
+        accountable_officer: "",
+        issued_by: "",
+        received_by: "",
+        createdBy: ""
       })
     };
   },

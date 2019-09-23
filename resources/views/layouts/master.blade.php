@@ -157,7 +157,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <router-link to="/requests" class="nav-link">
               <i class="nav-icon fas fa-thumbtack"></i>
               <p>
-                Requests Properties
+                Request Properties
               </p>
             </router-link>
           </li>
