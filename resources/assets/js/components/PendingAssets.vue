@@ -50,71 +50,71 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <!-- <template v-if="!assets.data.length">
+                  <template v-if="pendings.data<=0">
                     <tr>
-                      <td colspan="15" class="text-center">No Properties Available</td>
+                      <td colspan="15" class="text-center">No Pending PAR/ICS Available</td>
                     </tr>
-                  </template>-->
-                  <!-- <template v-else> -->
-                  <tr v-for="asset in pendings.data" :key="asset.id">
-                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
-                    <!-- <td>{{asset.id}}</td> -->
+                  </template>
+                  <template v-else>
+                    <tr v-for="asset in pendings.data" :key="asset.id">
+                      <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                      <!-- <td>{{asset.id}}</td> -->
 
-                    <td>
-                      <input type="checkbox" :value="asset.id" v-model="selected" />
-                    </td>
-                    <td>{{asset.article | upText}}</td>
-                    <td>{{asset.description | upText}}</td>
-                    <td>{{asset.property_number}}</td>
-                    <td>{{asset.unit_of_measure}}</td>
-                    <td>{{asset.price | numberComma }}</td>
-                    <td>{{asset.quantity | numberComma}}</td>
-                    <td>{{asset.total_value | numberComma}}</td>
-                    <td>{{asset.date | myDate}}</td>
-                    <td>{{asset.accountable_officer | upText}}</td>
-                    <td>{{asset.remarks | upText}}</td>
-                    <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                    <!-- <td>{{asset.service}}</td> -->
-                    <td>{{asset.status | upText}}</td>
-                    <td>{{asset.property_type | upText}}</td>
-                    <td>
-                      <a
-                        href="#"
-                        @click="editModal(asset)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Edit"
-                      >
-                        <i class="fas fa-edit"></i>
-                      </a>
-                      <router-link v-show="asset.price>15000" :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
+                      <td>
+                        <input type="checkbox" :value="asset.id" v-model="selected" />
+                      </td>
+                      <td>{{asset.article | upText}}</td>
+                      <td>{{asset.description | upText}}</td>
+                      <td>{{asset.property_number}}</td>
+                      <td>{{asset.unit_of_measure}}</td>
+                      <td>{{asset.price | numberComma }}</td>
+                      <td>{{asset.quantity | numberComma}}</td>
+                      <td>{{asset.total_value | numberComma}}</td>
+                      <td>{{asset.date | myDate}}</td>
+                      <td>{{asset.accountable_officer | upText}}</td>
+                      <td>{{asset.remarks | upText}}</td>
+                      <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
+                      <!-- <td>{{asset.service}}</td> -->
+                      <td>{{asset.status | upText}}</td>
+                      <td>{{asset.property_type | upText}}</td>
+                      <td>
+                        <a
+                          href="#"
+                          @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print PAR"
-                        ></i>
-                      </router-link>
-                      <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
+                          title="Edit"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                          <i
+                            class="fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print PAR"
+                          ></i>
+                        </router-link>
+                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                          <i
+                            class="fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print ICS"
+                          ></i>
+                        </router-link>
+                        <a
+                          href="#"
+                          @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print ICS"
-                        ></i>
-                      </router-link>
-                      <a
-                        href="#"
-                        @click="deleteAsset(asset.id)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Disposed"
-                      >
-                        <i class="fas fa-trash red"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <!-- </template> -->
+                          title="Disposed"
+                        >
+                          <i class="fas fa-trash red"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </template>
                 </tbody>
               </table>
               <div>

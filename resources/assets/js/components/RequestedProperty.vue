@@ -1,11 +1,15 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthorOrEmployeeOrSupply()">
+    <div class="card row mt-4" v-if="$gate.isEmployeeOrSupply()">
       <div class="rpcppe card-header">
         <h3 class="card-title mt-2">
           Request Asset
-          <button class="update-create btn float-right" @click="newModal">
+          <button
+            class="update-create btn float-right"
+            @click="newModal"
+            v-if="$gate.isEmployee()"
+          >
             <i class="fas fa-cart-plus">&nbsp;</i>Request Asset
           </button>
         </h3>
@@ -29,10 +33,9 @@
                 <tbody>
                   <tr class>
                     <!-- <th>ID</th> -->
-                    <th>
+                    <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
-                    </th>
-                    <th>Entity Name</th>
+                    </!-->
                     <th>Service</th>
                     <th>RIS Number</th>
                     <th>Unit</th>
@@ -48,61 +51,60 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <!-- <template v-if="!assets.data.length">
+                  <template v-if="assets.data<=0">
                     <tr>
-                      <td colspan="15" class="text-center">No Properties Available</td>
+                      <td colspan="15" class="text-center">No Request Available</td>
                     </tr>
-                  </template>-->
-                  <!-- <template v-else> -->
-                  <tr v-for="asset in assets.data" :key="asset.id">
-                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
-                    <!-- <td>{{asset.id}}</td> -->
+                  </template>
+                  <template v-else>
+                    <tr v-for="asset in assets.data" :key="asset.id">
+                      <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                      <!-- <td>{{asset.id}}</td> -->
 
-                    <td>
-                      <input type="checkbox" :value="asset.id" v-model="selected" />
-                    </td>
-                    <td>{{asset.entity_name | upText}}</td>
-                    <td>{{asset.service | upText}}</td>
-                    <td>{{asset.request_number}}</td>
-                    <td>{{asset.unit_of_measure}}</td>
-                    <td>{{asset.description | numberComma }}</td>
-                    <td>{{asset.quantity | numberComma}}</td>
-                    <td>{{asset.status | numberComma}}</td>
-                    <td>{{asset.remarks | myDate}}</td>
-                    <td>{{asset.purpose | upText}}</td>
-                    <td>{{asset.accountable_officer | upText}}</td>
-                    <td>{{asset.issued_by | upText}}</td>
-                    <td>{{asset.received_by}}</td>
-                    <td>
-                      <a
-                        href="#"
-                        @click="editModal(asset)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Edit"
-                      >
-                        <i class="fas fa-edit"></i>
-                      </a>
-                      <router-link :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
+                      <!-- <td>
+                        <input type="checkbox" :value="asset.id" v-model="selected" />
+                      </!-->
+                      <td>{{asset.service | upText}}</td>
+                      <td>{{asset.request_number}}</td>
+                      <td>{{asset.unit_of_measure}}</td>
+                      <td>{{asset.description | upText}}</td>
+                      <td class="text-center">{{asset.quantity | numberComma}}</td>
+                      <td>{{asset.status | upText}}</td>
+                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.purpose | upText}}</td>
+                      <td>{{asset.accountable_officer}}</td>
+                      <td>{{asset.issued_by }}</td>
+                      <td>{{asset.received_by | upText}}</td>
+                      <td>
+                        <a
+                          href="#"
+                          @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print"
-                        ></i>
-                      </router-link>
-                      <a
-                        href="#"
-                        @click="deleteAsset(asset.id)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Disposed"
-                      >
-                        <i class="fas fa-trash red"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <!-- </template> -->
+                          title="Edit"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <router-link :to="`${asset.id}`">
+                          <i
+                            class="fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print"
+                          ></i>
+                        </router-link>
+                        <a
+                          href="#"
+                          @click="deleteAsset(asset.id)"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Disposed"
+                        >
+                          <i class="fas fa-trash red"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </template>
                 </tbody>
               </table>
               <div>
@@ -117,7 +119,7 @@
     <!-- End for Admin -->
 
     <!-- /.row -->
-    <div v-if="!$gate.isAdminOrUserOrAuthorOrEmployeeOrSupply()">
+    <div v-if="!$gate.isEmployeeOrSupply()">
       <NotFound></NotFound>
     </div>
     <div
@@ -132,7 +134,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
-            <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Asset</h5>
+            <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Request</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
@@ -141,62 +143,47 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
-                  <label>PAR/ICS Number</label>
+                  <label>Entity Name</label>
                   <input
-                    v-model="form.number"
+                    readonly
+                    v-model="form.entity_name"
                     type="text"
-                    id="number"
-                    placeholder="Enter PAR/ICS Number"
-                    name="number"
+                    id="entity_name"
+                    placeholder="Entity Name"
+                    name="entity_name"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('number') }"
+                    :class="{ 'is-invalid': form.errors.has('entity_name') }"
                   />
-                  <has-error :form="form" field="number"></has-error>
+                  <has-error :form="form" field="entity_name"></has-error>
                 </div>
                 <div class="col form-group">
-                  <label>Article</label>
+                  <label>Service</label>
                   <input
-                    v-model="form.article"
-                    @change="getProfileid"
+                    v-model="form.service"
                     type="text"
-                    id="article"
-                    placeholder="Enter article"
-                    name="article"
+                    id="service"
+                    placeholder="Service"
+                    name="service"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('article') }"
+                    :class="{ 'is-invalid': form.errors.has('service') }"
                   />
-                  <has-error :form="form" field="article"></has-error>
+                  <has-error :form="form" field="service"></has-error>
                 </div>
-              </div>
-              <div class="form-group">
-                <label>Description</label>
-                <textarea
-                  v-model="form.description"
-                  type="text"
-                  id="description"
-                  placeholder="Enter description"
-                  name="description"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('description') }"
-                ></textarea>
-                <has-error :form="form" field="description"></has-error>
               </div>
               <div class="row">
-                <!-- first col -->
                 <div class="col form-group">
-                  <label>Property Number</label>
+                  <label>Request Number</label>
                   <input
-                    v-model="form.property_number"
+                    v-model="form.request_number"
                     type="text"
-                    id="property_number"
-                    placeholder="Property Number"
-                    name="property_number"
+                    id="request_number"
+                    placeholder="Request Number"
+                    name="request_number"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('property_number') }"
+                    :class="{ 'is-invalid': form.errors.has('request_number') }"
                   />
-                  <has-error :form="form" field="property_number"></has-error>
+                  <has-error :form="form" field="request_number"></has-error>
                 </div>
-                <!-- Second col -->
                 <div class="col form-group">
                   <label>Unit of Measure</label>
                   <select
@@ -217,33 +204,27 @@
                 </div>
               </div>
               <div class="row">
-                <!-- third col Remove also the v-model-->
                 <div class="col form-group">
-                  <label>Unit Price</label>
-                  <input
-                    min="0"
-                    currency="P"
-                    separator=","
-                    :value="form.price"
-                    @change="updatePrice"
-                    step="any"
-                    type="number"
-                    id="price"
-                    placeholder="Enter price"
-                    name="price"
+                  <label>Description</label>
+                  <textarea
+                    v-model="form.description"
+                    type="text"
+                    id="description"
+                    placeholder="Enter Description"
+                    name="description"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('price') }"
+                    :class="{ 'is-invalid': form.errors.has('description') }"
                   />
-                  <has-error :form="form" field="price"></has-error>
+                  <has-error :form="form" field="description"></has-error>
                 </div>
-                <!-- fourth col  Trying to remove the v-model first  -->
+              </div>
+              <div class="row">
                 <div class="col form-group">
                   <label>Quantity</label>
                   <input
                     min="1"
                     separator=","
-                    :value="form.quantity"
-                    @change="updateQuantity"
+                    v-model="form.quantity"
                     type="number"
                     id="quantity"
                     placeholder="Enter quantity"
@@ -253,62 +234,18 @@
                   />
                   <has-error :form="form" field="quantity"></has-error>
                 </div>
-              </div>
-              <div class="row">
-                <!-- firt col -->
-                <div class="col form-group">
-                  <label>Total Value</label>
+                <div class="col form-group" v-show="false">
                   <input
-                    disabled
-                    currency="P"
-                    separator=","
-                    v-model="form.total_value"
-                    step="any"
-                    type="number"
-                    id="total_value"
-                    placeholder="Total Value"
-                    name="total_value"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('total_value') }"
-                  />
-                  <has-error :form="form" field="total_value"></has-error>
-                </div>
-                <!-- Second col -->
-                <div class="col form-group">
-                  <label>Date Acquired</label>
-                  <input
-                    v-model="form.date"
-                    type="date"
-                    id="date"
-                    placeholder="Total Date"
-                    name="date"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('date') }"
-                  />
-                  <has-error :form="form" field="date"></has-error>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <label>Accountable Officer</label>
-                  <select
-                    v-model="form.accountable_officer"
+                    v-model="form.status"
+                    readonly
+                    value="pending"
                     type="text"
-                    id="accountable_officer"
-                    placeholder="Accountable Officer"
-                    name="accountable_officer"
+                    id="status"
+                    placeholder="Status"
+                    name="status"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
-                  >
-                    <option value>Select Accountable Officer</option>
-                    <option
-                      v-for="officer in accountable_officers.data"
-                      :key="officer.id"
-                    >{{officer.name}}</option>
-                  </select>
-                  <has-error :form="form" field="accountable_officer"></has-error>
+                  />
                 </div>
-                <!-- firt col -->
                 <div class="col form-group">
                   <label>Remarks</label>
                   <input
@@ -322,52 +259,84 @@
                   />
                   <has-error :form="form" field="remarks"></has-error>
                 </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label>Purpose</label>
+                  <textarea
+                    v-model="form.purpose"
+                    type="text"
+                    id="purpose"
+                    placeholder="Enter Purpose"
+                    name="purpose"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('purpose') }"
+                  />
+                  <has-error :form="form" field="purpose"></has-error>
+                </div>
                 <div class="col form-group" v-show="false">
+                  <label>Accountable Officer</label>
+                  <input
+                    v-model="form.accountable_officer"
+                    type="text"
+                    id="accountable_officer"
+                    placeholder="Accountable Officer"
+                    name="accountable_officer"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
+                  />
+                  <has-error :form="form" field="accountable_officer"></has-error>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group" v-if="$gate.isSupply()">
+                  <label>Issued by</label>
+                  <select
+                    v-model="form.issued_by"
+                    type="text"
+                    id="issued_by"
+                    placeholder="Issued By"
+                    name="issued_by"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('issued_by') }"
+                  >
+                    <option value>Select Property Officer</option>
+                    <option
+                      v-for="officer in accountable_officers.data"
+                      :key="officer.id"
+                    >{{officer.name}}</option>
+                  </select>
+                  <has-error :form="form" field="issued_by"></has-error>
+                </div>
+                <div class="col form-group" v-if="$gate.isSupply()">
+                  <label>Received by</label>
+                  <input
+                    v-model="form.received_by"
+                    type="text"
+                    id="received_by"
+                    placeholder="Received by"
+                    name="received_by"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('received_by') }"
+                  />
+                  <has-error :form="form" field="received_by"></has-error>
+                </div>
+                <div class="col form-group" v-show="false">
+                  <label>Created By</label>
                   <input
                     v-model="form.createdBy"
                     type="text"
                     id="createdBy"
-                    placeholder="createdBy"
+                    placeholder="Created By"
                     name="createdBy"
                     class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('createdBy') }"
                   />
-                </div>
-                <div class="col form-group" v-show="false">
-                  <input
-                    value="pending"
-                    type="text"
-                    id="status"
-                    placeholder="Status"
-                    name="status"
-                    class="form-control"
-                  />
-                </div>
-                <div class="col form-group" v-show="false">
-                  <input
-                    value="PAR"
-                    type="text"
-                    id="property_type"
-                    placeholder="property_type"
-                    name="property_type"
-                    class="form-control"
-                  />
+                  <has-error :form="form" field="createdBy"></has-error>
                 </div>
               </div>
               <div class="row">
-                <div class="col form-group">
-                  <label>Service</label>
-                  <input
-                    v-model="form.service"
-                    type="text"
-                    id="service"
-                    placeholder="Service"
-                    name="service"
-                    class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('service') }"
-                  />
-                  <has-error :form="form" field="service"></has-error>
-                </div>
-                <div class="col form-group" v-if="editmode">
+                <div class="col form-group" v-if="$gate.isSupply()" v-show="false">
                   <label>Status</label>
                   <select
                     type="text"
@@ -378,30 +347,12 @@
                     class="form-control"
                     :class="{'is-invalid': form.errors.has('status')}"
                   >
-                    <option value>Select Status</option>
+                    <!-- <option value>Select Status</option> -->
                     <!-- <option value="approved">Approved</!-->
-                    <option value="fordisposal">For Disposal</option>
-                    <option value="disposed">Disposed</option>
+                    <!-- <option value="approved">Approved</option> -->
+                    <!-- <option value="unavailable">No Available</option> -->
                   </select>
                   <has-error :form="form" field="status"></has-error>
-                </div>
-                <div class="col form-group">
-                  <label>Account Name</label>
-                  <select
-                    class="form-control"
-                    id="account_name"
-                    name="account_name"
-                    placeholder="Please select Account"
-                    v-model="form.account_name"
-                    :class="{'is-invalid': form.errors.has('account_name')}"
-                  >
-                    <option value>Select Account Name</option>
-                    <option
-                      v-for="account in accountcodes.data"
-                      :key="account.id"
-                    >{{account.account_name}}</option>
-                    <has-error :form="form" field="account_name"></has-error>
-                  </select>
                 </div>
               </div>
             </div>
@@ -409,11 +360,24 @@
               <button type="button" class="btn btn-danger" data-dismiss="modal">
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button v-show="editmode" type="submit" class="update-create btn">
-                <i class="fas fa-pen">&nbsp;</i>Update Asset
+              <button
+                v-if="$gate.isEmployee()"
+                v-show="editmode"
+                type="submit"
+                class="update-create btn"
+              >
+                <i class="fas fa-pen">&nbsp;</i>Update Request
+              </button>
+              <button
+                v-if="$gate.isSupply()"
+                v-show="editmode"
+                @click="updateAsset()"
+                class="update-create btn"
+              >
+                <i class="fas fa-thumbs-up">&nbsp;</i>Approved Request
               </button>
               <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+                <i class="fas fa-cart-plus">&nbsp;</i>Add Request
               </button>
             </div>
           </form>
@@ -452,13 +416,13 @@ export default {
       assets: {},
       form: new Form({
         id: "",
-        entity_name: "",
+        entity_name: "DICT",
         service: "",
         request_number: "",
         unit_of_measure: "",
         description: "",
         quantity: "",
-        status: "pending",
+        status: "",
         remarks: "",
         purpose: "",
         accountable_officer: "",
@@ -478,8 +442,12 @@ export default {
       }
     },
     getProfileid(event) {
-      this.form.article = event.target.value;
-      this.form.createdBy = this.profiles.name;
+      this.form.description = event.target.value;
+      this.form.createdBy = this.profiles.id;
+    },
+    getProfilename(event) {
+      this.form.quantity = event.target.value;
+      this.form.accountable_officer = this.profiles.name;
     },
     getProfileService(event) {
       this.form.description = event.target.value;
@@ -500,6 +468,9 @@ export default {
       });
     },
     updateAsset() {
+      if (this.$gate.isSupply()) {
+        this.form.status = "approved";
+      }
       this.$Progress.start();
       this.form
         .put("api/requests/" + this.form.id)
@@ -570,7 +541,7 @@ export default {
         });
     },
     loadAccountableOfficers() {
-      if (this.$gate.isAdminOrUserOrAuthor()) {
+      if (this.$gate.isEmployeeOrSupply()) {
         axios
           .get("api/accountable_officer")
           .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
@@ -581,13 +552,13 @@ export default {
     },
     // LoadUser to display in the tbody
     loadAssets() {
-      if (this.$gate.isAdminOrUserOrAuthor()) {
+      if (this.$gate.isEmployeeOrSupply()) {
         axios.get("api/requests").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
     // LoadAccountname to display in the options datalist
     loadAcctName() {
-      if (this.$gate.isAdminOrUserOrAuthor()) {
+      if (this.$gate.isEmployeeOrSupply()) {
         axios
           .get("api/accountcode")
           .then(({ data }) => (this.accountcodes = data)); //Remove the previous (this.users =data.data) into data only
@@ -596,6 +567,9 @@ export default {
     createAsset() {
       // Progressbar before create user
       this.$Progress.start();
+      this.form.status = "pending";
+      this.form.createdBy = this.profiles.id;
+      this.form.accountable_officer = this.profiles.name;
       this.form
         .post("api/requests")
         .then(() => {

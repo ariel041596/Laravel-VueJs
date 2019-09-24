@@ -10,7 +10,7 @@
             class="update-create btn float-right"
             @click="newModal"
           >
-            <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+            <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
           </button>
         </h3>
       </div>
@@ -53,70 +53,73 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <!-- <template v-if="!assets.data.length">
+                  <template v-if="assets.data<=0">
                     <tr>
-                      <td colspan="15" class="text-center">No Properties Available</td>
+                      <td
+                        colspan="15"
+                        class="text-center"
+                      >No Report on Physical Count of Property Plant and Equipment Available</td>
                     </tr>
-                  </template>-->
-                  <!-- <template v-else> -->
-                  <tr v-for="asset in assets.data" :key="asset.id">
-                    <!-- <tr v-for="asset in assets" :key="asset.id"> -->
-                    <!-- <td>{{asset.id}}</td> -->
+                  </template>
+                  <template v-else>
+                    <tr v-for="asset in assets.data" :key="asset.id">
+                      <!-- <tr v-for="asset in assets" :key="asset.id"> -->
+                      <!-- <td>{{asset.id}}</td> -->
 
-                    <td>
-                      <input type="checkbox" :value="asset.id" v-model="selected" />
-                    </td>
-                    <td>{{asset.article | upText}}</td>
-                    <td>{{asset.description | upText}}</td>
-                    <td>{{asset.property_number}}</td>
-                    <td>{{asset.unit_of_measure}}</td>
-                    <td>{{asset.price | numberComma }}</td>
-                    <td>{{asset.quantity | numberComma}}</td>
-                    <td>{{asset.total_value | numberComma}}</td>
-                    <td>{{asset.date | myDate}}</td>
-                    <td>{{asset.accountable_officer | upText}}</td>
-                    <td>{{asset.remarks | upText}}</td>
-                    <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                    <td>{{asset.status | upText}}</td>
-                    <td>{{asset.property_type}}</td>
-                    <td>
-                      <a
-                        href="#"
-                        @click="editModal(asset)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Edit"
-                      >
-                        <i class="fas fa-edit"></i>
-                      </a>
-                      <router-link v-show="asset.price>15000" :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
+                      <td>
+                        <input type="checkbox" :value="asset.id" v-model="selected" />
+                      </td>
+                      <td>{{asset.article | upText}}</td>
+                      <td>{{asset.description | upText}}</td>
+                      <td>{{asset.property_number}}</td>
+                      <td>{{asset.unit_of_measure}}</td>
+                      <td class="text-right">{{asset.price | numberComma }}</td>
+                      <td class="text-center">{{asset.quantity | numberComma}}</td>
+                      <td class="text-right">{{asset.total_value | numberComma}}</td>
+                      <td>{{asset.date | myDate}}</td>
+                      <td>{{asset.accountable_officer | upText}}</td>
+                      <td>{{asset.remarks | upText}}</td>
+                      <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
+                      <td>{{asset.status | upText}}</td>
+                      <td>{{asset.property_type}}</td>
+                      <td>
+                        <a
+                          href="#"
+                          @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print PAR"
-                        ></i>
-                      </router-link>
-                      <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
-                        <i
-                          class="fas fa-print"
+                          title="Edit"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                          <i
+                            class="fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print PAR"
+                          ></i>
+                        </router-link>
+                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                          <i
+                            class="fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print ICS"
+                          ></i>
+                        </router-link>
+                        <a
+                          href="#"
+                          @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print ICS"
-                        ></i>
-                      </router-link>
-                      <a
-                        href="#"
-                        @click="deleteAsset(asset.id)"
-                        data-toggle="tooltip"
-                        data-placement="bottom"
-                        title="Disposed"
-                      >
-                        <i class="fas fa-trash red"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <!-- </template> -->
+                          title="Disposed"
+                        >
+                          <i class="fas fa-trash red"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </template>
                 </tbody>
               </table>
               <div>
@@ -562,22 +565,14 @@
               </div>
             </div>
             <div class="modal-footer">
-              <div
-                class="py-2 px-2"
-                style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
-              >
-                <a href="#" @click="addAccModal">
-                  <i class="fas fa-plus" style="color:#fff;"></i>
-                </a>
-              </div>
               <button type="button" class="btn btn-danger" data-dismiss="modal">
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
               <button v-show="editmode" type="submit" class="update-create btn">
-                <i class="fas fa-pen">&nbsp;</i>Update Asset
+                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
               </button>
               <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
+                <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
               </button>
             </div>
           </form>

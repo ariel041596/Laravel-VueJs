@@ -27,6 +27,11 @@ export default class Gate {
         return this.user.type === 'auditor';
 
     }
+    isEmployeeOrSupply() {
+        if (this.user.type === 'employee' || this.user.type === 'supply') {
+            return true;
+        }
+    }
     isAdminOrAuthor() {
         if (this.user.type === 'admin' || this.user.type === 'author') {
             return true;

@@ -56,6 +56,7 @@ class UserController extends Controller
             // 'email' => 'unique:users,email_address,'.$user->id
             'password' => 'sometimes|required|string|min:6',
             'type' => 'required|string|max:191',
+            'service' => 'required|string|max:191',
             // 'class' => 'required|string|max:191',
             // 'type' => 'required|string|max:191|unique:users,type', // if you want a unique user type since we
         ]);
@@ -65,7 +66,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'type' => $request['type'],
             // 'class' => $request['class'],
-            'bio' => $request['bio'],
+            'service' => $request['service'],
             'photo' => $request['photo'],
             'password' => Hash::make($request['password']),
         ]);

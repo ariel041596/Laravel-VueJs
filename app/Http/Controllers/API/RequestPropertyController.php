@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Asset;
 use App\User;
 use App\Disposal;
-use \Auth;
 use App\RequestAsset;
+use \Auth;
 
 class RequestPropertyController extends Controller
 {
@@ -23,8 +23,15 @@ class RequestPropertyController extends Controller
             return RequestAsset::where('status','LIKE',"%pending%")->latest()->paginate();
         }
         else{
-        $createdBy = Auth::user()->id;
-        return RequestAsset::where('createdBy', $createdBy)->latest()->paginate(); //get or paginate?
+            if(\Gate::allows('isEmployee')){
+                $createdBy = Auth::user()->id;
+                return RequestAsset::where('createdBy', $createdBy)->latest()->paginate(); //get or paginate?
+            }else{
+                if(\Gate::allows('isSupply')){
+                    return RequestAsset::where('status','LIKE',"%pending%")
+                    ->orWhere('status','LIKE',"%unavailable%")->latest()->paginate();
+                }
+            }
         }
    }
 
@@ -39,12 +46,12 @@ class RequestPropertyController extends Controller
            'description' => 'required|string|max:191', //5
            'quantity' => 'required|string|max:191', //6
            'status' => 'required|string|max:191', //7
-           'remarks' => 'required|string|max:191', //8
+           'remarks' => 'max:191', //8
            'purpose' => 'required|string|max:191', //9
            'accountable_officer' => 'required|string|max:191', //10
-           'issued_by' => 'string|max:191', //11
-           'received_by' => 'string|max:191', //12 
-           'createdBy' => 'string|max:191', //13 
+           'issued_by' => 'max:191', //11
+           'received_by' => 'max:191', //12 
+           'createdBy' => 'required|max:191', //13 
           
        ]);
        // Insert the data into databse
@@ -62,7 +69,7 @@ class RequestPropertyController extends Controller
            'accountable_officer' => $request['accountable_officer'], //10
            'issued_by' => $request['issued_by'], //11
            'received_by' => $request['received_by'],//12
-           'createdBy' => $request['received_by'],//13
+           'createdBy' => $request['createdBy'],//13
        ]);
    }
 
@@ -76,7 +83,7 @@ class RequestPropertyController extends Controller
    }
    public function update(Request $request, $id)
    {
-       if(\Gate::allows('isAdmin')){
+       if(\Gate::allows('isSupply')){
             $this->validate($request, [
                 'entity_name' => 'required|string|max:191', //1
                 'service' => 'required|string|max:191', //2
@@ -92,20 +99,24 @@ class RequestPropertyController extends Controller
                 'received_by' => 'required|string|max:191', //12
             ]);
         }else{
-            $this->validate($request, [
-                'entity_name' => 'required|string|max:191', //1
-                'service' => 'required|string|max:191', //2
-                'request_number' => 'required|string|max:191', //3
-                'unit_of_measure' => 'required|string|max:191', //4
-                'description' => 'required|string|max:191', //5
-                'quantity' => 'required|string|max:191', //6
-                'status' => 'required|string|max:191', //7
-                'remarks' => 'required|string|max:191', //8
-                'purpose' => 'required|string|max:191', //9
-                'accountable_officer' => 'required|string|max:191', //10
-                'issued_by' => 'string|max:191', //11
-                'received_by' => 'string|max:191', //12
-            ]);
+            if(\Gate::allows('isEmployee')){
+                $this->validate($request, [
+                    'entity_name' => 'required|string|max:191', //1
+                    'service' => 'required|string|max:191', //2
+                    'request_number' => 'required|string|max:191', //3
+                    'unit_of_measure' => 'required|string|max:191', //4
+                    'description' => 'required|string|max:191', //5
+                    'quantity' => 'required|string|max:191', //6
+                    'status' => 'required|string|max:191', //7
+                    'remarks' => 'max:191', //8
+                    'purpose' => 'required|string|max:191', //9
+                    'accountable_officer' => 'required|string|max:191', //10
+                    'issued_by' => 'max:191', //11
+                    'received_by' => 'max:191', //12 
+                    'createdBy' => 'required|max:191', //13 
+                   
+                ]);
+            }
         }
        $asset = RequestAsset::findOrFail($id);
        $asset->update($request->all());

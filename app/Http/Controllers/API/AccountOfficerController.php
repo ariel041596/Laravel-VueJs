@@ -27,7 +27,7 @@ class AccountOfficerController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser') ){
+        if(\Gate::allows('isAdminOrUserOrAuthorOrEmployeeOrSupply') ){
             return AccountOfficer::latest()->paginate(5);
         }
     }

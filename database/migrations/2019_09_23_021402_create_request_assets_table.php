@@ -25,9 +25,9 @@ class CreateRequestAssetsTable extends Migration
             $table->string('remarks')->nullable(); //8
             $table->string('purpose'); //9
             $table->string('accountable_officer'); //10 Requested by
-            $table->string('issued_by'); //11 Approved by
-            $table->string('received_by'); //12 Received by
-            $table->string('createdBy'); //12 Received by
+            $table->string('issued_by')->nullable(); //11 Approved by
+            $table->string('received_by')->nullable(); //12 Received by
+            $table->string('createdBy')->nullable(); //12 Received by
             $table->timestamps();
         });
     }

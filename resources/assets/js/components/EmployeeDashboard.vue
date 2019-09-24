@@ -30,8 +30,8 @@
                 <tr class>
                   <!-- <th>ID</th> -->
                   <th>Article</th>
-                  <th width="20%">Description</th>
-                  <th width="5%">Property Number</th>
+                  <th>Description</th>
+                  <th>Property Number</th>
                   <th>Unit</th>
                   <th>Price</th>
                   <th>Qty</th>
@@ -41,9 +41,9 @@
                 </tr>
               </tbody>
               <tbody>
-                <template v-if="!assets.data.length">
+                <template v-if="assets.data<=0">
                   <tr>
-                    <td colspan="15" class="text-center">No Properties Available</td>
+                    <td colspan="15" class="text-center">No Accountability Available</td>
                   </tr>
                 </template>
                 <template v-else>
@@ -54,9 +54,9 @@
                     <td>{{asset.description | upText}}</td>
                     <td>{{asset.property_number}}</td>
                     <td>{{asset.unit_of_measure}}</td>
-                    <td>{{asset.price | numberComma }}</td>
-                    <td>{{asset.quantity | numberComma}}</td>
-                    <td>{{asset.total_value | numberComma}}</td>
+                    <td class="text-right">{{asset.price | numberComma }}</td>
+                    <td class="text-center">{{asset.quantity | numberComma}}</td>
+                    <td class="text-right">{{asset.total_value | numberComma}}</td>
                     <td>{{asset.date | myDate}}</td>
                     <td>{{asset.remarks | upText}}</td>
                   </tr>

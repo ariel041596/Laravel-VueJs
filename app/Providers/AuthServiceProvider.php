@@ -38,12 +38,24 @@ class AuthServiceProvider extends ServiceProvider
             return $user->type ==='user';
         });
         $this->registerPolicies();
+        Gate::define('isSupply', function($user){
+            return $user->type ==='supply';
+        });
+        $this->registerPolicies();
         Gate::define('isEmployee', function($user){
             return $user->type ==='employee';
         });
         $this->registerPolicies();
+        Gate::define('isEmployeeOrSupply', function($user){
+            return $user->type ==='employee' || $user->type ==='supply';
+        });
+        $this->registerPolicies();
         Gate::define('isAdminOrAuthor', function($user){
             return $user->type ==='admin' || $user->type ==='author';
+        });
+        $this->registerPolicies();
+        Gate::define('isAdminOrUserOrAuthorOrEmployeeOrSupply', function($user){
+            return $user->type ==='admin' || $user->type ==='user' || $user->type ==='author' || $user->type ==='employee' || $user->type ==='supply';
         });
 
         Passport::routes();

@@ -36,7 +36,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Type</th>
-                    <th>Registered At</th>
+                    <th>Service</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -58,7 +58,7 @@
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.type | upText}}</td>
-                    <td>{{user.created_at | myDate}}</td>
+                    <td>{{user.service}}</td>
                     <td>
                       <a href="#" @click="editModal(user)">
                         <i class="fas fa-edit"></i>
@@ -134,15 +134,15 @@
                 <has-error :form="form" field="email"></has-error>
               </div>
               <div class="form-group">
-                <label>Short Description</label>
-                <textarea
-                  v-model="form.bio"
-                  id="bio"
-                  placeholder="Short bio for user (optional)"
+                <label>Service</label>
+                <input
+                  v-model="form.service"
+                  id="service"
+                  placeholder="Service"
                   class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('bio') }"
-                ></textarea>
-                <has-error :form="form" field="bio"></has-error>
+                  :class="{ 'is-invalid': form.errors.has('service') }"
+                />
+                <has-error :form="form" field="service"></has-error>
               </div>
               <div class="form-group">
                 <label>User Type</label>
@@ -153,9 +153,13 @@
                   class="form-control"
                   :class="{'is-invalid': form.errors.has('type')}"
                 >
-                  <option value>Select User Role</option>
-                  <option v-for="type in users_types.data" :key="type.id">{{type.users_type}}</option>
-                  <has-error :form="form" field="bio"></has-error>
+                  <option value>--Select User Role--</option>
+                  <option value="admin">Admin</option>
+                  <option value="author">Author</option>
+                  <option value="user">User</option>
+                  <option value="supply">Supply</option>
+                  <option value="employee">Employee</option>
+                  <has-error :form="form" field="type"></has-error>
                 </select>
               </div>
               <div class="form-group">
@@ -207,7 +211,7 @@ export default {
         email: "",
         password: "",
         type: "",
-        bio: "",
+        service: "",
         photo: ""
       })
     };
