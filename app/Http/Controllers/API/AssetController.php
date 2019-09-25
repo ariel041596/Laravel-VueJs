@@ -35,8 +35,12 @@ class AssetController extends Controller
             if(\Gate::allows('isAdmin')){
                 // return Asset::latest()->paginate(10);
                 return Asset::where('status','LIKE',"%approved%")
-                ->where('property_type','LIKE',"%PAR%")->latest()->paginate();
-                
+                ->where('property_type','LIKE',"%PAR%")->latest()->paginate(1);
+                // $allasssetwithcount = [
+                //     'asset' => $asset,
+                //     'asset_count' => $asset->count()
+                // ];
+                // return $allasssetwithcount;
             }
             else{
             $createdBy = Auth::user()->id;
@@ -111,7 +115,7 @@ class AssetController extends Controller
         $this->validate($request, [
             'number' => 'required|string|max:191', //1
             'article' => 'required|string|max:191', //1
-            'description' => 'required|string|max:191', //2
+            'description' => 'required|string', //2
             'property_number' => 'max:191', //3
             'unit_of_measure' => 'required|string|max:191', //4
             'price' => 'max:191', //5
@@ -208,7 +212,7 @@ class AssetController extends Controller
         $this->validate($request, [
             'number' => 'required|string|max:191', //1
             'article' => 'required|string|max:191', //1
-            'description' => 'required|string|max:191', //2
+            'description' => 'required|string', //2
             'property_number' => 'max:191', //3
             'unit_of_measure' => 'required|string|max:191', //4
             'price' => 'max:191', //5

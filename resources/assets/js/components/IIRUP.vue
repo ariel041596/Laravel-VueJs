@@ -69,9 +69,9 @@
                       <td>{{asset.description | upText}}</td>
                       <td>{{asset.property_number}}</td>
                       <td>{{asset.unit_of_measure}}</td>
-                      <td>{{asset.price | numberComma }}</td>
-                      <td>{{asset.quantity | numberComma}}</td>
-                      <td>{{asset.total_value | numberComma}}</td>
+                      <td class="text-right">{{asset.price | numberComma }}</td>
+                      <td class="text-center">{{asset.quantity | numberComma}}</td>
+                      <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
                       <td>{{asset.remarks | upText}}</td>
@@ -923,12 +923,12 @@ export default {
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
-  },
-  mounted() {
-    axios.get("api/disposal").then(response => {
-      this.assets = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/disposal").then(response => {
+  //     this.assets = response.data;
+  //   });
+  // }
 };
 </script>
 

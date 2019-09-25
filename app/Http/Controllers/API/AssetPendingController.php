@@ -31,7 +31,7 @@ class AssetPendingController extends Controller
     {
         // $pending = Asset::asset()->status->pending;
         if(\Gate::allows('isAdmin')){
-        return Asset::where('status','LIKE',"%pending%")->latest()->paginate(); //get or paginate? 
+        return Asset::where('status','LIKE',"%pending%")->latest()->paginate(1); //get or paginate? 
         }else{
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)
@@ -50,7 +50,7 @@ class AssetPendingController extends Controller
         $this->validate($request, [
             'number' => 'required|string|max:191', //1
             'article' => 'required|string|max:191', //1
-            'description' => 'required|string|max:191', //2
+            'description' => 'required|string', //2
             'property_number' => 'max:191', //3
             'unit_of_measure' => 'required|string|max:191', //4
             'price' => 'max:191', //5

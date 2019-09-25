@@ -72,7 +72,7 @@
                       <td>{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.remarks }}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <!-- <td>{{asset.service}}</td> -->
                       <td>{{asset.status | upText}}</td>
@@ -117,8 +117,9 @@
                   </template>
                 </tbody>
               </table>
-              <div>
-                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              <p>Showing {{pendings.from}} to {{pendings.to}} of {{pendings.total}} entries</p>
+              <div id="footer">
+                <pagination class="float-right" :data="assets" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
           </div>
@@ -132,147 +133,6 @@
     <div v-if="!$gate.isAdminOrUserOrAuthor()">
       <NotFound></NotFound>
     </div>
-    <div
-      id="printThis"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="myLargeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <!-- Modal Content: begins -->
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="gridSystemModalLabel">Your Headings</h4>
-          </div>
-
-          <!-- Modal Body -->
-          <div class="modal-body">
-            <div class="body-message">
-              <h4>Any Heading</h4>
-              <p>And a paragraph with a full sentence or something else...</p>
-            </div>
-          </div>
-
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a href @click.prevent="print" target="_blank" class="btn btn-default">
-              <i class="fa fa-print"></i>
-            </a>
-          </div>
-        </div>
-        <!-- Modal Content: ends -->
-      </div>
-    </div>
-
-    <div
-      class="modal fade"
-      id="printing"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addNewModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <!-- <h5 class="modal-title" id="addNewModalLabel">Add New Accountable Officer</h5> -->
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="widget-user-header text-white">
-            <img src="/img/Header.png" width="75%" style="margin-left: 12%;" />
-            <!-- <img src="/img/example-logo.jpg" width="75%" style="margin-left: 12%;"> -->
-          </div>
-          <form @submit.prevent>
-            <div class="modal-body">
-              <!-- For account Name and Code -->
-              <div class="form-group">
-                <input
-                  v-model="form.account_name"
-                  type="text"
-                  id="account_name"
-                  placeholder="Enter Account Name"
-                  name="account_name"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('account_name') }"
-                />
-                <has-error :form="form" field="account_name"></has-error>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-              <a href @click.prevent="print" target="_blank" class="btn btn-default">
-                <i class="fa fa-print"></i>
-              </a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- End Modal for Printing -->
-
-    <!-- Modal for Adding Account Name -->
-    <!-- Add bd-example-modal-lg for LARGE size modal and modal-lg for the second div-->
-    <div
-      class="modal fade"
-      id="addNewAcctName"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addNewModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 v-show="acctMode" class="modal-title" id="addNewModalLabel">Add New Account Name</h5>
-            <h5
-              v-show="!acctMode"
-              class="modal-title"
-              id="addNewModalLabel"
-            >Add New Accountable Officer</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form @submit.prevent="acctMode ? createAcct() : createAcctOfficer()">
-            <div class="modal-body">
-              <!-- For account Name and Code -->
-              <div class="form-group">
-                <input
-                  v-model="form.account_name"
-                  type="text"
-                  id="account_name"
-                  placeholder="Enter Account Name"
-                  name="account_name"
-                  class="form-control"
-                  :class="{ 'is-invalid': form.errors.has('account_name') }"
-                />
-                <has-error :form="form" field="account_name"></has-error>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-              <!-- <button
-                v-show="!acctMode"
-                type="submit"
-                class="btn btn-primary"
-              >Create Accountable Officer</button>-->
-              <button v-show="acctMode" type="submit" class="btn btn-primary">Create Account Name</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- End Modal for Adding Account Name -->
-    <!-- Modal -->
     <!-- Add bd-example-modal-lg for LARGE size modal and modal-lg for the second div-->
     <div
       class="modal fade bd-example-modal-lg"
@@ -535,14 +395,6 @@
               </div>
             </div>
             <div class="modal-footer">
-              <div
-                class="py-2 px-2"
-                style="background: rgb(52, 144, 220); height: 32px; border-radius: 3px;"
-              >
-                <a href="#" @click="addAccModal">
-                  <i class="fas fa-plus" style="color:#fff;"></i>
-                </a>
-              </div>
               <button type="button" class="btn btn-danger" data-dismiss="modal">
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
@@ -737,8 +589,8 @@ export default {
       this.form.total_value = this.form.quantity * this.form.price;
     },
     getResults(page = 1) {
-      axios.get("api/asset?page=" + page).then(response => {
-        this.assets = response.data;
+      axios.get("api/pending?page=" + page).then(response => {
+        this.pendings = response.data;
       });
     },
     updateAsset() {
@@ -901,9 +753,9 @@ export default {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
     this.loadPendingAssets();
+    this.loadAssets();
     this.loadUsers();
     this.loadAcctName();
-    this.loadAssets();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
@@ -912,12 +764,12 @@ export default {
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
-  },
-  mounted() {
-    axios.get("api/asset").then(response => {
-      this.assets = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/asset").then(response => {
+  //     this.assets = response.data;
+  //   });
+  // }
 };
 </script>
 

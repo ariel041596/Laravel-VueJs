@@ -69,7 +69,7 @@
                       <td>
                         <input type="checkbox" :value="asset.id" v-model="selected" />
                       </td>
-                      <td>{{asset.article | upText}}</td>
+                      <td>{{asset.article | upText }}</td>
                       <td>{{asset.description | upText}}</td>
                       <td>{{asset.property_number}}</td>
                       <td>{{asset.unit_of_measure}}</td>
@@ -78,10 +78,10 @@
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.remarks }}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <td>{{asset.status | upText}}</td>
-                      <td>{{asset.property_type}}</td>
+                      <td>{{asset.property_type | upText}}</td>
                       <td>
                         <a
                           href="#"
@@ -122,11 +122,13 @@
                   </template>
                 </tbody>
               </table>
-              <div>
-                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              <p>Showing {{assets.from}} to {{assets.to}} of {{assets.total}} entries</p>
+              <div id="footer">
+                <pagination class="float-right" :data="assets" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
           </div>
+          <!-- start the pagination -->
         </div>
       </div>
       <!-- /.card-body -->
@@ -609,6 +611,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+      assetCount: null,
       form: new Form({
         id: "",
         number: "",
@@ -937,12 +940,12 @@ export default {
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
-  },
-  mounted() {
-    axios.get("api/asset").then(response => {
-      this.assets = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/asset").then(response => {
+  //     this.assets = response.data;
+  //   });
+  // }
 };
 </script>
 
@@ -999,6 +1002,10 @@ export default {
 
 .rpcppe {
   background-color: rgb(242, 242, 242);
+}
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
 }
 </style>
 

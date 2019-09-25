@@ -366,12 +366,12 @@ export default {
     Fire.$on("AfterCreate", () => {
       this.loadAccountableOfficers();
     });
-  },
-  mounted() {
-    axios.get("api/accountable_officer").then(response => {
-      this.accountable_officers = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/accountable_officer").then(response => {
+  //     this.accountable_officers = response.data;
+  //   });
+  // }
 };
 </script>
 

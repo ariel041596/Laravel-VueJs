@@ -340,12 +340,12 @@ export default {
     Fire.$on("AfterCreate", () => {
       this.loadAccountCodes();
     });
-  },
-  mounted() {
-    axios.get("api/account_code").then(response => {
-      this.account_codes = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/account_code").then(response => {
+  //     this.account_codes = response.data;
+  //   });
+  // }
 };
 </script>
 
