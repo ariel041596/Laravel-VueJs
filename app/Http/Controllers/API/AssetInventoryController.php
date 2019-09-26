@@ -33,7 +33,7 @@ class AssetInventoryController extends Controller
         if(\Gate::allows('isAdmin')){
             // return Asset::latest()->paginate(10);
             return Asset::where('status','LIKE',"%approved%")
-            ->where('property_type','LIKE',"%INVENTORY%")->latest()->paginate();
+            ->where('property_type','LIKE',"%INVENTORY%")->latest()->paginate(1);
         }else{
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)
@@ -75,5 +75,29 @@ class AssetInventoryController extends Controller
         $asset = Asset::findOrFail($id);
         $asset->update($request->all());
         return ['message' => 'Updated the assets info'];
+    }
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $inventories = Asset::where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%INVENTORY%")
+            ->where(function($query) use ($search){
+                $query->where('article','LIKE',"%$search%")
+                        ->orWhere('description','LIKE',"%$search%")
+                        ->orWhere('property_number','LIKE',"%$search%")
+                        ->orWhere('price','LIKE',"%$search%")
+                        ->orWhere('accountable_officer','LIKE',"%$search%")
+                        ->orWhere('remarks','LIKE',"%$search%")
+                        ->orWhere('account_name','LIKE',"%$search%");
+                        // orWhere to use other search like for type or description
+            })->paginate(20);
+        }else{
+            // if the users do not found any data after delete all search words
+            $inventories = Asset::where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%INVENTORY%")->latest()->paginate(1);
+        }
+
+        return $inventories;
+
     }
 }

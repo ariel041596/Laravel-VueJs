@@ -107,6 +107,22 @@ Route::apiResources(['accountcode' => 'API\AccountCodeController']);
 // Router for the public profile
 // Route::get('{id}', 'API\AssetController@show');
 
+// Pending Asset Search
+Route::get('findPending', 'API\AssetPendingController@search');
+// End for Pending asset search
+
+// Asset Search
+Route::get('findAsset', 'API\AssetController@search');
+// End for asset search
+
+// inventory Search
+Route::get('findInventory', 'API\AssetInventoryController@search');
+// End for inventory search
+
+// Disposal Search
+Route::get('findDisposal', 'API\DisposalController@search');
+// End for Disposal search
+
 Route::get('profile', 'API\UserController@profile');
 // Router for the search function
 Route::get('findUser', 'API\UserController@search');

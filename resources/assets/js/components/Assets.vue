@@ -1,18 +1,14 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="rpcppe card-header">
-        <h3 class="card-title mt-2">
-          Report on Physical Count of Property Plant and Equipment (RPCPPE)
-          {{selected}}
-          <button
-            class="update-create btn float-right"
-            @click="newModal"
-          >
-            <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
-          </button>
-        </h3>
+    <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div id="rpcppe" class="card-header">
+        <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
+        </button>
+        <h3
+          class="card-title mt-1 text-white"
+        >REPORT ON PHYSICAL COUNT OF PROPERTY PLANT AND EQUIPMENT</h3>
       </div>
 
       <!-- /.card-header -->
@@ -122,7 +118,9 @@
                   </template>
                 </tbody>
               </table>
-              <p>Showing {{assets.from}} to {{assets.to}} of {{assets.total}} entries</p>
+              <p
+                id="showEntries"
+              >Showing {{assets.from}} to {{assets.to}} of {{assets.total}} entries</p>
               <div id="footer">
                 <pagination class="float-right" :data="assets" @pagination-change-page="getResults"></pagination>
               </div>
@@ -938,6 +936,16 @@ export default {
       this.loadAssets();
       this.loadAcctName();
     });
+
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findAsset?q=" + query)
+        .then(data => {
+          this.assets = data.data;
+        })
+        .catch(() => {});
+    });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
   }
@@ -1006,6 +1014,16 @@ export default {
 #footer {
   margin-top: -40px;
   margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
 }
 </style>
 

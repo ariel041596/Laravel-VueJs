@@ -1,17 +1,14 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="rpcppe card-header">
-        <h3 class="card-title mt-2">
-          Inventory and Inspection Report of Unserviceable Property, Plant and Equipment (IIRUP)
-          <button
-            class="update-create btn float-right"
-            @click="newModal"
-          >
-            <i class="fas fa-plus">&nbsp;</i>Add IIRUP
-          </button>
-        </h3>
+    <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div id="rpcppe" class="card-header">
+        <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-plus">&nbsp;</i>Add IIRUP
+        </button>
+        <h3
+          class="card-title mt-1 text-white"
+        >INVENTORY AND INSPECTION REPORT OF UNSERVICEABLE PROPERTY</h3>
       </div>
 
       <!-- /.card-header -->
@@ -46,7 +43,6 @@
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
-                    <th>Service</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -74,9 +70,8 @@
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.remarks}}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                      <td>{{asset.service}}</td>
                       <td>{{asset.status | upText}}</td>
                       <td>
                         <a
@@ -118,8 +113,11 @@
                   </template>
                 </tbody>
               </table>
-              <div>
-                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              <p
+                id="showEntries"
+              >Showing {{assets.from}} to {{assets.to}} of {{assets.total}} entries</p>
+              <div id="footer">
+                <pagination class="float-right" :data="assets" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
           </div>
@@ -753,7 +751,7 @@ export default {
       this.form.total_value = this.form.quantity * this.form.price;
     },
     getResults(page = 1) {
-      axios.get("api/asset?page=" + page).then(response => {
+      axios.get("api/disposal?page=" + page).then(response => {
         this.assets = response.data;
       });
     },
@@ -921,6 +919,16 @@ export default {
       this.loadAssets();
       this.loadAcctName();
     });
+
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findDisposal?q=" + query)
+        .then(data => {
+          this.assets = data.data;
+        })
+        .catch(() => {});
+    });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
   }
@@ -985,6 +993,20 @@ export default {
 
 .rpcppe {
   background-color: rgb(242, 242, 242);
+}
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
 }
 </style>
 

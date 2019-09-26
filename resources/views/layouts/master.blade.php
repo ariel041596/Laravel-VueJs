@@ -13,16 +13,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>Property Management System</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
+    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper"  id="app">
 
   <!-- Navbar -->
-  <nav id="navigation-header" class="main-header navbar navbar-expand navbar-light border-bottom bg-light">
+  <nav id="navigation-header" class="main-header navbar navbar-expand navbar-light border-bottom ">
 
-  <ul class="navbar-nav">
+    <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars text-white"></i></a>
       </li>
     </ul>
 

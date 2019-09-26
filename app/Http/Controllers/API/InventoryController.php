@@ -28,7 +28,7 @@ class InventoryController extends Controller
     public function index()
     {
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
-            return Inventory::latest()->paginate(5);
+            return Inventory::latest()->paginate(1);
         }
     }
 
@@ -119,4 +119,5 @@ class InventoryController extends Controller
         $inventory->delete();
         return ['message' => 'inventory Deleted'];
     }
+    
 }

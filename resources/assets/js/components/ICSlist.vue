@@ -1,17 +1,12 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="rpcppe card-header">
-        <h3 class="card-title mt-2">
-          Inventory and Custodian Slip (ICS)
-          <button
-            class="update-create btn float-right"
-            @click="newModal"
-          >
-            <i class="fas fa-plus">&nbsp;</i>Add ICS
-          </button>
-        </h3>
+    <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div id="rpcppe" class="card-header">
+        <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-plus">&nbsp;</i>Add ICS
+        </button>
+        <h3 class="card-title mt-1 text-white">INVENTORY CUSTODIAN SLIP</h3>
       </div>
 
       <!-- /.card-header -->
@@ -52,13 +47,13 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <template v-if="assets.data<=0">
+                  <template v-if="inventories.data<=0">
                     <tr>
                       <td colspan="15" class="text-center">No Inventory Custodian Slip Available</td>
                     </tr>
                   </template>
                   <template v-else>
-                    <tr v-for="asset in assets.data" :key="asset.id">
+                    <tr v-for="asset in inventories.data" :key="asset.id">
                       <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                       <!-- <td>{{asset.id}}</td> -->
 
@@ -74,7 +69,7 @@
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.remarks}}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <td>{{asset.status | upText}}</td>
                       <td>{{asset.property_type}}</td>
@@ -118,8 +113,15 @@
                   </template>
                 </tbody>
               </table>
-              <div>
-                <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
+              <p
+                id="showEntries"
+              >Showing {{inventories.from}} to {{inventories.to}} of {{inventories.total}} entries</p>
+              <div id="footer">
+                <pagination
+                  class="float-right"
+                  :data="inventories"
+                  @pagination-change-page="getResults"
+                ></pagination>
               </div>
             </div>
           </div>
@@ -603,6 +605,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+      inventories: {},
       form: new Form({
         id: "",
         number: "",
@@ -753,8 +756,8 @@ export default {
       this.form.total_value = this.form.quantity * this.form.price;
     },
     getResults(page = 1) {
-      axios.get("api/asset?page=" + page).then(response => {
-        this.assets = response.data;
+      axios.get("api/inventory?page=" + page).then(response => {
+        this.inventories = response.data;
       });
     },
     updateAsset() {
@@ -837,12 +840,19 @@ export default {
     loadUsers() {
       axios.get("api/profile").then(({ data }) => (this.profiles = data));
     },
-    // LoadUser to display in the tbody
-    loadAssets() {
+    loadInventories() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
-        axios.get("api/inventory").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+        axios
+          .get("api/inventory")
+          .then(({ data }) => (this.inventories = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
+    // LoadUser to display in the tbody
+    // loadAssets() {
+    //   if (this.$gate.isAdminOrUserOrAuthor()) {
+    //     axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+    //   }
+    // },
     // LoadAccountname to display in the options datalist
     loadAcctName() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
@@ -913,13 +923,24 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
+    this.loadInventories();
     this.loadUsers();
     this.loadAcctName();
-    this.loadAssets();
+    // this.loadAssets();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
-      this.loadAssets();
+      this.loadInventories();
+      // this.loadAssets();
       this.loadAcctName();
+    });
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findInventory?q=" + query)
+        .then(data => {
+          this.inventories = data.data;
+        })
+        .catch(() => {});
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
@@ -985,6 +1006,20 @@ export default {
 
 .rpcppe {
   background-color: rgb(242, 242, 242);
+}
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
 }
 </style>
 

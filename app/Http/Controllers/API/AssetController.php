@@ -249,4 +249,28 @@ class AssetController extends Controller
         return ['message' => 'Asset Deleted'];
     
     }
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $assets = Asset::where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%PAR%")
+            ->where(function($query) use ($search){
+                $query->where('article','LIKE',"%$search%")
+                        ->orWhere('description','LIKE',"%$search%")
+                        ->orWhere('property_number','LIKE',"%$search%")
+                        ->orWhere('price','LIKE',"%$search%")
+                        ->orWhere('accountable_officer','LIKE',"%$search%")
+                        ->orWhere('remarks','LIKE',"%$search%")
+                        ->orWhere('account_name','LIKE',"%$search%");
+                        // orWhere to use other search like for type or description
+            })->paginate(20);
+        }else{
+            // if the users do not found any data after delete all search words
+            $assets = Asset::where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(1);
+        }
+
+        return $assets;
+
+    }
 }

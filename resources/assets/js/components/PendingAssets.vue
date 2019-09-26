@@ -1,10 +1,10 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
-      <div class="rpcppe card-header">
-        <h3 class="card-title mt-2">
-          Pendings
+    <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
+      <div id="rpcppe" class="rpcppe card-header">
+        <h3 class="card-title mt-1 text-white">
+          PENDINGS
           <!-- <button class="update-create btn float-right" @click="newModal">
             <i class="fas fa-cart-plus">&nbsp;</i>Add Asset
           </button>-->
@@ -117,9 +117,15 @@
                   </template>
                 </tbody>
               </table>
-              <p>Showing {{pendings.from}} to {{pendings.to}} of {{pendings.total}} entries</p>
+              <p
+                id="showEntries"
+              >Showing {{pendings.from}} to {{pendings.to}} of {{pendings.total}} entries</p>
               <div id="footer">
-                <pagination class="float-right" :data="assets" @pagination-change-page="getResults"></pagination>
+                <pagination
+                  class="float-right"
+                  :data="pendings"
+                  @pagination-change-page="getResults"
+                ></pagination>
               </div>
             </div>
           </div>
@@ -762,6 +768,16 @@ export default {
       this.loadAcctName();
       this.loadPendingAssets();
     });
+
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findPending?q=" + query)
+        .then(data => {
+          this.pendings = data.data;
+        })
+        .catch(() => {});
+    });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
   }
@@ -826,6 +842,20 @@ export default {
 
 .rpcppe {
   background-color: rgb(242, 242, 242);
+}
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
 }
 </style>
 

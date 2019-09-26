@@ -174,7 +174,7 @@ const app = new Vue({
         // Debounce is an installed package in laravel for wait of every request
         searchit: _.debounce(() => {
             Fire.$emit('searching');
-        }, 1000),
+        }, 200),
 
         printme() {
             window.print();
