@@ -42,6 +42,11 @@ export default class Gate {
             return true;
         }
     }
+    isAdminOrUser() {
+        if (this.user.type === 'admin' || this.user.type === 'user') {
+            return true;
+        }
+    }
     isAdminOrUserOrAuthor() {
         if (this.user.type === 'admin' || this.user.type === 'user' || this.user.type === 'author') {
             return true;

@@ -25,11 +25,11 @@ class RequestPropertyController extends Controller
         else{
             if(\Gate::allows('isEmployee')){
                 $createdBy = Auth::user()->id;
-                return RequestAsset::where('createdBy', $createdBy)->latest()->paginate(); //get or paginate?
+                return RequestAsset::where('createdBy', $createdBy)
+                ->orWhere('status','LIKE',"%unavailable%")->latest()->paginate(); //get or paginate?
             }else{
                 if(\Gate::allows('isSupply')){
-                    return RequestAsset::where('status','LIKE',"%pending%")
-                    ->orWhere('status','LIKE',"%unavailable%")->latest()->paginate();
+                    return RequestAsset::where('status','LIKE',"%pending%")->latest()->paginate();
                 }
             }
         }
@@ -130,4 +130,59 @@ class RequestPropertyController extends Controller
        return ['message' => 'Asset Deleted'];
    
    }
+   public function search(){
+
+    if(\Gate::allows('isSupply')){
+        if ($search = \Request::get('q')) {
+            $requests = RequestAsset::where('status','LIKE',"%pending%")
+            ->where(function($query) use ($search){
+                $query->Where('entity_name','LIKE',"%$search%")
+                        ->orWhere('service','LIKE',"%$search%")
+                        ->orWhere('request_number','LIKE',"%$search%")
+                        ->orWhere('description','LIKE',"%$search%")
+                        ->orWhere('quantity','LIKE',"%$search%")
+                        ->orWhere('remarks','LIKE',"%$search%")
+                        ->orWhere('purpose','LIKE',"%$search%")
+                        ->orWhere('accountable_officer','LIKE',"%$search%")
+                        ->orWhere('received_by','LIKE',"%$search%");
+                        // orWhere to use other search like for type or description
+            })->paginate(20);
+        }else{
+            // if the users do not found any data after delete all search words
+            if(\Gate::allows('isSupply')){
+                $requests = RequestAsset::where('status','LIKE',"%pending%")->latest()->paginate();
+            }
+        }
+    }else{
+        if(\Gate::allows('isEmployee')){
+            if ($search = \Request::get('q')) {
+                $createdBy = Auth::user()->id;
+                $requests = RequestAsset::where('createdBy',$createdBy)
+                ->where(function($query) use ($search){
+                    $query->Where('entity_name','LIKE',"%$search%")
+                            ->orWhere('service','LIKE',"%$search%")
+                            ->orWhere('request_number','LIKE',"%$search%")
+                            ->orWhere('description','LIKE',"%$search%")
+                            ->orWhere('quantity','LIKE',"%$search%")
+                            ->orWhere('remarks','LIKE',"%$search%")
+                            ->orWhere('purpose','LIKE',"%$search%")
+                            ->orWhere('accountable_officer','LIKE',"%$search%")
+                            ->orWhere('received_by','LIKE',"%$search%");
+                            // orWhere to use other search like for type or description
+                })->paginate(20);
+            }else{
+                if(\Gate::allows('isEmployee')){
+                    $createdBy = Auth::user()->id;
+                    $requests = RequestAsset::where('createdBy', $createdBy)->latest()->paginate();
+                }
+            }
+        }
+
+    }
+
+    
+
+    return $requests;
+
+}
 }

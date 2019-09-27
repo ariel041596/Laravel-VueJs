@@ -6,9 +6,7 @@
         <button class="update-create btn float-right" @click="newModal">
           <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
         </button>
-        <h3
-          class="card-title mt-1 text-white"
-        >REPORT ON PHYSICAL COUNT OF PROPERTY PLANT AND EQUIPMENT</h3>
+        <h3 class="card-title mt-1 text-white">RPCPPE</h3>
       </div>
 
       <!-- /.card-header -->

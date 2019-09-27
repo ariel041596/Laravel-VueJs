@@ -1,18 +1,12 @@
 <template>
   <div class>
     <!-- For Admin -->
-    <div class="card row mt-4" v-if="$gate.isEmployeeOrSupply()">
-      <div class="rpcppe card-header">
-        <h3 class="card-title mt-2">
-          Request Asset
-          <button
-            class="update-create btn float-right"
-            @click="newModal"
-            v-if="$gate.isEmployee()"
-          >
-            <i class="fas fa-cart-plus">&nbsp;</i>Request Asset
-          </button>
-        </h3>
+    <div id="card-content" class="card row mt-4" v-if="$gate.isEmployeeOrSupply()">
+      <div id="rpcppe" class="card-header">
+        <button class="update-create btn float-right" @click="newModal" v-if="$gate.isEmployee()">
+          <i class="fas fa-cart-plus">&nbsp;</i>Request Asset
+        </button>
+        <h3 class="card-title mt-1 text-white">Request Asset</h3>
       </div>
 
       <!-- /.card-header -->
@@ -620,14 +614,23 @@ export default {
       this.loadAssets();
       this.loadAcctName();
     });
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findRequest?q=" + query)
+        .then(data => {
+          this.assets = data.data;
+        })
+        .catch(() => {});
+    });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
-  },
-  mounted() {
-    axios.get("api/requests").then(response => {
-      this.assets = response.data;
-    });
   }
+  // mounted() {
+  //   axios.get("api/requests").then(response => {
+  //     this.assets = response.data;
+  //   });
+  // }
 };
 </script>
 
@@ -682,8 +685,19 @@ export default {
   padding: 0;
 }
 
-.rpcppe {
-  background-color: rgb(242, 242, 242);
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
 }
 </style>
 

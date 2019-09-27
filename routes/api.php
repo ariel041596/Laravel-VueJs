@@ -123,6 +123,10 @@ Route::get('findInventory', 'API\AssetInventoryController@search');
 Route::get('findDisposal', 'API\DisposalController@search');
 // End for Disposal search
 
+// Request property to supply Search
+Route::get('findRequest', 'API\RequestPropertyController@search');
+// End for Request property to supply search
+
 Route::get('profile', 'API\UserController@profile');
 // Router for the search function
 Route::get('findUser', 'API\UserController@search');

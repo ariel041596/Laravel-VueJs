@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Dashboard -->
-          @can('isAdmin')
+          @can('isAdminOrUser')
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -131,12 +131,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Users</p>
                 </router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link to="/users-type" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
                  <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Users Type</p>
                 </router-link>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <router-link to="/accountable-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
                  <i class="fas fa-users-cog"></i>&nbsp;

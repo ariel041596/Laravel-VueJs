@@ -3,12 +3,10 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <h3 class="card-title mt-2 text-white">
-          User's Management
-          <button class="update-create btn float-right" @click="newModal">
-            <i class="fas fa-user-plus">&nbsp;</i>Create User
-          </button>
-        </h3>
+        <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-user-plus">&nbsp;</i>Create User
+        </button>
+        <h3 class="card-title mt-1 text-white">User's Management</h3>
       </div>
 
       <!-- /.card-header -->
@@ -176,17 +174,27 @@
                 <has-error :form="form" field="password"></has-error>
               </div>
             </div>
-            <div class="modal-footer">
+            <i class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button v-show="editmode" type="submit" class="update-create btn">
+              <button
+                :disabled="disabled"
+                v-show="editmode"
+                type="submit"
+                class="update-create btn"
+              >
                 <i class="fas fa-pen">&nbsp;</i>Update User
               </button>
-              <button v-show="!editmode" type="submit" class="update-create btn">
+              <button
+                :disabled="disabled"
+                v-show="!editmode"
+                type="submit"
+                class="update-create btn"
+              >
                 <i class="fas fa-user-plus">&nbsp;</i>Create User
               </button>
-            </div>
+            </i>
           </form>
         </div>
       </div>
@@ -199,6 +207,7 @@
 export default {
   data() {
     return {
+      submitmode: false,
       errors: null,
       selected: [],
       selectAll: false,
@@ -216,7 +225,36 @@ export default {
       })
     };
   },
+  computed: {
+    disabled() {
+      return (
+        this.form.name === "" ||
+        this.form.email === "" ||
+        this.form.password === "" ||
+        this.form.type === "" ||
+        this.form.service === ""
+      );
+    }
+  },
   methods: {
+    // disabled() {
+    //   return (
+    //     this.form.name === "" ||
+    //     this.form.email === "" ||
+    //     this.form.password === "" ||
+    //     this.form.type === "" ||
+    //     this.form.service === ""
+    //   );
+    // },
+    isInAsset(asset) {
+      const item = this.asset.find(item => item.id === asset.id);
+      if (item) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     select() {
       this.selected = [];
       if (!this.selectAll) {
@@ -231,6 +269,7 @@ export default {
       });
     },
     updateUser() {
+      $("#addNew").modal("hide");
       this.$Progress.start();
       this.form
         .put("api/user/" + this.form.id)
@@ -353,8 +392,12 @@ export default {
   color: white;
   opacity: 0.9;
 }
-.update-create:hover {
+.update-create:hover:enabled {
   opacity: 1;
+}
+.update-create:hover:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
 }
 .modal-close-button {
   color: white;
@@ -383,5 +426,6 @@ export default {
 }
 #rpcppe {
   background: #3c8dbc;
+  height: 50px;
 }
 </style>

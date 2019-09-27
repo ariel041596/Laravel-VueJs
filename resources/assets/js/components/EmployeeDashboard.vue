@@ -1,8 +1,8 @@
 <template>
   <!-- For Employee -->
-  <div class="card row mt-4" v-if="$gate.isEmployee()">
-    <div class="rpcppe card-header">
-      <h3 class="card-title mt-2">
+  <div id="card-content" class="card row mt-4" v-if="$gate.isEmployee()">
+    <div id="rpcppe" class="card-header">
+      <h3 class="card-title mt-1 text-white">
         List of Accountabilities
         <!-- <button class="update-create btn float-right" @click="newModal">
             <i class="fas fa-code">&nbsp;</i>Add User Type
@@ -111,3 +111,19 @@ export default {
   }
 };
 </script>
+<style scoped>
+#footer {
+  margin-top: -40px;
+  margin-bottom: -5px;
+}
+#showEntries {
+  padding-bottom: 10px;
+}
+#card-content {
+  border: 1px solid #3c8dbc;
+}
+#rpcppe {
+  background: #3c8dbc;
+  height: 50px;
+}
+</style>

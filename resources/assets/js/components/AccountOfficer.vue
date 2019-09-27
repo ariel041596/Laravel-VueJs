@@ -3,12 +3,10 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <h3 class="card-title mt-2 text-white">
-          Accountable Officers
-          <button class="update-create btn float-right" @click="newModal">
-            <i class="fas fa-user-plus">&nbsp;</i>Add Accountable Officer
-          </button>
-        </h3>
+        <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-user-plus">&nbsp;</i>Add Accountable Officer
+        </button>
+        <h3 class="card-title mt-1 text-white">Accountable Officers</h3>
       </div>
 
       <!-- /.card-header -->
@@ -431,6 +429,7 @@ export default {
 }
 #rpcppe {
   background: #3c8dbc;
+  height: 50px;
 }
 </style>
 
