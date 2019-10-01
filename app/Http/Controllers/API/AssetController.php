@@ -161,13 +161,22 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function edit($id)
+    // {
+    //     $asset = Asset::whereId($id)->first();
+    //     return response()->json([
+    //         "asset" => $asset   
+    //     ], 200);
+    // }
     public function show($id)
     {
-        // return auth('api')->asset();
+    //     // return auth('api')->asset();
         $asset = Asset::whereId($id)->first();
         return response()->json([
             "asset" => $asset   
         ], 200);
+        // $asset = Asset::find($id);
+        // return response()->json($asset);
 
         // $accountabilities = Asset::find($id);
         // return $accountabilities;
@@ -235,6 +244,7 @@ class AssetController extends Controller
         $asset->update($request->all());
         return ['message' => 'Updated the assets info'];
     }
+    
 
     /**
      * Remove the specified resource from storage.

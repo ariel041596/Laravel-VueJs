@@ -45,9 +45,9 @@ Route::middleware('auth:api')->get('/asset', function (Request $request) {
 });
 // router for Asset Controller
 Route::apiResources(['asset' => 'API\AssetController']);
-Route::middleware('auth:api')->get('/asset/par/{id}', function (Request $request) { //this is not working
-    return $request->asset(); //this is not working
-});                            //this is not working
+// Route::middleware('auth:api')->get('/asset/par/{id}', function (Request $request) { //this is not working
+//     return $request->asset(); //this is not working
+// });                            //this is not working
 // ===============================================End For Assets==========================
 // ===============================================For Assets Pending==========================
 // Middleware to get Asset
@@ -89,6 +89,14 @@ Route::middleware('auth:api')->get('/disposal', function (Request $request) {
 // router for Asset Controller
 Route::apiResources(['disposal' => 'API\DisposalController']);
 // ===============================================End For IRRUP==========================
+// ===============================================For PAR Printing==========================
+// Middleware to get Asset
+// Route::middleware('auth:api')->get('/par', function (Request $request) {
+//     return $request->par();
+// });
+// // router for Asset Controller
+// Route::apiResources(['par' => 'API\PrintAssetController']);
+// ===============================================End For PAR Printing==========================
 
 
 
@@ -127,6 +135,8 @@ Route::get('findDisposal', 'API\DisposalController@search');
 Route::get('findRequest', 'API\RequestPropertyController@search');
 // End for Request property to supply search
 
+// Route::get(':id', 'API\AssetController@show');
+// Route::get(':id', 'API\PrintAssetController@show');
 Route::get('profile', 'API\UserController@profile');
 // Router for the search function
 Route::get('findUser', 'API\UserController@search');
@@ -134,6 +144,11 @@ Route::get('findUser', 'API\UserController@search');
 Route::put('profile', 'API\UserController@updateProfile');
 
 
+// Route::get('{id}', 'API\PrintAssetController@edit');
+// Route::group(['middleware' => 'auth:api'], function ($router) {
+//     Route::get('asset/{id}', 'API\PrintAssetController@edit');
+
+// });
 
 // Route::get('add','CarController@create');
 // Route::post('add','CarController@store');

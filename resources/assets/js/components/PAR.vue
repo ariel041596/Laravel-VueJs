@@ -32,24 +32,24 @@
           <!-- Table row -->
           <div class="row">
             <div class="card-body table-responsive p-1" style="text-align:center; font-size:16px;">
-              <table class="table table-hover">
-                <tbody>
+              <table border="1" id="table">
+                <tbody class="tablebody">
                   <tr>
                     <!-- <th>ID</th> -->
                     <th width="8%">Qty.</th>
                     <th width="8%">Unit</th>
                     <th width="30%">Description</th>
-                    <th>Property No.</th>
-                    <th>Date Acquired</th>
-                    <th>Unit Cost</th>
-                    <th>Total Cost</th>
+                    <th width="14%">Property No.</th>
+                    <th width="10%">Date Acquired</th>
+                    <th width="15%">Unit Cost</th>
+                    <th width="15%">Total Cost</th>
                   </tr>
                 </tbody>
-                <tbody>
+                <tbody class="tablebody">
                   <tr v-for="asset in assets" :key="asset.id">
                     <td>{{ asset.quantity | numberComma }}</td>
                     <td>{{ asset.unit_of_measure }}</td>
-                    <td class="text-left">{{ asset.description | upText }}</td>
+                    <td class="text-left">{{ asset.description }}</td>
                     <td>{{ asset.property_number }}</td>
                     <td>{{ asset.date | myDate }}</td>
                     <td>{{ asset.price | numberComma }}</td>
@@ -57,6 +57,10 @@
                   </tr>
                 </tbody>
               </table>
+              <p class="tablebody">
+                x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+                <i>NOTHING FOLLOWS x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x</i>
+              </p>
             </div>
             <!-- /.col -->
           </div>
@@ -156,22 +160,21 @@ export default {
       assets: {}
     };
   },
-  computed: {
-    // assets() {
-    //   return this.$store.getters.assets;
-    // }
-  },
   created() {
-    if (this.assets.length) {
-      this.assets = this.asset.find(asset => asset.id == this.$route.params.id);
-    } else {
-      if (this.$gate.isAdminOrUserOrAuthor()) {
-        axios
-          .get(`api/asset/${this.$route.params.id}`)
-          .then(({ data }) => (this.assets = data));
-      }
+    if (this.$gate.isAdminOrUserOrAuthor()) {
+      axios
+        .get(`api/asset/${this.$route.params.id}`)
+        .then(({ data }) => (this.assets = data));
     }
-
+    // if (this.$gate.isAdminOrUserOrAuthor()) {
+    //   axios.get(`api/asset/${this.$route.params.id}`).then(response => {
+    //     this.assets = response.data;
+    //   });
+    // }
+    // if (this.assets.length) {
+    //   this.assets = this.asset.find(asset => asset.id == this.$route.params.id);
+    // } else {
+    // }
     // if (this.$gate.isAdminOrUserOrAuthor()) {
     //     axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
     //   }
@@ -260,6 +263,15 @@ export default {
 }
 .widget-user .card-footer {
   padding: 0;
+}
+#table {
+  font-family: Palatino Linotype;
+  font-size: 16px;
+}
+
+.tablebody {
+  border-top: 1px solid black;
+  border: 1px solid black;
 }
 </style>
 

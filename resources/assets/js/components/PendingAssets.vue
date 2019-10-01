@@ -21,8 +21,9 @@
           <div class="row">
             <div class="col-sm-12">
               <table
+                border="1"
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
@@ -856,6 +857,8 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+table {
 }
 </style>
 

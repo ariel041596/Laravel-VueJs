@@ -22,6 +22,8 @@ import jspdf from 'jspdf';
 import Vuetify from 'vuetify'
 import StoreData from './store'
 
+// import { routes } from './routes';
+
 Vue.use(Vuetify)
 
 Vue.use(Vuex);
@@ -78,6 +80,9 @@ Vue.use(VueNumeric)
 Vue.use(VueRouter);
 Vue.use(jspdf);
 // routes for vue js
+
+
+
 const routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue') },
     { path: '/users', component: require('./components/Users.vue') },
@@ -94,17 +99,17 @@ const routes = [
     { path: '/employee-dashboard', component: require('./components/EmployeeDashboard.vue') },
     { path: '/requests', component: require('./components/RequestedProperty.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
-    { path: '/', component: require('./components/Dashboard.vue') },
+    { path: '/', component: require('./components/Profile.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },
-    // { path: '/:id', component: require('./components/PAR.vue') },
+    { path: '/:id', name: 'par', component: require('./components/PAR.vue') },
     // { path: '/:id', component: require('./components/ICS.vue') },
     { path: '*', component: require('./components/404NotFound.vue') },
 ];
 // To remove the home e.g home/dashboard after the refresh page
 const router = new VueRouter({
     mode: 'history',
-    routes
-})
+    routes //added the routes:
+});
 
 
 // Use this to make a filter imported from vuejs and make a capitalize letter

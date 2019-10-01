@@ -86,7 +86,11 @@
                         >
                           <i class="fas fa-edit"></i>
                         </a>
-                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                        <router-link
+                          v-show="asset.price>15000"
+                          :to="{name: 'par', params: { id: asset.id }}"
+                        >
+                          <!-- <router-link v-show="asset.price>15000" :to="`${asset.id}`"> -->
                           <i
                             class="fas fa-print"
                             data-toggle="tooltip"
