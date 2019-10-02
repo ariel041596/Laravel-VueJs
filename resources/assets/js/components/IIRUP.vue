@@ -22,16 +22,16 @@
             <div class="col-sm-12">
               <table
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table table-bordered dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
                 <tbody>
                   <tr class>
                     <!-- <th>ID</th> -->
-                    <th>
+                    <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
-                    </th>
+                    </!-->
                     <th>Article</th>
                     <th width="20%">Description</th>
                     <th width="5%">Property Number</th>
@@ -58,9 +58,9 @@
                       <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                       <!-- <td>{{asset.id}}</td> -->
 
-                      <td>
+                      <!-- <td>
                         <input type="checkbox" :value="asset.id" v-model="selected" />
-                      </td>
+                      </!-->
                       <td>{{asset.article | upText}}</td>
                       <td>{{asset.description | upText}}</td>
                       <td>{{asset.property_number}}</td>

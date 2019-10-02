@@ -44,7 +44,7 @@ class AccountOfficerController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
-            'name' => 'required|string|max:191', //1
+            'name' => 'required|string|max:191|unique:account_officers,name', //1
             'designation' => 'required|string|max:191', //2
             'service' => 'required|string|max:191', //3
             
@@ -60,6 +60,12 @@ class AccountOfficerController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'name' => 'required|string|max:191', //1
+            'designation' => 'required|string|max:191', //2
+            'service' => 'required|string|max:191', //3
+            
+        ]);
         $accountofficer = AccountOfficer::findOrFail($id);
         $accountofficer->update($request->all());
         return ['message' => 'Updated the Accounts info'];

@@ -98,6 +98,8 @@ const routes = [
     { path: '/users-type', component: require('./components/UsersType.vue') },
     { path: '/employee-dashboard', component: require('./components/EmployeeDashboard.vue') },
     { path: '/requests', component: require('./components/RequestedProperty.vue') },
+    { path: '/property-officers', component: require('./components/PropertyOfficer.vue') },
+    { path: '/article-category', component: require('./components/ArticleCategory.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Profile.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },

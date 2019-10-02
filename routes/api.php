@@ -20,6 +20,14 @@ Route::middleware('auth:api')->get('/accountable_officer', function (Request $re
 // router for Usercontroller
 Route::apiResources(['accountable_officer' => 'API\AccountOfficerController']);
 // ===============================================End For Accountable Officers==========================
+// ===============================================For Property Officers==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/property_officer', function (Request $request) {
+    return $request->property_officer();
+});
+// router for Usercontroller
+Route::apiResources(['property_officer' => 'API\PropertyOfficerController']);
+// ===============================================End For Property Officers==========================
 // ===============================================For Account Codes==========================
 // Middleware to get user
 Route::middleware('auth:api')->get('/account_code', function (Request $request) {
@@ -36,6 +44,14 @@ Route::middleware('auth:api')->get('/users_type', function (Request $request) {
 // router for Usercontroller
 Route::apiResources(['users_type' => 'API\UsersTypeController']);
 // ===============================================End For Users Type==========================
+// ===============================================For Article category==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/article_category', function (Request $request) {
+    return $request->article_category();
+});
+// router for Usercontroller
+Route::apiResources(['article_category' => 'API\ArticleCategoryController']);
+// ===============================================End For Article category==========================
 
 
 // ===============================================For Assets==========================

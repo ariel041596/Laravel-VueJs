@@ -20,17 +20,17 @@
             <div class="col-sm-12">
               <table
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table table-bordered dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
                 <tbody>
                   <tr class>
                     <!-- <th>ID</th> -->
-                    <th>
+                    <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
-                    </th>
-                    <th>ID</th>
+                    </!-->
+                    <th class="text-center">ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Type</th>
@@ -49,10 +49,10 @@
                     <!-- <tr v-for="asset in assets" :key="asset.id"> -->
                     <!-- <td>{{asset.id}}</td> -->
 
-                    <td>
+                    <!-- <td>
                       <input type="checkbox" :value="user.id" v-model="selected" />
-                    </td>
-                    <td>{{user.id}}</td>
+                    </!-->
+                    <td class="text-center">{{user.id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.type | upText}}</td>

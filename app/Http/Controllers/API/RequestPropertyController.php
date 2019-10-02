@@ -41,7 +41,7 @@ class RequestPropertyController extends Controller
        $this->validate($request, [
            'entity_name' => 'required|string|max:191', //1
            'service' => 'required|string|max:191', //2
-           'request_number' => 'required|string|max:191', //3
+           'request_number' => 'required|max:191', //3
            'unit_of_measure' => 'required|string|max:191', //4
            'description' => 'required|string|max:191', //5
            'quantity' => 'required|string|max:191', //6

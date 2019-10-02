@@ -39,8 +39,8 @@
                     <th>Remarks</th>
                     <th>Purpose</th>
                     <th>Accountable Officer</th>
-                    <th>Issued By</th>
-                    <th>Received By</th>
+                    <th v-if="$gate.isSupply()">Issued By</th>
+                    <th v-if="$gate.isSupply()">Received By</th>
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -64,11 +64,11 @@
                       <td>{{asset.description | upText}}</td>
                       <td class="text-center">{{asset.quantity | numberComma}}</td>
                       <td>{{asset.status | upText}}</td>
-                      <td>{{asset.remarks | upText}}</td>
+                      <td>{{asset.remarks }}</td>
                       <td>{{asset.purpose | upText}}</td>
                       <td>{{asset.accountable_officer}}</td>
-                      <td>{{asset.issued_by }}</td>
-                      <td>{{asset.received_by | upText}}</td>
+                      <td v-if="$gate.isSupply()">{{asset.issued_by }}</td>
+                      <td v-if="$gate.isSupply()">{{asset.received_by }}</td>
                       <td>
                         <a
                           href="#"
@@ -153,6 +153,7 @@
                 <div class="col form-group">
                   <label>Service</label>
                   <input
+                    readonly
                     v-model="form.service"
                     type="text"
                     id="service"
@@ -296,7 +297,7 @@
                   >
                     <option value>Select Property Officer</option>
                     <option
-                      v-for="officer in accountable_officers.data"
+                      v-for="officer in property_officers.data"
                       :key="officer.id"
                     >{{officer.name}}</option>
                   </select>
@@ -405,7 +406,7 @@ export default {
       acctMode: false,
       editmode: false,
       accountcodes: {},
-      accountable_officers: {},
+      property_officers: {},
       profiles: {},
       assets: {},
       form: new Form({
@@ -461,6 +462,11 @@ export default {
         this.assets = response.data;
       });
     },
+    getService() {
+      if (this.$gate.isEmployee()) {
+        this.form.service = this.profiles.service;
+      }
+    },
     updateAsset() {
       if (this.$gate.isSupply()) {
         this.form.status = "approved";
@@ -504,6 +510,8 @@ export default {
       this.form.reset();
       this.form.clear();
       $("#addNew").modal("show");
+      this.form.service = this.profiles.service;
+      this.form.request_number = this.assets.to + 1;
     },
     //Delete User method
     deleteAsset(id) {
@@ -534,11 +542,11 @@ export default {
           }
         });
     },
-    loadAccountableOfficers() {
+    loadPropertyOfficers() {
       if (this.$gate.isEmployeeOrSupply()) {
         axios
-          .get("api/accountable_officer")
-          .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
+          .get("api/property_officer")
+          .then(({ data }) => (this.property_officers = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
     loadUsers() {
@@ -609,7 +617,7 @@ export default {
     this.loadUsers();
     this.loadAcctName();
     this.loadAssets();
-    this.loadAccountableOfficers();
+    this.loadPropertyOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadAcctName();

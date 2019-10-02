@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('type')->default('employee');
             // $table->string('class')->default('employee');
             // $table->string('type')->unique(); ----------Note this will be use on production-----
-            $table->string('service');
-            $table->string('photo')->nullable();;
+            $table->string('service')->nullable();
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

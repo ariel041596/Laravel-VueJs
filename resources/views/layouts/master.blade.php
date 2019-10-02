@@ -112,6 +112,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <p>IIRUP</p>
               </router-link>
               </li>
+              <li class="nav-item">
+              <router-link to="/article-category" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-list-alt"></i>&nbsp;
+                 <p>Article Category</p>
+              </router-link>
+              </li>
             </ul>
           </li>
           @endcan
@@ -141,6 +147,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <router-link to="/accountable-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
                  <i class="fas fa-users-cog"></i>&nbsp;
                   <p>Accountable Officers</p>
+                </router-link>
+              </li> 
+              <li class="nav-item">
+                <router-link to="/property-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                 <i class="fas fa-users-cog"></i>&nbsp;
+                  <p>Property Officers</p>
                 </router-link>
               </li> 
               <li class="nav-item">

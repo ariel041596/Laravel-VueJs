@@ -113,7 +113,7 @@ class AssetController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
-            'number' => 'required|string|max:191', //1
+            'number' => 'required|max:191', //1
             'article' => 'required|string|max:191', //1
             'description' => 'required|string', //2
             'property_number' => 'max:191', //3
@@ -219,7 +219,7 @@ class AssetController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'number' => 'required|string|max:191', //1
+            'number' => 'required|max:191', //1
             'article' => 'required|string|max:191', //1
             'description' => 'required|string', //2
             'property_number' => 'max:191', //3
