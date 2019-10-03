@@ -316,7 +316,7 @@
                 </div>
                 <div class="col form-group">
                   <label>Article</label>
-                  <input
+                  <select
                     v-model="form.article"
                     @change="getProfileid"
                     type="text"
@@ -325,7 +325,13 @@
                     name="article"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('article') }"
-                  />
+                  >
+                    <option value>Please select article</option>
+                    <option
+                      v-for="article in article_categories.data"
+                      :key="article.id"
+                    >{{article.article}}</option>
+                  </select>
                   <has-error :form="form" field="article"></has-error>
                 </div>
               </div>
@@ -611,6 +617,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+      article_categories: {},
       assetCount: null,
       form: new Form({
         id: "",
@@ -845,6 +852,13 @@ export default {
           }
         });
     },
+    loadArticleCategory() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get("api/article_category")
+          .then(({ data }) => (this.article_categories = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    },
     loadAccountableOfficers() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         axios
@@ -931,6 +945,7 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
+    this.loadArticleCategory();
     this.loadUsers();
     this.loadAcctName();
     this.loadAssets();

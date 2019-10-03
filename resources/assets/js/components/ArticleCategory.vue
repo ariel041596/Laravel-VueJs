@@ -144,7 +144,7 @@
                   <label>Account Name</label>
                   {{selecteds}}
                   <select
-                    v-model="selecteds"
+                    v-model="form.account_name"
                     type="text"
                     id="account_name"
                     placeholder="Enter Account Name"
@@ -154,10 +154,9 @@
                   >
                     <option value>Select Account Name</option>
                     <option
-                      @click="select_account_code()"
                       v-for="accountname in account_codes.data"
                       :key="accountname.id"
-                    >{{accountname}}</option>
+                    >{{accountname.account_name}}</option>
                   </select>
                   <has-error :form="form" field="account_name"></has-error>
                 </div>
@@ -166,7 +165,7 @@
                 <div class="col form-group">
                   <label>Account Code</label>
                   <input
-                    v-model="selecteds_account_code"
+                    v-model="form.account_code"
                     type="text"
                     id="account_code"
                     placeholder="Enter Account Code"
@@ -242,9 +241,7 @@ export default {
         }
       }
     },
-    select_account_code(){
-
-    },
+    select_account_code() {},
     selects() {
       //   this.selecteds = [];
       //   if (!this.selectAlls) {
@@ -264,9 +261,10 @@ export default {
       //     this.form.account_code = this.account_codes.data[accountname].id;
       //   }
     },
-    // getSelectedOptions() {
-    //   this.selected_options = this.account_codes.data;
-    // },
+    getSelectedOptions(event) {
+      this.account_name = event.target.value;
+      this.form.account_code = this.selecteds.account_code;
+    },
     updateArticleCategory() {
       this.$Progress.start();
       this.form
