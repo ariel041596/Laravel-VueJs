@@ -27,7 +27,7 @@ class AccountCodeController extends Controller
      */
     public function index()
     {
-        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser' ) || \Gate::allows('isSupply' )){
             return AccountCode::latest()->paginate(5);
         }
     }

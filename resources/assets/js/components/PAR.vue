@@ -24,7 +24,10 @@
                   </p>
                   <p style="font-family:Palatino Linotype; font-size:16px;  ">
                     <strong>Fund Cluster:</strong>
-                    <strong class="float-right" style="text-align:right;">PAR No:______________</strong>
+                    <strong class="float-right" style="text-align:right;">
+                      PAR No:
+                      <u>{{assets.asset.number}}</u>
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -74,56 +77,70 @@
             <div class="row">
               <!-- accepted payments column -->
               <div class="col-6">
-                <p class="lead">Payment Methods:</p>
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/visa.png"
-                  alt="Visa"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/mastercard.png"
-                  alt="Mastercard"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/american-express.png"
-                  alt="American Express"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/paypal2.png"
-                  alt="Paypal"
-                />
-
-                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                  Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                  plugg
-                  dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                <p class="lead" style="margin-top: 50px;">
+                  <i>Received by:</i>
+                </p>
+                <p class="receiving-side" style="margin-top: 50px;  ">
+                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <br />Signature over Printed Name of End User
+                </p>
+                <p class="receiving-side" style="margin-top: 30px;  ">
+                  <strong>{{}}</strong>
+                  <br />Position / Office
+                </p>
+                <p class="receiving-side" style="margin-top: 10px;">
+                  <span>{{assets.asset.date}}</span>
+                  <br />Date
                 </p>
               </div>
-              <!-- /.col -->
+              <!-- 2nd Column -->
               <div class="col-6">
-                <p class="lead">Amount Due 2/22/2014</p>
-
-                <div class="table-responsive">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <th style="width:50%">Subtotal:</th>
-                        <td>$250.30</td>
-                      </tr>
-                      <tr>
-                        <th>Tax (9.3%)</th>
-                        <td>$10.34</td>
-                      </tr>
-                      <tr>
-                        <th>Shipping:</th>
-                        <td>$5.80</td>
-                      </tr>
-                      <tr>
-                        <th>Total:</th>
-                        <td>$265.24</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <p class="lead" style="margin-top: 50px;">
+                  <i>Received from:</i>
+                </p>
+                <p class="receiving-side" style="margin-top: 50px;  ">
+                  <strong>
+                    <select
+                      class="mdl-selectfield__box"
+                      v-model="form.received_from"
+                      type="text"
+                      id="received_from"
+                      placeholder="Accountable Officer"
+                      name="received_from"
+                      :class="{ 'is-invalid': form.errors.has('received_from') }"
+                    >
+                      <option value>Select Accountable Officer</option>
+                      <option v-for="officer in property_officers.data" :key="officer.id">
+                        <strong>{{officer.name}}</strong>
+                      </option>
+                    </select>
+                  </strong>
+                  <br />Signature over Printed Name of End User
+                </p>
+                <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
+                  <strong>
+                    <select
+                      class="mdl-selectfield__box"
+                      v-model="form.received_from"
+                      type="text"
+                      id="received_from"
+                      placeholder="Accountable Officer"
+                      name="received_from"
+                      :class="{ 'is-invalid': form.errors.has('received_from') }"
+                    >
+                      <option value>Select Accountable Officer</option>
+                      <option
+                        v-for="officer in property_officers.data"
+                        :key="officer.id"
+                      >{{officer.name}}</option>
+                    </select>
+                  </strong>
+                  <br />Position / Office
+                </p>
+                <p class="receiving-side" style="margin-top: 10px;">
+                  <span>{{assets.asset.date}}</span>
+                  <br />Date
+                </p>
               </div>
               <!-- /.col -->
             </div>
@@ -229,60 +246,41 @@
             <!-- /.row -->
 
             <div class="row">
-              <!-- accepted payments column -->
               <div class="col-6">
-                <p class="lead">Payment Methods:</p>
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/visa.png"
-                  alt="Visa"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/mastercard.png"
-                  alt="Mastercard"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/american-express.png"
-                  alt="American Express"
-                />
-                <img
-                  src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/paypal2.png"
-                  alt="Paypal"
-                />
-
-                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                  Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                  plugg
-                  dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                <p class="lead" style="margin-top: 50px;">
+                  <i>Received by:</i>
+                </p>
+                <p class="receiving-side" style="margin-top: 50px;  ">
+                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <br />Signature over Printed Name of End User
+                </p>
+                <p class="receiving-side" style="margin-top: 30px;  ">
+                  <strong>{{}}</strong>
+                  <br />Position / Office
+                </p>
+                <p class="receiving-side" style="margin-top: 10px;">
+                  <span>{{assets.asset.date}}</span>
+                  <br />Date
                 </p>
               </div>
-              <!-- /.col -->
+              <!-- 2nd Column -->
               <div class="col-6">
-                <p class="lead">Amount Due 2/22/2014</p>
-
-                <div class="table-responsive">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <th style="width:50%">Subtotal:</th>
-                        <td>$250.30</td>
-                      </tr>
-                      <tr>
-                        <th>Tax (9.3%)</th>
-                        <td>$10.34</td>
-                      </tr>
-                      <tr>
-                        <th>Shipping:</th>
-                        <td>$5.80</td>
-                      </tr>
-                      <tr>
-                        <th>Total:</th>
-                        <td>$265.24</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <p class="lead" style="margin-top: 50px;">
+                  <i>Received from:</i>
+                </p>
+                <p class="receiving-side" style="margin-top: 50px;  ">
+                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <br />Signature over Printed Name of End User
+                </p>
+                <p class="receiving-side" style="margin-top: 30px;  ">
+                  <strong>{{}}</strong>
+                  <br />Position / Office
+                </p>
+                <p class="receiving-side" style="margin-top: 10px;">
+                  <span>{{assets.asset.date}}</span>
+                  <br />Date
+                </p>
               </div>
-              <!-- /.col -->
             </div>
             <!-- /.row -->
 
@@ -324,15 +322,34 @@ export default {
   data() {
     return {
       show: false,
-      assets: {}
+      assets: {},
+      property_officers: {},
+      form: new Form({
+        received_from: ""
+      })
     };
   },
+  methods: {
+    loadPropertyOfficers() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios
+          .get("api/property_officer")
+          .then(({ data }) => (this.property_officers = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    }
+  },
   created() {
+    if (this.$gate.isAdminOrUserOrAuthor()) {
+      axios
+        .get("api/property_officer")
+        .then(({ data }) => (this.property_officers = data)); //Remove the previous (this.users =data.data) into data only
+    }
     if (this.$gate.isAdminOrUserOrAuthor()) {
       axios
         .get(`api/asset/${this.$route.params.id}`)
         .then(({ data }) => (this.assets = data));
     }
+
     // if (this.$gate.isAdminOrUserOrAuthor()) {
     //   axios.get(`api/asset/${this.$route.params.id}`).then(response => {
     //     this.assets = response.data;
@@ -439,6 +456,20 @@ export default {
 .tablebody {
   border-top: 1px solid black;
   border: 1px solid black;
+}
+.receiving-side {
+  font-family: Palatino Linotype;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: underline;
+}
+.lead {
+  font-family: Palatino Linotype;
+  font-size: 16px;
+}
+select {
+  border: 0px;
+  outline: 0px;
 }
 </style>
 

@@ -3,7 +3,13 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <button class="update-create btn float-right" @click="newModal">
+        <!-- <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-plus">&nbsp;</i>Add ICS
+        </button>-->
+        <button
+          @click="newModal"
+          class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+        >
           <i class="fas fa-plus">&nbsp;</i>Add ICS
         </button>
         <h3 class="card-title mt-1 text-white">INVENTORY CUSTODIAN SLIP</h3>
@@ -300,6 +306,7 @@
                 <div class="col form-group">
                   <label>PAR/ICS Number</label>
                   <input
+                    readonly
                     v-model="form.number"
                     type="text"
                     id="number"
@@ -568,13 +575,33 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>-->
+              <button
+                data-dismiss="modal"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button v-show="editmode" type="submit" class="update-create btn">
+              <!-- <button v-show="editmode" type="submit" class="update-create btn">
                 <i class="fas fa-pen">&nbsp;</i>Update ICS
+              </button>-->
+              <button
+                v-show="editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
               </button>
-              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
+              <!-- <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
+                <i class="fas fa-plus">&nbsp;</i>Add ICS
+              </button>-->
+              <button
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-plus">&nbsp;</i>Add ICS
               </button>
             </div>
@@ -807,7 +834,16 @@ export default {
       this.form.reset();
       this.form.clear();
       $("#addNew").modal("show");
-      this.form.number = this.inventories.to + 1;
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+      let parnumber = this.inventories.total + 1;
+      let createdby = this.profiles.id;
+      this.form.number = "ICS-" + today + "-" + createdby + "-" + parnumber;
+      this.form.createdBy = this.profiles.id;
     },
     //Delete User method
     deleteAsset(id) {
@@ -878,6 +914,17 @@ export default {
     },
     createAsset() {
       // Progressbar before create user
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+      let parnumber = this.inventories.total + 1;
+      let createdby = this.profiles.id;
+      this.form.number = "ICS-" + today + "-" + createdby + "-" + parnumber;
+      this.form.createdBy = this.profiles.id;
+
       this.$Progress.start();
       this.form
         .post("api/asset")
@@ -938,16 +985,14 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
-    this.loadArticleCategory();
     this.loadInventories();
     this.loadUsers();
+    this.loadArticleCategory();
     this.loadAcctName();
-    // this.loadAssets();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadInventories();
-      // this.loadAssets();
-      this.loadAcctName();
+      // this.loadAcctName();
     });
     Fire.$on("searching", () => {
       let query = this.$parent.search;

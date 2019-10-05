@@ -67,6 +67,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @can('isSupply')
+        <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                  <p>
+                    Assets <i class="right fa fa-angle-left "></i>
+                  </p>
+              </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-dot-circle"></i>&nbsp;
+                    <p>Pendings</p>
+                </router-link>
+              </li>
+            </ul>
+        </li>
+        @endcan
           <!-- Dashboard -->
           @can('isAdminOrUser')
           <li class="nav-item">

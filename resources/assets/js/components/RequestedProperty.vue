@@ -169,6 +169,7 @@
                 <div class="col form-group">
                   <label>Request Number</label>
                   <input
+                    readonly
                     v-model="form.request_number"
                     type="text"
                     id="request_number"
@@ -511,7 +512,18 @@ export default {
       this.form.clear();
       $("#addNew").modal("show");
       this.form.service = this.profiles.service;
-      this.form.request_number = this.assets.to + 1;
+      // this.form.request_number = this.assets.to + 1;
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+    let risnumber = this.assets.total + 1;
+      let createdby = this.profiles.id;
+      this.form.request_number =
+        "RIS-" + today + "-" + createdby + "-" + risnumber;
+      this.form.createdBy = this.assets.id;
     },
     //Delete User method
     deleteAsset(id) {

@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Property Management System') }}</title>
 
     <!-- Scripts -->
+    <script src="/node_modules/material-design-lite/material.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -18,6 +19,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="/node_modules/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
  
 </head>

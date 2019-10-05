@@ -6,8 +6,6 @@ body{
     background: linear-gradient(-60deg,#C70E1A , #FFFFFF 20%, #03266A );
 }
 
-.container{
-}
 
 #loginbtn{
     background: rgb(22, 70, 143);
@@ -19,4 +17,5 @@ body{
 }
 #loginlogo{
     width: 60%;
+    height: 110px;
 }

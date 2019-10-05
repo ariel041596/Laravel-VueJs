@@ -113,7 +113,7 @@ class AssetController extends Controller
         // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
             // Validate the inputs in form
         $this->validate($request, [
-            'number' => 'required|max:191', //1
+            'number' => 'required|string|max:191|unique:assets,number', //1
             'article' => 'required|string|max:191', //1
             'description' => 'required|string', //2
             'property_number' => 'max:191', //3
@@ -125,7 +125,7 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            // 'service' => 'required|string|max:191', //12 
+            'service' => 'required|string|max:191', //12 
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
@@ -148,7 +148,7 @@ class AssetController extends Controller
             'accountable_officer' => $request['accountable_officer'], //9
             'remarks' => $request['remarks'], //10
             'account_name' => $request['account_name'], //11
-            // 'service' => $request['service'], //12
+            'service' => $request['service'], //12
             'property_type' => $request['property_type'], //12
             'createdBy' => $request['createdBy'], //12
             'status' => $request['status'], //13
@@ -231,7 +231,7 @@ class AssetController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            // 'service' => 'required|string|max:191', //12 
+            'service' => 'required|string|max:191', //12 
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13

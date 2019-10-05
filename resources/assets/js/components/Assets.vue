@@ -3,8 +3,20 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <button class="update-create btn float-right" @click="newModal">
+        <!-- <button class="update-create btn btn-outline-light float-right" @click="newModal">
           <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
+        </button>-->
+        <!-- <button
+          @click="newModal"
+          class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        >
+          <i class="fas fa-plus">&nbsp;</i>Button
+        </button>-->
+        <button
+          @click="newModal"
+          class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+        >
+          <i class="fas fa-plus">&nbsp;</i>RPCPPE
         </button>
         <h3 class="card-title mt-1 text-white">RPCPPE</h3>
       </div>
@@ -21,7 +33,6 @@
               <table
                 id="example2"
                 class="table table-bordered dataTable"
-                role="grid"
                 aria-describedby="example2_info"
               >
                 <tbody>
@@ -43,7 +54,7 @@
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
                     <th>Status</th>
                     <th>Property Type</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -64,7 +75,11 @@
                         <input type="checkbox" :value="asset.id" v-model="selected" />
                       </td>-->
                       <td>{{asset.article | upText }}</td>
-                      <td>{{asset.description | upText}}</td>
+                      <!-- <td
+                        class="mdl-badge mdl-badge--overlap"
+                        :data-badge="asset.remarks"
+                      >{{asset.description | upText}}</td>-->
+                      <td :data-badge="asset.remarks">{{asset.description | upText}}</td>
                       <td>{{asset.property_number}}</td>
                       <td>{{asset.unit_of_measure}}</td>
                       <td class="text-right">{{asset.price | numberComma }}</td>
@@ -78,42 +93,50 @@
                       <td>{{asset.property_type | upText}}</td>
                       <td>
                         <a
-                          href="#"
                           @click="editModal(asset)"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          href="#"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Edit"
                         >
-                          <i class="fas fa-edit"></i>
+                          <i class="material-icons fas fa-pen"></i>
+                          <!-- <i class="material-icons">add</i> -->
                         </a>
                         <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price>15000"
                           :to="{name: 'par', params: { id: asset.id }}"
                         >
                           <!-- <router-link v-show="asset.price>15000" :to="`${asset.id}`"> -->
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print PAR"
                           ></i>
                         </router-link>
-                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                        <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price<=15000"
+                          :to="`${asset.id}`"
+                        >
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print ICS"
                           ></i>
                         </router-link>
                         <a
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Disposed"
                         >
-                          <i class="fas fa-trash red"></i>
+                          <i class="material-icons fas fa-trash red"></i>
                         </a>
                       </td>
                     </tr>
@@ -304,6 +327,7 @@
                 <div class="col form-group">
                   <label>PAR/ICS Number</label>
                   <input
+                    readonly
                     v-model="form.number"
                     type="text"
                     id="number"
@@ -521,9 +545,9 @@
                 </div>
               </div>
               <div class="row">
-                <!-- <div class="col form-group">
-                  <label>Service</label>
-                  <input
+                <div class="col form-group">
+                  <label>Position</label>
+                  <select
                     v-model="form.service"
                     type="text"
                     id="service"
@@ -531,10 +555,16 @@
                     name="service"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('service') }"
-                  />
+                  >
+                    <option value>Please Select Position</option>
+                    <option
+                      v-for="position in accountable_officers.data"
+                      :key="position.id"
+                    >{{position.designation}}</option>
+                  </select>
                   <has-error :form="form" field="service"></has-error>
-                </div>-->
-                <div class="col form-group" v-if="editmode">
+                </div>
+                <!-- <div class="col form-group" v-if="editmode">
                   <label>Status</label>
                   <select
                     type="text"
@@ -545,13 +575,13 @@
                     class="form-control"
                     :class="{'is-invalid': form.errors.has('status')}"
                   >
-                    <option value>Select Status</option>
-                    <!-- <option value="approved">Approved</!-->
-                    <option value="fordisposal">For Disposal</option>
+                <option value>Select Status</option>-->
+                <!-- <option value="approved">Approved</!-->
+                <!-- <option value="fordisposal">For Disposal</option>
                     <option value="disposed">Disposed</option>
                   </select>
                   <has-error :form="form" field="status"></has-error>
-                </div>
+                </div>-->
                 <div class="col form-group">
                   <label>Account Name</label>
                   <select
@@ -573,14 +603,43 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>-->
+              <button
+                data-dismiss="modal"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button v-show="editmode" type="submit" class="update-create btn">
+              <button
+                v-show="editmode"
+                @click="approvedStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-trash">&nbsp;</i>Disposal
+              </button>
+              <button
+                v-show="editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
               </button>
-              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
+
+              <!-- <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
+              </button>-->
+              <!-- <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
                 <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
+              </button>-->
+              <button
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-plus">&nbsp;</i>RPCPPE
               </button>
             </div>
           </form>
@@ -617,6 +676,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+
       article_categories: {},
       assetCount: null,
       form: new Form({
@@ -633,7 +693,7 @@ export default {
         accountable_officer: "",
         remarks: "",
         account_name: "",
-        // service: "",
+        service: "",
         createdBy: "",
         status: "pending",
         property_type: "PAR",
@@ -781,6 +841,9 @@ export default {
         this.assets = response.data;
       });
     },
+    approvedStatus() {
+      this.form.status = "fordisposal";
+    },
     updateAsset() {
       this.$Progress.start();
       this.form
@@ -821,7 +884,16 @@ export default {
       this.form.reset();
       this.form.clear();
       $("#addNew").modal("show");
-      this.form.number = this.assets.to + 1;
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+      let parnumber = this.assets.total + 1;
+      let createdby = this.profiles.id;
+      this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
+      this.form.createdBy = this.profiles.id;
     },
     //Delete User method
     deleteAsset(id) {
@@ -885,6 +957,17 @@ export default {
     },
     createAsset() {
       // Progressbar before create user
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+      let parnumber = this.assets.total + 1;
+      let createdby = this.profiles.id;
+      this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
+      this.form.createdBy = this.profiles.id;
+
       this.$Progress.start();
       this.form
         .post("api/asset")
@@ -945,14 +1028,14 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
-    this.loadArticleCategory();
+    this.loadAssets();
     this.loadUsers();
     this.loadAcctName();
-    this.loadAssets();
+    this.loadArticleCategory();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
-      this.loadAcctName();
+      // this.loadAcctName();
     });
 
     Fire.$on("searching", () => {
@@ -1042,6 +1125,9 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

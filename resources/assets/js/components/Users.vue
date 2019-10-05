@@ -3,7 +3,13 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <button class="update-create btn float-right" @click="newModal">
+        <!-- <button class="update-create btn float-right" @click="newModal">
+          <i class="fas fa-user-plus">&nbsp;</i>Create User
+        </button>-->
+        <button
+          @click="newModal"
+          class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+        >
           <i class="fas fa-user-plus">&nbsp;</i>Create User
         </button>
         <h3 class="card-title mt-1 text-white">User's Management</h3>
@@ -175,14 +181,28 @@
               </div>
             </div>
             <i class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>-->
+              <button
+                data-dismiss="modal"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button
+              <!-- <button
                 :disabled="disabled"
                 v-show="editmode"
                 type="submit"
                 class="update-create btn"
+              >
+                <i class="fas fa-pen">&nbsp;</i>Update User
+              </button>-->
+              <button
+                :disabled="disabled"
+                v-show="editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
                 <i class="fas fa-pen">&nbsp;</i>Update User
               </button>
@@ -190,10 +210,18 @@
                 :disabled="disabled"
                 v-show="!editmode"
                 type="submit"
-                class="update-create btn"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
                 <i class="fas fa-user-plus">&nbsp;</i>Create User
               </button>
+              <!-- <button
+                :disabled="disabled"
+                v-show="!editmode"
+                type="submit"
+                class="update-create btn"
+              >
+                <i class="fas fa-user-plus">&nbsp;</i>Create User
+              </button>-->
             </i>
           </form>
         </div>

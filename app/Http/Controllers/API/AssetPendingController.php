@@ -30,7 +30,7 @@ class AssetPendingController extends Controller
     public function index()
     {
         // $pending = Asset::asset()->status->pending;
-        if(\Gate::allows('isAdmin')){
+        if(\Gate::allows('isAdminOrUser')){
         return Asset::where('status','LIKE',"%pending%")->latest()->paginate(1); //get or paginate? 
         }else{
             $createdBy = Auth::user()->id;

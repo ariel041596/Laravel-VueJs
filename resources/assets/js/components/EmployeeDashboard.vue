@@ -38,6 +38,7 @@
                   <th>Total Value</th>
                   <th>Date</th>
                   <th>Remarks</th>
+                  <th>Actions</th>
                 </tr>
               </tbody>
               <tbody>
@@ -58,7 +59,18 @@
                     <td class="text-center">{{asset.quantity | numberComma}}</td>
                     <td class="text-right">{{asset.total_value | numberComma}}</td>
                     <td>{{asset.date | myDate}}</td>
-                    <td>{{asset.remarks | upText}}</td>
+                    <td>{{asset.remarks }}</td>
+                    <td>
+                      <a
+                        href="#"
+                        @click="editModal(asset)"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Edit"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </td>
                   </tr>
                 </template>
               </tbody>
