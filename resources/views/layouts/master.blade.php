@@ -86,7 +86,54 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
         @endcan
           <!-- Dashboard -->
-          @can('isAdminOrUser')
+          @can('isUser')
+          <li class="nav-item">
+            <router-link to="/dashboard" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                Dashboard
+                </p>
+            </router-link>
+          </li>
+          <!-- End for Dashboard -->
+
+          <!-- Tree view for assets -->
+          <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                  <p>
+                    Assets <i class="right fa fa-angle-left "></i>
+                  </p>
+              </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-dot-circle"></i>&nbsp;
+                    <p>Pendings</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-dot-circle"></i>&nbsp;
+                <p>RPCPPE</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-clipboard"></i>&nbsp;
+                <p>ICS</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-trash-restore-alt"></i>&nbsp;
+                 <p>IIRUP</p>
+              </router-link>
+              </li>
+            </ul>
+          </li>
+          @endcan
+          @can('isAdmin')
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>

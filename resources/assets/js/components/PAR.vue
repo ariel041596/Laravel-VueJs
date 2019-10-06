@@ -85,7 +85,7 @@
                   <br />Signature over Printed Name of End User
                 </p>
                 <p class="receiving-side" style="margin-top: 30px;  ">
-                  <strong>{{}}</strong>
+                  <strong>{{assets.asset.service}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
@@ -198,7 +198,10 @@
                   </p>
                   <p style="font-family:Palatino Linotype; font-size:16px;  ">
                     <strong>Fund Cluster:</strong>
-                    <strong class="float-right" style="text-align:right;">PAR No:______________</strong>
+                    <strong class="float-right" style="text-align:right;">
+                      ICS No:
+                      <u>{{assets.asset.number}}</u>
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -255,7 +258,7 @@
                   <br />Signature over Printed Name of End User
                 </p>
                 <p class="receiving-side" style="margin-top: 30px;  ">
-                  <strong>{{}}</strong>
+                  <strong>{{assets.asset.service}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
@@ -344,7 +347,7 @@ export default {
         .get("api/property_officer")
         .then(({ data }) => (this.property_officers = data)); //Remove the previous (this.users =data.data) into data only
     }
-    if (this.$gate.isAdminOrUserOrAuthor()) {
+    if (this.$gate.isAdminOrUserOrAuthorOrSupply()) {
       axios
         .get(`api/asset/${this.$route.params.id}`)
         .then(({ data }) => (this.assets = data));

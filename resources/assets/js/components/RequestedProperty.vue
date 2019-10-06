@@ -3,7 +3,11 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isEmployeeOrSupply()">
       <div id="rpcppe" class="card-header">
-        <button class="update-create btn float-right" @click="newModal" v-if="$gate.isEmployee()">
+        <button
+          class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect float-right"
+          @click="newModal"
+          v-if="$gate.isEmployee()"
+        >
           <i class="fas fa-cart-plus">&nbsp;</i>Request Asset
         </button>
         <h3 class="card-title mt-1 text-white">Request Asset</h3>
@@ -71,31 +75,48 @@
                       <td v-if="$gate.isSupply()">{{asset.received_by }}</td>
                       <td>
                         <a
+                          v-show="$gate.isEmployee()"
+                          v-if="asset.status=='pending'"
                           href="#"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Edit"
                         >
-                          <i class="fas fa-edit"></i>
+                          <i class="material-icons fas fa-pen"></i>
                         </a>
-                        <router-link :to="`${asset.id}`">
+                        <a
+                          v-show="$gate.isSupply()"
+                          href="#"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          @click="editModal(asset)"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Edit"
+                        >
+                          <i class="material-icons fas fa-pen"></i>
+                        </a>
+                        <!-- <a
+                          v-if="asset.status=='approved'"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          href="#"
+                          @click="editModal(asset)"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Disposed"
+                        >
+                          <i class="material-icons fas fa-eye"></i>
+                        </a>-->
+
+                        <!-- <router-link :to="`${asset.id}`">
                           <i
                             class="fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print"
                           ></i>
-                        </router-link>
-                        <a
-                          href="#"
-                          @click="deleteAsset(asset.id)"
-                          data-toggle="tooltip"
-                          data-placement="bottom"
-                          title="Disposed"
-                        >
-                          <i class="fas fa-trash red"></i>
-                        </a>
+                        </router-link>-->
                       </td>
                     </tr>
                   </template>
@@ -183,6 +204,7 @@
                 <div class="col form-group">
                   <label>Unit of Measure</label>
                   <select
+                    :disabled="!$gate.isEmployee()"
                     name="unit_of_measure"
                     v-model="form.unit_of_measure"
                     id="unit_of_measure"
@@ -203,6 +225,7 @@
                 <div class="col form-group">
                   <label>Description</label>
                   <textarea
+                    :disabled="!$gate.isEmployee()"
                     v-model="form.description"
                     type="text"
                     id="description"
@@ -218,6 +241,7 @@
                 <div class="col form-group">
                   <label>Quantity</label>
                   <input
+                    :disabled="!$gate.isEmployee()"
                     min="1"
                     separator=","
                     v-model="form.quantity"
@@ -245,6 +269,7 @@
                 <div class="col form-group">
                   <label>Remarks</label>
                   <input
+                    :disabled="!$gate.isSupply()"
                     v-model="form.remarks"
                     type="text"
                     id="remarks"
@@ -260,6 +285,7 @@
                 <div class="col form-group">
                   <label>Purpose</label>
                   <textarea
+                    :disabled="!$gate.isEmployee()"
                     v-model="form.purpose"
                     type="text"
                     id="purpose"
@@ -353,27 +379,43 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
-                <i class="fas fa-times">&nbsp;</i>Close
+              <button
+                type="button"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                data-dismiss="modal"
+              >
+                <i class="material-icons fas fa-times">&nbsp;</i>Close
               </button>
               <button
                 v-if="$gate.isEmployee()"
                 v-show="editmode"
                 type="submit"
-                class="update-create btn"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-pen">&nbsp;</i>Update Request
+                <i class="material-icons fas fa-pen">&nbsp;</i>Update Request
               </button>
               <button
                 v-if="$gate.isSupply()"
                 v-show="editmode"
-                @click="updateAsset()"
-                class="update-create btn"
+                @click="noAvailable()"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-thumbs-up">&nbsp;</i>Approved Request
+                <i class="material-icons fas fa-thumbs-down">&nbsp;</i>No Available
               </button>
-              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
-                <i class="fas fa-cart-plus">&nbsp;</i>Add Request
+              <button
+                v-if="$gate.isSupply()"
+                v-show="editmode"
+                @click="approvedStatus()"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="material-icons fas fa-thumbs-up">&nbsp;</i>Approved Request
+              </button>
+              <button
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="material-icons fas fa-cart-plus">&nbsp;</i>Add Request
               </button>
             </div>
           </form>
@@ -437,6 +479,15 @@ export default {
         }
       }
     },
+    getStatus() {
+      this.assets.data.status == "seen";
+    },
+    noAvailable() {
+      this.form.remarks = "No Available / Insuficient Quantity";
+    },
+    approvedStatus() {
+      this.form.status = "approved";
+    },
     getProfileid(event) {
       this.form.description = event.target.value;
       this.form.createdBy = this.profiles.id;
@@ -469,9 +520,9 @@ export default {
       }
     },
     updateAsset() {
-      if (this.$gate.isSupply()) {
-        this.form.status = "approved";
-      }
+      // if (this.$gate.isSupply()) {
+      //   this.form.status = "approved";
+      // }
       this.$Progress.start();
       this.form
         .put("api/requests/" + this.form.id)
@@ -519,7 +570,7 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-    let risnumber = this.assets.total + 1;
+      let risnumber = this.assets.total + 1;
       let createdby = this.profiles.id;
       this.form.request_number =
         "RIS-" + today + "-" + createdby + "-" + risnumber;
@@ -718,6 +769,9 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

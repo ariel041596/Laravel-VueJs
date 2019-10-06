@@ -82,37 +82,47 @@
                       <td>
                         <a
                           href="#"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Edit"
                         >
-                          <i class="fas fa-edit"></i>
+                          <i class="material-icons fas fa-pen"></i>
                         </a>
-                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                        <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price>15000"
+                          :to="`${asset.id}`"
+                        >
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print PAR"
                           ></i>
                         </router-link>
-                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                        <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price<=15000"
+                          :to="`${asset.id}`"
+                        >
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print ICS"
                           ></i>
                         </router-link>
                         <a
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Disposed"
                         >
-                          <i class="fas fa-trash red"></i>
+                          <i class="material-icons fas fa-trash red"></i>
                         </a>
                       </td>
                     </tr>
@@ -513,7 +523,7 @@
                 </div>
               </div>
               <div class="row">
-                <!-- <div class="col form-group">
+                <div class="col form-group">
                   <label>Service</label>
                   <input
                     v-model="form.service"
@@ -525,8 +535,8 @@
                     :class="{ 'is-invalid': form.errors.has('service') }"
                   />
                   <has-error :form="form" field="service"></has-error>
-                </div>-->
-                <div class="col form-group" v-if="editmode">
+                </div>
+                <div class="col form-group" v-show="false">
                   <label>Status</label>
                   <select
                     name="status"
@@ -576,6 +586,14 @@
               <!-- <button v-show="editmode" type="submit" class="update-create btn">
                 <i class="fas fa-pen">&nbsp;</i>Update IIRUP
               </button>-->
+              <button
+                v-show="editmode"
+                type="submit"
+                @click="disposed()"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-trash">&nbsp;</i>Disposed
+              </button>
               <button
                 v-show="editmode"
                 type="submit"
@@ -641,7 +659,7 @@ export default {
         accountable_officer: "",
         remarks: "",
         account_name: "",
-        // service: "",
+        service: "",
         createdBy: "",
         status: "pending",
         property_type: "PAR"
@@ -762,6 +780,9 @@ export default {
           this.selected.push(this.assets.data[asset].id);
         }
       }
+    },
+    disposed() {
+      this.form.status = "disposed";
     },
     getProfileid(event) {
       this.form.article = event.target.value;
@@ -1033,6 +1054,9 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

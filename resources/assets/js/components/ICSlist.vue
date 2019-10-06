@@ -82,37 +82,47 @@
                       <td>
                         <a
                           href="#"
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Edit"
                         >
-                          <i class="fas fa-edit"></i>
+                          <i class="material-icons fas fa-pen"></i>
                         </a>
-                        <router-link v-show="asset.price>15000" :to="`${asset.id}`">
+                        <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price>15000"
+                          :to="`${asset.id}`"
+                        >
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print PAR"
                           ></i>
                         </router-link>
-                        <router-link v-show="asset.price<=15000" :to="`${asset.id}`">
+                        <router-link
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price<=15000"
+                          :to="`${asset.id}`"
+                        >
                           <i
-                            class="fas fa-print"
+                            class="material-icons fas fa-print"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Print ICS"
                           ></i>
                         </router-link>
                         <a
+                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
                           data-placement="bottom"
                           title="Disposed"
                         >
-                          <i class="fas fa-trash red"></i>
+                          <i class="material-icons fas fa-trash red"></i>
                         </a>
                       </td>
                     </tr>
@@ -1081,6 +1091,9 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

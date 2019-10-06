@@ -95,8 +95,8 @@ class RequestPropertyController extends Controller
                 'remarks' => 'required|string|max:191', //8
                 'purpose' => 'required|string|max:191', //9
                 'accountable_officer' => 'required|string|max:191', //10
-                'issued_by' => 'required|string|max:191', //11
-                'received_by' => 'required|string|max:191', //12
+                // 'issued_by' => 'required|string|max:191', //11
+                // 'received_by' => 'required|string|max:191', //12
             ]);
         }else{
             if(\Gate::allows('isEmployee')){
