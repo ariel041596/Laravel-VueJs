@@ -67,7 +67,7 @@
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Edit"
-                        class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                       >
                         <i class="material-icons fas fa-exchange-alt"></i>
                       </a>
@@ -77,7 +77,7 @@
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Edit"
-                        class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                       >
                         <i class="material-icons fas fa-recycle red"></i>
                       </a>
@@ -377,6 +377,27 @@
                     v-model="form.account_name"
                     :class="{'is-invalid': form.errors.has('account_name')}"
                   />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label>For Transfe to</label>
+                  <select
+                    v-model="form.transfer_to"
+                    type="text"
+                    id="accountable_officer"
+                    placeholder="Accountable Officer"
+                    name="accountable_officer"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
+                  >
+                    <option value>Select Accountable Officer</option>
+                    <option
+                      v-for="officer in accountable_officers.data"
+                      :key="officer.id"
+                    >{{officer.name}}</option>
+                  </select>
+                  <has-error :form="form" field="accountable_officer"></has-error>
                 </div>
               </div>
             </div>
@@ -789,6 +810,7 @@ export default {
     return {
       assets: {},
       transfermode: false,
+      accountable_officers: {},
       form: new Form({
         id: "",
         number: "",
@@ -806,7 +828,8 @@ export default {
         service: "",
         createdBy: "",
         status: "",
-        property_type: ""
+        property_type: "",
+        transfer_to: ""
       })
     };
   },
@@ -829,6 +852,11 @@ export default {
           .then(({ data }) => (this.assets = data));
       }
     },
+    loadAccountableOfficers() {
+      axios
+        .get("api/accountable_officer")
+        .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
+    },
     transferModal(asset) {
       this.transfermode = true;
       $("#addNew").modal("show");
@@ -843,6 +871,10 @@ export default {
 
   created() {
     this.loadAssets();
+    this.loadAccountableOfficers();
+    Fire.$on("AfterCreate", () => {
+      this.loadAssets();
+    });
   }
 };
 </script>
@@ -871,5 +903,8 @@ export default {
 }
 .update-create:hover {
   opacity: 1;
+}
+.mdl-btn {
+  background-color: #ececec;
 }
 </style>

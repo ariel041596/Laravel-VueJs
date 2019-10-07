@@ -52,6 +52,22 @@ Route::middleware('auth:api')->get('/article_category', function (Request $reque
 // router for Usercontroller
 Route::apiResources(['article_category' => 'API\ArticleCategoryController']);
 // ===============================================End For Article category==========================
+// ===============================================For Total Entries==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/total_assets', function (Request $request) {
+    return $request->total_assets();
+});
+// router for Usercontroller
+Route::apiResources(['total_assets' => 'API\TotalEntriesController']);
+// ===============================================End For Total Entries==========================
+// ===============================================For Total Entries==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/total_inventories', function (Request $request) {
+    return $request->total_inventories();
+});
+// router for Usercontroller
+Route::apiResources(['total_inventories' => 'API\TotalInvetoriesController']);
+// ===============================================End For Total Entries==========================
 
 
 // ===============================================For Assets==========================

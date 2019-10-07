@@ -47,8 +47,8 @@
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
-                    <th>Status</th>
-                    <th>Property Type</th>
+                    <!-- <th>Status</th>
+                    <th>Property Type</th>-->
                     <th>Action</th>
                   </tr>
                 </tbody>
@@ -77,12 +77,12 @@
                       <td>{{asset.accountable_officer | upText}}</td>
                       <td>{{asset.remarks}}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                      <td>{{asset.status | upText}}</td>
-                      <td>{{asset.property_type}}</td>
+                      <!-- <td>{{asset.status | upText}}</td>
+                      <td>{{asset.property_type}}</td>-->
                       <td>
                         <a
                           href="#"
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
@@ -91,7 +91,7 @@
                           <i class="material-icons fas fa-pen"></i>
                         </a>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price>15000"
                           :to="`${asset.id}`"
                         >
@@ -103,7 +103,7 @@
                           ></i>
                         </router-link>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price<=15000"
                           :to="`${asset.id}`"
                         >
@@ -114,8 +114,8 @@
                             title="Print ICS"
                           ></i>
                         </router-link>
-                        <a
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        <!-- <a
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
@@ -123,7 +123,7 @@
                           title="Disposed"
                         >
                           <i class="material-icons fas fa-trash red"></i>
-                        </a>
+                        </a>-->
                       </td>
                     </tr>
                   </template>
@@ -649,6 +649,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+      total_inventories: {},
       inventories: {},
       form: new Form({
         id: "",
@@ -891,6 +892,11 @@ export default {
           .then(({ data }) => (this.accountable_officers = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
+    loadTotalInventories() {
+      axios
+        .get("api/total_inventories")
+        .then(({ data }) => (this.total_inventories = data));
+    },
     loadUsers() {
       axios.get("api/profile").then(({ data }) => (this.profiles = data));
     },
@@ -996,12 +1002,14 @@ export default {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
     this.loadInventories();
+    this.loadTotalInventories();
     this.loadUsers();
     this.loadArticleCategory();
     this.loadAcctName();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadInventories();
+      this.loadTotalInventories();
       // this.loadAcctName();
     });
     Fire.$on("searching", () => {
@@ -1039,6 +1047,9 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+}
+.mdl-btn {
+  background-color: #ececec;
 }
 #description {
   height: 100px;

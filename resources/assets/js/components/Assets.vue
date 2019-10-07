@@ -52,8 +52,8 @@
                     <th>Accountable Officer</th>
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
-                    <th>Status</th>
-                    <th>Property Type</th>
+                    <!-- <th>Status</th>
+                    <th>Property Type</th>-->
                     <th>Actions</th>
                   </tr>
                 </tbody>
@@ -89,12 +89,12 @@
                       <td>{{asset.accountable_officer | upText}}</td>
                       <td>{{asset.remarks }}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
-                      <td>{{asset.status | upText}}</td>
-                      <td>{{asset.property_type | upText}}</td>
+                      <!-- <td>{{asset.status | upText}}</td> -->
+                      <!-- <td>{{asset.property_type | upText}}</td> -->
                       <td>
                         <a
                           @click="editModal(asset)"
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           data-toggle="tooltip"
                           data-placement="bottom"
@@ -104,7 +104,7 @@
                           <!-- <i class="material-icons">add</i> -->
                         </a>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price>15000"
                           :to="{name: 'par', params: { id: asset.id }}"
                         >
@@ -117,7 +117,7 @@
                           ></i>
                         </router-link>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price<=15000"
                           :to="`${asset.id}`"
                         >
@@ -128,8 +128,8 @@
                             title="Print ICS"
                           ></i>
                         </router-link>
-                        <a
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        <!-- <a
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
@@ -137,7 +137,7 @@
                           title="Disposed"
                         >
                           <i class="material-icons fas fa-trash red"></i>
-                        </a>
+                        </a>-->
                       </td>
                     </tr>
                   </template>
@@ -676,7 +676,7 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
-
+      total_assets: {},
       article_categories: {},
       assetCount: null,
       form: new Form({
@@ -890,7 +890,7 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.assets.total + 1;
+      let parnumber = this.total_assets + 1;
       let createdby = this.profiles.id;
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
@@ -931,6 +931,11 @@ export default {
           .then(({ data }) => (this.article_categories = data)); //Remove the previous (this.users =data.data) into data only
       }
     },
+    loadTotals() {
+      axios
+        .get("api/total_assets")
+        .then(({ data }) => (this.total_assets = data));
+    },
     loadAccountableOfficers() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         axios
@@ -963,7 +968,7 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.assets.total + 1;
+      let parnumber = this.total_assets + 1;
       let createdby = this.profiles.id;
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
@@ -1029,12 +1034,14 @@ export default {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
     this.loadAssets();
+    this.loadTotals();
     this.loadUsers();
     this.loadAcctName();
     this.loadArticleCategory();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
+      this.loadTotals();
       // this.loadAcctName();
     });
 
@@ -1128,6 +1135,9 @@ export default {
 }
 .material-icons {
   font-size: 15px;
+}
+.mdl-btn {
+  background-color: #ececec;
 }
 </style>
 

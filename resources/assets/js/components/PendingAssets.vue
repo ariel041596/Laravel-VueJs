@@ -52,7 +52,7 @@
                     <th>Remarks</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
                     <!-- <th>Service</th> -->
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                     <th>Property Type</th>
                     <th>Actions</th>
                   </tr>
@@ -84,11 +84,11 @@
                       <td>{{asset.remarks }}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <!-- <td>{{asset.service}}</td> -->
-                      <td>{{asset.status | upText}}</td>
+                      <!-- <td>{{asset.status | upText}}</td> -->
                       <td>{{asset.property_type | upText}}</td>
                       <td>
                         <a
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
@@ -98,7 +98,7 @@
                           <i class="material-icons fas fa-pen"></i>
                         </a>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price>15000"
                           :to="`${asset.id}`"
                         >
@@ -110,7 +110,7 @@
                           ></i>
                         </router-link>
                         <router-link
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price<=15000"
                           :to="`${asset.id}`"
                         >
@@ -121,8 +121,8 @@
                             title="Print ICS"
                           ></i>
                         </router-link>
-                        <a
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        <!-- <a
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
                           data-toggle="tooltip"
@@ -130,7 +130,7 @@
                           title="Disposed"
                         >
                           <i class="material-icons fas fa-trash red"></i>
-                        </a>
+                        </a>-->
                       </td>
                     </tr>
                   </template>
@@ -466,6 +466,15 @@
                 class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
                 <i class="fas fa-times">&nbsp;</i>Close
+              </button>
+              <button
+                v-if="$gate.isAdminOrUserOrAuthor()"
+                v-show="editmode"
+                @click="cancelStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-trash">&nbsp;</i>Cancel
               </button>
               <button
                 v-if="$gate.isAdminOrUserOrAuthor()"
@@ -884,6 +893,8 @@ export default {
       accountable_officers: {},
       profiles: {},
       assets: {},
+      total_assets: {},
+      total_inventories: {},
       pendings: {},
       inventories: {},
       article_categories: {},
@@ -1047,6 +1058,12 @@ export default {
         this.form.createdBy = this.profiles.id;
       }
     },
+    cancelStatus() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        this.form.status = "cancel";
+        this.form.createdBy = this.profiles.id;
+      }
+    },
     updateAsset() {
       this.$Progress.start();
       this.form
@@ -1093,7 +1110,7 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.assets.total + 1;
+      let parnumber = this.total_assets + 1; //trying to compute the total
       let createdby = this.profiles.id;
       this.form.property_type = "PAR";
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
@@ -1109,10 +1126,10 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.inventories.total + 1;
+      let icsnumber = this.total_inventories + 1;
       let createdby = this.profiles.id;
       this.form.property_type = "INVENTORY";
-      this.form.number = "ICS-" + today + "-" + createdby + "-" + parnumber;
+      this.form.number = "ICS-" + today + "-" + createdby + "-" + icsnumber;
     },
     //Delete User method
     deleteAsset(id) {
@@ -1163,6 +1180,16 @@ export default {
     loadPendingAssets() {
       axios.get("api/pending").then(({ data }) => (this.pendings = data));
     },
+    loadTotals() {
+      axios
+        .get("api/total_assets")
+        .then(({ data }) => (this.total_assets = data));
+    },
+    loadTotalInventories() {
+      axios
+        .get("api/total_inventories")
+        .then(({ data }) => (this.total_inventories = data));
+    },
     // LoadUser to display in the tbody
     loadAssets() {
       if (this.$gate.isAdminOrUserOrAuthorOrSupply()) {
@@ -1191,7 +1218,7 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.assets.total + 1;
+      let parnumber = this.total_assets + 1;
       let createdby = this.profiles.id;
       this.form.property_type = "PAR";
       this.form.status = "pending";
@@ -1225,11 +1252,11 @@ export default {
       let yyyy = String(today.getFullYear()).padStart(1, "0");
       // today = mm + dd + yyyy;
       today = yyyy;
-      let parnumber = this.inventories.total + 1;
+      let icsnumber = this.total_inventories + 1;
       let createdby = this.profiles.id;
       this.form.property_type = "INVENTORY";
       this.form.status = "pending";
-      this.form.number = "ICS-" + today + "-" + createdby + "-" + parnumber;
+      this.form.number = "ICS-" + today + "-" + createdby + "-" + icsnumber;
 
       this.$Progress.start();
       this.form
@@ -1294,6 +1321,8 @@ export default {
     this.loadPendingAssets();
     this.loadInventories();
     this.loadAssets();
+    this.loadTotals();
+    this.loadTotalInventories();
     this.loadUsers();
     this.loadAcctName();
     this.loadAccountableOfficers();
@@ -1302,6 +1331,7 @@ export default {
       this.loadPendingAssets();
       this.loadAssets();
       this.loadInventories();
+      this.loadTotals();
     });
 
     Fire.$on("searching", () => {
@@ -1363,7 +1393,9 @@ export default {
     top: 0;
   }
 }
-
+.mdl-btn {
+  background-color: #ececec;
+}
 .widget-user-header {
   background-position: center center;
   background-size: contain;
