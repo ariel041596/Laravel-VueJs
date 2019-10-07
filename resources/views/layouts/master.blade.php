@@ -230,22 +230,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           @endcan
           <!-- end for Management Tree View -->
-          @can('isEmployeeOrSupply')
-          <li class="nav-item">
-            <router-link to="/requests" class="nav-link">
-              <i class="nav-icon fas fa-thumbtack"></i>
-              <p>
-                Request Properties
-              </p>
-            </router-link>
-          </li>
-          @endcan
           @can('isEmployee')
           <li class="nav-item">
             <router-link to="/employee-dashboard" class="nav-link">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 List of Accountabilities
+              </p>
+            </router-link>
+          </li>
+          @endcan
+          @can('isEmployeeOrSupply')
+          <li class="nav-item">
+            <router-link to="/requests" class="nav-link">
+              <i class="nav-icon fas fa-thumbtack"></i>
+              <p>
+                Request Properties
               </p>
             </router-link>
           </li>

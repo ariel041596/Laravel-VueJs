@@ -78,7 +78,7 @@
                           v-show="$gate.isEmployee()"
                           v-if="asset.status=='pending'"
                           href="#"
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
@@ -89,7 +89,7 @@
                         <a
                           v-show="$gate.isSupply()"
                           href="#"
-                          class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           @click="editModal(asset)"
                           data-toggle="tooltip"
                           data-placement="bottom"
@@ -387,6 +387,7 @@
                 <i class="material-icons fas fa-times">&nbsp;</i>Close
               </button>
               <button
+                :disabled="form.remarks=='processing'"
                 v-if="$gate.isEmployee()"
                 v-show="editmode"
                 type="submit"
@@ -403,6 +404,15 @@
                 <i class="material-icons fas fa-thumbs-down">&nbsp;</i>No Available
               </button>
               <button
+                v-if="$gate.isSupply()"
+                v-show="editmode"
+                @click="forprocessing()"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="material-icons fas fa-check">&nbsp;</i>For Processing
+              </button>
+              <button
+                :disabled="disabled"
                 v-if="$gate.isSupply()"
                 v-show="editmode"
                 @click="approvedStatus()"
@@ -470,6 +480,17 @@ export default {
       })
     };
   },
+  computed: {
+    disableChange() {},
+    disabled() {
+      return (
+        this.form.received_by === null ||
+        !this.form.received_by ||
+        this.form.issued_by === null ||
+        !this.form.issued_by
+      );
+    }
+  },
   methods: {
     select() {
       this.selected = [];
@@ -485,8 +506,13 @@ export default {
     noAvailable() {
       this.form.remarks = "No Available / Insuficient Quantity";
     },
+    forprocessing() {
+      this.form.remarks = "processing";
+    },
+
     approvedStatus() {
       this.form.status = "approved";
+      this.form.remarks = "Available";
     },
     getProfileid(event) {
       this.form.description = event.target.value;
@@ -711,8 +737,12 @@ export default {
   color: white;
   opacity: 0.9;
 }
-.update-create:hover {
+.update-create:hover:enabled {
   opacity: 1;
+}
+.update-create:hover:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
 }
 .modal-close-button {
   color: white;
@@ -772,6 +802,9 @@ export default {
 }
 .material-icons {
   font-size: 15px;
+}
+.mdl-btn {
+  background-color: #ececec;
 }
 </style>
 

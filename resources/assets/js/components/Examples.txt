@@ -712,3 +712,6 @@ export default {
 alternate to retrieve the data of the article is by 
 @change="getArticleCode" ---> on select tags in Assets
 -->add the read only on other html inputs
+
+
+form.status = forprocessing --> for tommorow

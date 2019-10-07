@@ -20,7 +20,8 @@ class RequestPropertyController extends Controller
    public function index()
    {
         if(\Gate::allows('isAdmin')){
-            return RequestAsset::where('status','LIKE',"%pending%")->latest()->paginate();
+            return RequestAsset::where('status','LIKE',"%pending%")
+            ->orWhere('status','LIKE',"%processing%")->latest()->paginate();
         }
         else{
             if(\Gate::allows('isEmployee')){
@@ -29,7 +30,8 @@ class RequestPropertyController extends Controller
                 ->orWhere('status','LIKE',"%unavailable%")->latest()->paginate(); //get or paginate?
             }else{
                 if(\Gate::allows('isSupply')){
-                    return RequestAsset::where('status','LIKE',"%pending%")->latest()->paginate();
+                    return RequestAsset::where('status','LIKE',"%pending%")
+                    ->orWhere('status','LIKE',"%processing%")->latest()->paginate();
                 }
             }
         }
