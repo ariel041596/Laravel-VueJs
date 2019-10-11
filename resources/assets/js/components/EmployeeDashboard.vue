@@ -3,7 +3,8 @@
   <div id="card-content" class="card row mt-4" v-if="$gate.isEmployee()">
     <div id="rpcppe" class="card-header">
       <h3 class="card-title mt-1 text-white">
-        List of Accountabilities
+        <i class="fas fa-list-ol"></i> &nbsp;
+        LIST OF ACCOUNTABILITIES
         <!-- <button class="update-create btn float-right" @click="newModal">
             <i class="fas fa-code">&nbsp;</i>Add User Type
         </button>-->
@@ -21,7 +22,7 @@
           <div class="col-sm-12">
             <table
               id="example2"
-              class="table table-bordered table-hover dataTable"
+              class="table table-bordered dataTable"
               role="grid"
               aria-describedby="example2_info"
             >
@@ -29,16 +30,16 @@
               <tbody>
                 <tr class>
                   <!-- <th>ID</th> -->
-                  <th>Article</th>
-                  <th>Description</th>
-                  <th class="text-center">Property Number</th>
-                  <th class="text-center">Unit</th>
-                  <th class="text-center">Price</th>
-                  <th class="text-center">Qty</th>
-                  <th class="text-center">Total Value</th>
-                  <th class="text-center">Date</th>
-                  <th class="text-center">Remarks</th>
-                  <th class="text-center">Actions</th>
+                  <th>ARTICLE</th>
+                  <th width="30%">DESCRIPTION</th>
+                  <th class="text-center">PROPERTY #</th>
+                  <th class="text-center">UNIT</th>
+                  <th class="text-center">PRICE</th>
+                  <th class="text-center">QTY</th>
+                  <th class="text-center">TOTAL COST</th>
+                  <th class="text-center">DATE</th>
+                  <th class="text-center">REMARKS</th>
+                  <th class="text-center">ACTION</th>
                 </tr>
               </tbody>
               <tbody>
@@ -66,7 +67,7 @@
                         @click="transferModal(asset)"
                         data-toggle="tooltip"
                         data-placement="bottom"
-                        title="Edit"
+                        title="Transfer Accountability"
                         class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                       >
                         <i class="material-icons fas fa-exchange-alt"></i>
@@ -76,7 +77,7 @@
                         @click="transferModal2(asset)"
                         data-toggle="tooltip"
                         data-placement="bottom"
-                        title="Edit"
+                        title="Request for Returned"
                         class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                       >
                         <i class="material-icons fas fa-recycle red"></i>
@@ -381,7 +382,7 @@
               </div>
               <div class="row">
                 <div class="col form-group">
-                  <label>For Transfe to</label>
+                  <label>For Transfer to</label>
                   <select
                     v-model="form.transfer_to"
                     type="text"
@@ -472,7 +473,7 @@
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form @submit.prevent="transfermode ? updateAsset() : createAsset()">
+          <form @submit.prevent="transfermode ? updateAsset2() : createAsset()">
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
@@ -507,7 +508,6 @@
               <div class="form-group">
                 <label>Description</label>
                 <textarea
-                  readonly
                   v-model="form.description"
                   type="text"
                   id="description"
@@ -579,10 +579,9 @@
                 <div class="col form-group">
                   <label>Quantity</label>
                   <input
-                    readonly
                     min="1"
                     separator=","
-                    :value="form.quantity"
+                    v-model="form.quantity"
                     type="number"
                     id="quantity"
                     placeholder="Enter quantity"
@@ -740,6 +739,19 @@
                   />
                 </div>
               </div>
+              <!-- <div class="row">
+                <div class="col form-group">
+                  <label>Purpose</label>
+                  <textarea
+                    class="form-control"
+                    id="comments"
+                    name="comments"
+                    placeholder="Please input reason for return"
+                    v-model="form.comments"
+                    :class="{'is-invalid': form.errors.has('comments')}"
+                  />
+                </div>
+              </div>-->
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -760,8 +772,27 @@
               >
                 <i class="fas fa-thumbs-up">&nbsp;</i>Approved
               </button>
+              <!-- <button
+                :disabled="noremarks"
+                v-show="transfermode"
+                @click="cancelStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-undo">&nbsp;</i>Cancel
+              </button>-->
+              <!-- <button
+                :disabled="noremarks"
+                v-show="transfermode"
+                @click="cancelStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-undo">&nbsp;</i>Cancel
+              </button>-->
               <button
                 v-show="transfermode"
+                @click="returnedStatus()"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
@@ -809,6 +840,7 @@ export default {
   data() {
     return {
       assets: {},
+      profiles: {},
       transfermode: false,
       accountable_officers: {},
       form: new Form({
@@ -829,21 +861,64 @@ export default {
         createdBy: "",
         status: "",
         property_type: "",
-        transfer_to: ""
+        transfer_to: "",
+        comments: "",
+        null: ""
       })
     };
   },
-  components: {
-    // Calendar
+  computed: {
+    noremarks() {
+      return this.form.remarks === null || !this.form.remarks;
+    }
+    // disabled() {
+    //   return this.form.comments === null || !this.form.comments;
+    // }
+    // disabledCancel() {
+    //   return this.form.remarks === "Cancel Returned";
+    // }
   },
   methods: {
+    loadUsers() {
+      axios.get("api/profile").then(({ data }) => (this.profiles = data));
+    },
     getResults(page = 1) {
       axios.get("api/accountabilities?page=" + page).then(response => {
         this.assets = response.data;
       });
     },
+    returnedStatus() {
+      this.form.remarks = "For Returned ";
+    },
+    cancelStatus() {
+      this.form.remarks = "Cancel Returned";
+    },
     setShowDate(d) {
       this.showDate = d;
+    },
+    updateAsset2() {
+      this.$Progress.start();
+      this.form.createdBy = this.profiles.id;
+      this.form.property_type = "IIRUP";
+      this.form.status = "Pending";
+      this.form
+        .post("api/disposal")
+        // let request2 = this.form.put("api/asset/" + this.form.id);
+        // this.form
+        //   .put("api/asset/" + this.form.id)
+        // $.when(request1, request2)
+        .then(() => {
+          $("#addNew2").modal("hide");
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
+          this.$Progress.finish();
+          Fire.$emit("AfterCreate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
     },
     loadAssets() {
       if (this.$gate.isEmployee()) {
@@ -872,6 +947,7 @@ export default {
   created() {
     this.loadAssets();
     this.loadAccountableOfficers();
+    this.loadUsers();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
     });
@@ -906,5 +982,15 @@ export default {
 }
 .mdl-btn {
   background-color: #ececec;
+}
+.modal-close-button {
+  color: white;
+}
+.modal-header {
+  background: rgb(22, 70, 143);
+  color: aliceblue;
+}
+#description {
+  height: 160px;
 }
 </style>

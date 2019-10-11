@@ -33,7 +33,7 @@ class AssetInventoryController extends Controller
         if(\Gate::allows('isAdmin')){
             // return Asset::latest()->paginate(10);
             return Asset::where('status','LIKE',"%approved%")
-            ->where('property_type','LIKE',"%INVENTORY%")->latest()->paginate(1);
+            ->where('property_type','LIKE',"%INVENTORY%")->latest()->paginate(50);
         }else{
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)

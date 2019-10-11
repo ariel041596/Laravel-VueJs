@@ -18,7 +18,14 @@
         >
           <i class="fas fa-plus">&nbsp;</i>RPCPPE
         </button>
-        <h3 class="card-title mt-1 text-white">RPCPPE</h3>
+        <h3
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Report on Physical Count of Property Plant and Equipment"
+          class="card-title mt-1 text-white"
+        >
+          <i class="fas fa-clipboard-check">&nbsp;</i>RPCPPE
+        </h3>
       </div>
 
       <!-- /.card-header -->
@@ -41,20 +48,20 @@
                     <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
                     </!-->
-                    <th>Article</th>
-                    <th width="20%">Description</th>
-                    <th width="5%">Property Number</th>
-                    <th>Unit</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Total Value</th>
-                    <th>Date</th>
-                    <th>Accountable Officer</th>
-                    <th>Remarks</th>
-                    <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
+                    <th>ARTICLE</th>
+                    <th width="20%">DESCRIPTION</th>
+                    <th width="5%">PROPERTY #</th>
+                    <th>UNIT</th>
+                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th>TOTAL VALUE</th>
+                    <th>DATE</th>
+                    <th>ACCOUNTABLE OFFICER</th>
+                    <th>STATUS</th>
+                    <th v-if="$gate.isAdminOrAuthor()" width="8%">ACCOUNT NAME</th>
                     <!-- <th>Status</th>
                     <th>Property Type</th>-->
-                    <th>Actions</th>
+                    <th>ACTION</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -79,7 +86,7 @@
                         class="mdl-badge mdl-badge--overlap"
                         :data-badge="asset.remarks"
                       >{{asset.description | upText}}</td>-->
-                      <td :data-badge="asset.remarks">{{asset.description | upText}}</td>
+                      <td>{{asset.description | upText}}</td>
                       <td>{{asset.property_number}}</td>
                       <td>{{asset.unit_of_measure}}</td>
                       <td class="text-right">{{asset.price | numberComma }}</td>
@@ -87,7 +94,17 @@
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
                       <td>{{asset.accountable_officer | upText}}</td>
-                      <td>{{asset.remarks }}</td>
+                      <td>
+                        <span
+                          v-if="asset.remarks=='For Returned'"
+                          class="badge badge-pill badge-danger"
+                        >{{asset.remarks }}</span>
+                        <span
+                          v-if="asset.remarks=='Cancel Returned'"
+                          class="badge badge-pill badge-dark"
+                        >{{asset.remarks }}</span>
+                        <!-- <span v-else>{{asset.remarks}}</span> -->
+                      </td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <!-- <td>{{asset.status | upText}}</td> -->
                       <!-- <td>{{asset.property_type | upText}}</td> -->
@@ -1138,6 +1155,9 @@ export default {
 }
 .mdl-btn {
   background-color: #ececec;
+}
+.badge {
+  font-size: 11px;
 }
 </style>
 

@@ -64,11 +64,26 @@
                     <td>{{user.type | upText}}</td>
                     <td>{{user.service}}</td>
                     <td>
-                      <a href="#" @click="editModal(user)">
-                        <i class="fas fa-edit"></i>
+                      <a
+                        id="mdl-btn"
+                        title="Edit"
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        @click="editModal(user)"
+                      >
+                        <i class="material-icons fas fa-pen"></i>
                       </a>
-                      <a href="#" @click="deleteUser(user.id)">
-                        <i class="fas fa-trash red"></i>
+                      <a
+                        title="Delete"
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        @click="deleteUser(user.id)"
+                      >
+                        <i class="material-icons fas fa-trash red"></i>
                       </a>
                     </td>
                   </tr>
@@ -455,5 +470,11 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
+}
+.mdl-btn {
+  background-color: #ececec;
 }
 </style>

@@ -52,6 +52,51 @@ class DisposalController extends Controller
     public function store(Request $request)
     {
         
+    
+        // 'article', 'description', 'property_number','unit_of_measure','price','quantity','total_value','date','accountable_officer','remarks','service'
+            // Validate the inputs in form
+            $this->validate($request, [
+                'number' => 'required|string|max:191', //1
+                'article' => 'required|string|max:191', //1
+                'description' => 'required|string', //2
+                'property_number' => 'max:191', //3
+                'unit_of_measure' => 'required|string|max:191', //4
+                'price' => 'max:191', //5
+                'quantity' => 'required|max:191', //6
+                'total_value' => 'max:191', //7
+                'date' => 'max:191', //8
+                'accountable_officer' => 'required|string|max:191', //9
+                'remarks' => 'max:191', //10
+                'account_name' => 'required|string|max:191', //11
+                'service' => 'required|string|max:191', //12 
+                'property_type' => 'required|string|max:191', //12 
+                'createdBy' => 'max:191', //12 
+                'status' => 'max:191', //13
+                
+    
+                
+            ]);
+            // Insert the data into databse
+            return Disposal::create([
+                
+                'number' => $request['number'], //1
+                'article' => $request['article'], //1
+                'description' => $request['description'], //2
+                'property_number' => $request['property_number'], //3
+                'unit_of_measure' => $request['unit_of_measure'], //4
+                'price' => $request['price'], //5
+                'quantity' => $request['quantity'], //6
+                'total_value' => $request['total_value'], //7
+                'date' => $request['date'], //8 
+                'accountable_officer' => $request['accountable_officer'], //9
+                'remarks' => $request['remarks'], //10
+                'account_name' => $request['account_name'], //11
+                'service' => $request['service'], //12
+                'property_type' => $request['property_type'], //12
+                'createdBy' => $request['createdBy'], //12
+                'status' => $request['status'], //13
+            ]);
+        
     }
 
       /**
@@ -64,8 +109,6 @@ class DisposalController extends Controller
     {
         
     }
-
-    
 
     /**
      * Update the specified resource in storage.

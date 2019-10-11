@@ -4,18 +4,26 @@
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthorOrSupply()">
       <div id="rpcppe" class="rpcppe card-header">
         <button
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Unit Price Exceeds P15,000.00"
           @click="newModal"
           class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
         >
           <i class="fas fa-plus">&nbsp;</i>RPCPPE
         </button>
         <button
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Unit Price Below P15,001.00"
           @click="newModal2"
           class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
         >
           <i class="fas fa-plus">&nbsp;</i>ICS
         </button>
-        <h3 class="card-title mt-1 text-white">PENDINGS</h3>
+        <h3 class="card-title mt-1 text-white">
+          <i class="fas fa-clipboard"></i>&nbsp;PENDINGS
+        </h3>
       </div>
 
       <!-- /.card-header -->
@@ -172,7 +180,15 @@
           <div class="modal-header">
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Asset</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Close"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -500,6 +516,9 @@
                 <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
               </button>-->
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Add Report on Physical Count of Property Plant and Equipment"
                 v-show="!editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
@@ -853,6 +872,9 @@
                 <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
               </button>-->
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Add Inventory Custodian Slip"
                 v-show="!editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"

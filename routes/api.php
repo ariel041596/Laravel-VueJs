@@ -121,6 +121,13 @@ Route::middleware('auth:api')->get('/disposal', function (Request $request) {
 // router for Asset Controller
 Route::apiResources(['disposal' => 'API\DisposalController']);
 // ===============================================End For IRRUP==========================
+// Middleware to get Asset
+Route::middleware('auth:api')->get('/return-request', function (Request $request) {
+    return $request->return-request();
+});
+// router for Asset Controller
+Route::apiResources(['return-request' => 'API\ReturnRequestController']);
+// ===============================================End For IRRUP==========================
 // ===============================================For PAR Printing==========================
 // Middleware to get Asset
 // Route::middleware('auth:api')->get('/par', function (Request $request) {

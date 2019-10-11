@@ -29,7 +29,8 @@ class AccountabilityController extends Controller
     {
             $employeename = Auth::user()->name;
             return Asset::where('accountable_officer',$employeename)
-            ->where('status','LIKE',"%approved%")->paginate();
+            ->where('status','LIKE',"%approved%")
+            ->orWhere('status','LIKE',"%For Returned%")->paginate();
        
         
     }

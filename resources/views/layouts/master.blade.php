@@ -68,9 +68,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         @can('isSupply')
-        <li class="nav-item has-treeview">
+        <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
+                <i class="nav-icon fas fa-chart-bar text-white"></i>
                   <p>
                     Assets <i class="right fa fa-angle-left "></i>
                   </p>
@@ -78,7 +78,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                  <i class="fas fa-dot-circle"></i>&nbsp;
+                  <i class="fas fa-clipboard text-white"></i>&nbsp;
                     <p>Pendings</p>
                 </router-link>
               </li>
@@ -89,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           @can('isUser')
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-tachometer-alt text-white"></i>
                 <p>
                 Dashboard
                 </p>
@@ -98,9 +98,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- End for Dashboard -->
 
           <!-- Tree view for assets -->
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
+                <i class="nav-icon fas fa-chart-bar text-white"></i>
                   <p>
                     Assets <i class="right fa fa-angle-left "></i>
                   </p>
@@ -108,25 +108,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                  <i class="fas fa-dot-circle"></i>&nbsp;
+                  <i class="fas fa-clipboard text-white"></i>&nbsp;
                     <p>Pendings</p>
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="/return-request" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-thumbtack text-white"></i>&nbsp;
+                  <p> Return Request</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
               <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-              <i class="fas fa-dot-circle"></i>&nbsp;
+              <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>RPCPPE</p>
               </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-              <i class="fas fa-clipboard"></i>&nbsp;
+              <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>ICS</p>
               </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-trash-restore-alt"></i>&nbsp;
+                <i class="fas fa-recycle text-white"></i>&nbsp;
                  <p>IIRUP</p>
               </router-link>
               </li>
@@ -136,7 +142,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           @can('isAdmin')
           <li class="nav-item">
             <router-link to="/dashboard" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-tachometer-alt text-white"></i>
                 <p>
                 Dashboard
                 </p>
@@ -145,9 +151,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- End for Dashboard -->
 
           <!-- Tree view for assets -->
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
+                <i class="nav-icon fas fa-chart-bar text-white"></i>
                   <p>
                     Assets <i class="right fa fa-angle-left "></i>
                   </p>
@@ -155,31 +161,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/pendings" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                  <i class="fas fa-dot-circle"></i>&nbsp;
+                  <i class="fas fa-clipboard text-white"></i>&nbsp;
                     <p>Pendings</p>
                 </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-              <i class="fas fa-dot-circle"></i>&nbsp;
+              <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>RPCPPE</p>
               </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/inventory" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-              <i class="fas fa-clipboard"></i>&nbsp;
+              <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>ICS</p>
               </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-trash-restore-alt"></i>&nbsp;
+                <i class="fas fa-trash-restore-alt text-white"></i>&nbsp;
                  <p>IIRUP</p>
               </router-link>
               </li>
               <li class="nav-item">
               <router-link to="/article-category" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-list-alt"></i>&nbsp;
+                <i class="fas fa-list-alt text-white"></i>&nbsp;
                  <p>Article Category</p>
               </router-link>
               </li>
@@ -190,15 +196,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <!-- Done For Management Tree View-->
           @can('isAdmin')
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
+              <i class="nav-icon fas fa-cog text-white"></i>
                 <p>Management<i class="right fa fa-angle-left"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <router-link to="/users" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                 <i class="fas fa-users-cog"></i>&nbsp;
+                 <i class="fas fa-users-cog text-white"></i>&nbsp;
                   <p>Users</p>
                 </router-link>
               </li>
@@ -210,19 +216,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li> -->
               <li class="nav-item">
                 <router-link to="/accountable-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                 <i class="fas fa-users-cog"></i>&nbsp;
+                 <i class="fas fa-users-cog text-white"></i>&nbsp;
                   <p>Accountable Officers</p>
                 </router-link>
               </li> 
               <li class="nav-item">
                 <router-link to="/property-officers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                 <i class="fas fa-users-cog"></i>&nbsp;
+                 <i class="fas fa-users-cog text-white"></i>&nbsp;
                   <p>Property Officers</p>
                 </router-link>
               </li> 
               <li class="nav-item">
                 <router-link to="/account-codes" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-code"></i>&nbsp;
+                <i class="fas fa-code text-white"></i>&nbsp;
                   <p>Account Codes</p>
                 </router-link>
               </li> 
@@ -230,29 +236,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           @endcan
           <!-- end for Management Tree View -->
-          @can('isEmployee')
-          <li class="nav-item">
-            <router-link to="/employee-dashboard" class="nav-link">
-              <i class="nav-icon fas fa-list"></i>
-              <p>
-                List of Accountabilities
-              </p>
-            </router-link>
-          </li>
-          @endcan
           @can('isEmployeeOrSupply')
           <li class="nav-item">
             <router-link to="/requests" class="nav-link">
-              <i class="nav-icon fas fa-thumbtack"></i>
+              <i class="nav-icon fas fa-thumbtack text-white"></i>
               <p>
                 Request Properties
               </p>
             </router-link>
           </li>
           @endcan
+          @can('isEmployee')
+          <li class="nav-item">
+            <router-link to="/employee-dashboard" class="nav-link">
+              <i class="nav-icon fas fa-list text-white"></i>
+              <p>
+                List of Accountabilities
+              </p>
+            </router-link>
+            <router-link to="/return-request" class="nav-link">
+              <i class="nav-icon fas fa-thumbtack text-white"></i>
+              <p>
+                Return Request
+              </p>
+            </router-link>
+          </li>
+          @endcan
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
-              <i class="nav-icon fas fa-user-cog"></i>
+              <i class="nav-icon fas fa-user-cog text-white"></i>
               <p>
                 Profile
               </p>
@@ -275,7 +287,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a class="nav-link" href="{{ route('logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
-              <i class="nav-icon fas fa-power-off"></i>
+              <i class="nav-icon fas fa-power-off text-white"></i>
                 <p>
                   {{ __('Logout') }}
                 </p>

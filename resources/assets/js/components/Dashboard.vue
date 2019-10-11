@@ -26,7 +26,7 @@
             <div class="row">
               <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box" id="totalpar">
                   <div class="inner">
                     <h3>150</h3>
 
@@ -193,5 +193,9 @@ export default {
   width: 90vw;
   margin-left: auto;
   margin-right: auto;
+}
+#totalpar {
+  background-color: #15aabf;
+  color: aliceblue;
 }
 </style>

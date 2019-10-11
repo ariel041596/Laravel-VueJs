@@ -13,8 +13,13 @@
           <i class="fas fa-plus">&nbsp;</i>IIRUP
         </button>
         <h3
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="INVENTORY AND INSPECTION REPORT OF UNSERVICEABLE PROPERTY"
           class="card-title mt-1 text-white"
-        >INVENTORY AND INSPECTION REPORT OF UNSERVICEABLE PROPERTY</h3>
+        >
+          <i class="fas fa-recycle">&nbsp;</i>IIRUP
+        </h3>
       </div>
 
       <!-- /.card-header -->

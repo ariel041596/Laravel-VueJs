@@ -12,7 +12,14 @@
         >
           <i class="fas fa-plus">&nbsp;</i>Add ICS
         </button>
-        <h3 class="card-title mt-1 text-white">INVENTORY CUSTODIAN SLIP</h3>
+        <h3
+          data-toggle="tooltip"
+          data-placement="bottom"
+          title="Inventory Custodian Slip"
+          class="card-title mt-1 text-white"
+        >
+          <i class="fas fa-clipboard-check">&nbsp;</i>ICS
+        </h3>
       </div>
 
       <!-- /.card-header -->
@@ -524,7 +531,7 @@
                 </div>
                 <div class="col form-group" v-show="false">
                   <input
-                    value="INVENTORY"
+                    value="PAR"
                     type="text"
                     id="property_type"
                     placeholder="property_type"
@@ -534,9 +541,9 @@
                 </div>
               </div>
               <div class="row">
-                <!-- <div class="col form-group">
-                  <label>Service</label>
-                  <input
+                <div class="col form-group">
+                  <label>Position</label>
+                  <select
                     v-model="form.service"
                     type="text"
                     id="service"
@@ -544,26 +551,33 @@
                     name="service"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('service') }"
-                  />
+                  >
+                    <option value>Please Select Position</option>
+                    <option
+                      v-for="position in accountable_officers.data"
+                      :key="position.id"
+                    >{{position.designation}}</option>
+                  </select>
                   <has-error :form="form" field="service"></has-error>
-                </div>-->
-                <div class="col form-group" v-if="editmode">
+                </div>
+                <!-- <div class="col form-group" v-if="editmode">
                   <label>Status</label>
                   <select
+                    type="text"
                     name="status"
+                    placeholder="Status"
                     v-model="form.status"
                     id="status"
                     class="form-control"
                     :class="{'is-invalid': form.errors.has('status')}"
                   >
-                    <option value>Select Status</option>
-                    <!-- <option value="approved">Approved</!-->
-                    -->
-                    <option value="fordisposal">For Disposal</option>
+                <option value>Select Status</option>-->
+                <!-- <option value="approved">Approved</!-->
+                <!-- <option value="fordisposal">For Disposal</option>
                     <option value="disposed">Disposed</option>
-                    <has-error :form="form" field="status"></has-error>
                   </select>
-                </div>
+                  <has-error :form="form" field="status"></has-error>
+                </div>-->
                 <div class="col form-group">
                   <label>Account Name</label>
                   <select
@@ -594,25 +608,35 @@
               >
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <!-- <button v-show="editmode" type="submit" class="update-create btn">
-                <i class="fas fa-pen">&nbsp;</i>Update ICS
-              </button>-->
+              <button
+                v-if="$gate.isAdminOrUserOrAuthor()"
+                v-show="editmode"
+                @click="disposedStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-trash">&nbsp;</i>Disposal
+              </button>
               <button
                 v-show="editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
+                <i class="fas fa-pen">&nbsp;</i>Update
               </button>
+
+              <!-- <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
+              </button>-->
               <!-- <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
-                <i class="fas fa-plus">&nbsp;</i>Add ICS
+                <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
               </button>-->
               <button
                 v-show="!editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-plus">&nbsp;</i>Add ICS
+                <i class="fas fa-plus">&nbsp;</i>RPCPPE
               </button>
             </div>
           </form>
@@ -665,7 +689,7 @@ export default {
         accountable_officer: "",
         remarks: "",
         account_name: "",
-        // service: "",
+        service: "",
         createdBy: "",
         status: "pending",
         property_type: "INVENTORY"
@@ -805,6 +829,9 @@ export default {
         this.inventories = response.data;
       });
     },
+    disposedStatus() {
+      this.form.status = "fordisposal";
+    },
     updateAsset() {
       this.$Progress.start();
       this.form
@@ -940,13 +967,11 @@ export default {
       let createdby = this.profiles.id;
       this.form.number = "ICS-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
-
       this.$Progress.start();
       this.form
         .post("api/asset")
         .then(() => {
           // Custom event to fire
-
           Fire.$emit("AfterCreate");
           // Sweet Alert message from sweetalert2
           toast.fire({

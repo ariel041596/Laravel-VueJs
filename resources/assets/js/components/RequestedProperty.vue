@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class id="requestedPropertyvue">
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isEmployeeOrSupply()">
       <div id="rpcppe" class="card-header">
@@ -8,9 +8,11 @@
           @click="newModal"
           v-if="$gate.isEmployee()"
         >
-          <i class="fas fa-cart-plus">&nbsp;</i>Request Asset
+          <i class="fas fa-cart-plus"></i>&nbsp;REQUEST ITEM
         </button>
-        <h3 class="card-title mt-1 text-white">Request Asset</h3>
+        <h3 class="card-title mt-1 text-white">
+          <i class="fas fa-clipboard-check"></i>&nbsp;REQUEST ASSET
+        </h3>
       </div>
 
       <!-- /.card-header -->
@@ -34,18 +36,17 @@
                     <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
                     </!-->
-                    <th>Service</th>
-                    <th>RIS Number</th>
-                    <th>Unit</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                    <th>Remarks</th>
-                    <th>Purpose</th>
-                    <th>Accountable Officer</th>
-                    <th v-if="$gate.isSupply()">Issued By</th>
-                    <th v-if="$gate.isSupply()">Received By</th>
-                    <th>Action</th>
+                    <th>SERVICE</th>
+                    <th>RIS #</th>
+                    <th>UNIT</th>
+                    <th>DESCRIPTION</th>
+                    <th>QTY</th>
+                    <th>STATUS</th>
+                    <th>PURPOSE</th>
+                    <th>ACCOUNTABLE OFFICER</th>
+                    <th v-if="$gate.isSupply()">ISSUED BY</th>
+                    <th v-if="$gate.isSupply()">RECEIVED BY</th>
+                    <th>ACTION</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -67,7 +68,6 @@
                       <td>{{asset.unit_of_measure}}</td>
                       <td>{{asset.description | upText}}</td>
                       <td class="text-center">{{asset.quantity | numberComma}}</td>
-                      <td>{{asset.status | upText}}</td>
                       <td>{{asset.remarks }}</td>
                       <td>{{asset.purpose | upText}}</td>
                       <td>{{asset.accountable_officer}}</td>
@@ -123,6 +123,10 @@
                 </tbody>
               </table>
               <div>
+                <p
+                  id="showEntries"
+                >Showing {{assets.from}} to {{assets.to}} of {{assets.total}} entries</p>
+
                 <pagination :data="assets" @pagination-change-page="getResults" align="center"></pagination>
               </div>
             </div>
@@ -150,7 +154,15 @@
           <div class="modal-header">
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Request</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Close"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -266,14 +278,14 @@
                     class="form-control"
                   />
                 </div>
-                <div class="col form-group">
-                  <label>Remarks</label>
+                <div class="col form-group" v-show="editmode">
+                  <label>Status</label>
                   <input
                     :disabled="!$gate.isSupply()"
                     v-model="form.remarks"
                     type="text"
                     id="remarks"
-                    placeholder="Remarks"
+                    placeholder="Status"
                     name="remarks"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('remarks') }"
@@ -387,7 +399,7 @@
                 <i class="material-icons fas fa-times">&nbsp;</i>Close
               </button>
               <button
-                :disabled="form.remarks=='processing'"
+                :disabled="hasremarks"
                 v-if="$gate.isEmployee()"
                 v-show="editmode"
                 type="submit"
@@ -396,6 +408,9 @@
                 <i class="material-icons fas fa-pen">&nbsp;</i>Update Request
               </button>
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="No Available"
                 v-if="$gate.isSupply()"
                 v-show="editmode"
                 @click="noAvailable()"
@@ -404,14 +419,31 @@
                 <i class="material-icons fas fa-thumbs-down">&nbsp;</i>No Available
               </button>
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="For Processing"
                 v-if="$gate.isSupply()"
                 v-show="editmode"
                 @click="forprocessing()"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="material-icons fas fa-check">&nbsp;</i>For Processing
+                <i class="material-icons fas fa-check">&nbsp;</i>Processing
               </button>
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Ready for Release"
+                v-if="$gate.isSupply()"
+                v-show="editmode"
+                @click="forrelease()"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="material-icons fas fa-check">&nbsp;</i>Release
+              </button>
+              <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Please fill up Received By portion"
                 :disabled="disabled"
                 v-if="$gate.isSupply()"
                 v-show="editmode"
@@ -421,6 +453,7 @@
                 <i class="material-icons fas fa-thumbs-up">&nbsp;</i>Approved Request
               </button>
               <button
+                @click="pending()"
                 v-show="!editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
@@ -482,6 +515,12 @@ export default {
   },
   computed: {
     disableChange() {},
+    hasremarks() {
+      return (
+        this.form.remarks == "For Processing" ||
+        this.form.remarks == "Ready for Release"
+      );
+    },
     disabled() {
       return (
         this.form.received_by === null ||
@@ -507,9 +546,14 @@ export default {
       this.form.remarks = "No Available / Insuficient Quantity";
     },
     forprocessing() {
-      this.form.remarks = "processing";
+      this.form.remarks = "For Processing";
     },
-
+    forrelease() {
+      this.form.remarks = "Ready for Release";
+    },
+    pending() {
+      this.form.remarks = "Pending";
+    },
     approvedStatus() {
       this.form.status = "approved";
       this.form.remarks = "Available";
@@ -656,6 +700,18 @@ export default {
       }
     },
     createAsset() {
+      this.form.service = this.profiles.service;
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0");
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      // today = mm + dd + yyyy;
+      today = yyyy;
+      let risnumber = this.assets.total + 1;
+      let createdby = this.profiles.id;
+      this.form.request_number =
+        "RIS-" + today + "-" + createdby + "-" + risnumber;
+      this.form.createdBy = this.assets.id;
       // Progressbar before create user
       this.$Progress.start();
       this.form.status = "pending";
@@ -806,6 +862,12 @@ export default {
 .mdl-btn {
   background-color: #ececec;
 }
+#showEntries {
+  padding-bottom: 10px;
+}
+/* #requestedPropertyvue {
+  font-size: 11px;
+} */
 </style>
 
 
