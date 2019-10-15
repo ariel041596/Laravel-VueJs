@@ -38,7 +38,7 @@
                   <th class="text-center">QTY</th>
                   <th class="text-center">TOTAL COST</th>
                   <th class="text-center">DATE</th>
-                  <th class="text-center">REMARKS</th>
+                  <!-- <th class="text-center">REMARKS</th> -->
                   <th class="text-center">ACTION</th>
                 </tr>
               </tbody>
@@ -60,7 +60,7 @@
                     <td class="text-center">{{asset.quantity | numberComma}}</td>
                     <td class="text-right">{{asset.total_value | numberComma}}</td>
                     <td class="text-center">{{asset.date | myDate}}</td>
-                    <td class="text-center">{{asset.remarks }}</td>
+                    <!-- <td class="text-center">{{asset.remarks }}</td> -->
                     <td class="text-center">
                       <a
                         href="#"

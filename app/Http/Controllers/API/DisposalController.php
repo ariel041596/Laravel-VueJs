@@ -181,7 +181,7 @@ class DisposalController extends Controller
             })->paginate(20);
         }else{
             // if the users do not found any data after delete all search words
-            $disposal = Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate(1);
+            $disposal = Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate(20);
         }
 
         return $disposal;

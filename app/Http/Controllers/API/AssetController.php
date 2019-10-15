@@ -277,7 +277,7 @@ class AssetController extends Controller
         }else{
             // if the users do not found any data after delete all search words
             $assets = Asset::where('status','LIKE',"%approved%")
-            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(1);
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(20);
         }
 
         return $assets;

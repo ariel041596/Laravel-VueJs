@@ -80,15 +80,15 @@
                   <i>Received by:</i>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <strong class="underline-text">{{assets.asset.accountable_officer}}</strong>
                   <br />Signature over Printed Name of End User
                 </p>
                 <p class="receiving-side" style="margin-top: 30px;  ">
-                  <strong>{{assets.asset.service}}</strong>
+                  <strong class="underline-text">{{assets.asset.service}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
@@ -98,15 +98,15 @@
                   <i>Received from:</i>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{property.name}}</strong>
+                  <strong class="underline-text">{{property.name}}</strong>
                   <br />Signature over Printed Name
                 </p>
                 <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
-                  <strong>{{property.designation}}</strong>
+                  <strong class="underline-text">{{property.designation}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
@@ -222,15 +222,15 @@
                   <i>Received by:</i>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <strong class="underline-text">{{assets.asset.accountable_officer}}</strong>
                   <br />Signature over Printed Name of End User
                 </p>
                 <p class="receiving-side" style="margin-top: 30px;  ">
-                  <strong>{{assets.asset.service}}</strong>
+                  <strong class="underline-text">{{assets.asset.service}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
@@ -240,15 +240,15 @@
                   <i>Received from:</i>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{property.name}}</strong>
+                  <strong class="underline-text">{{property.name}}</strong>
                   <br />Signature over Printed Name
                 </p>
                 <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
-                  <strong>{{property.designation}}</strong>
+                  <strong class="underline-text">{{property.designation}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
@@ -299,19 +299,25 @@
                 <p
                   style="font-family:Palatino Linotype; font-size:18px; text-align:center; text-decoration: underline; "
                 >
-                  <strong>RETURN SLIP</strong>
+                  <strong>RETURN SLIP FOR PROPERTY, PLANT AND EQUIPMENT</strong>
                 </p>
                 <div>
-                  <p style="font-family:Palatino Linotype; font-size:16px; text-align:left; ">
-                    <strong>Entity Name:</strong> DICT
+                  <p
+                    style="font-family:Palatino Linotype; font-size:18px; text-align:left; margin-top: 50px;"
+                  >
+                    <strong>MEMORANDUM:</strong>
                   </p>
-                  <p style="font-family:Palatino Linotype; font-size:16px;  ">
-                    <strong>Fund Cluster:</strong>
-                    <strong class="float-right" style="text-align:right;">
-                      ICS No:
-                      <u>{{assets.asset.number}}</u>
-                    </strong>
+                  <p style="font-family:Palatino Linotype; font-size:18px;">
+                    <strong>FOR: The Officer-in-Charge, Asset and Property Section</strong>
                   </p>
+                  <p style="font-family:Palatino Linotype; font-size:18px;">
+                    <strong style="text-align:left;">FROM: {{assets.asset.accountable_officer}}</strong>
+                  </p>
+                </div>
+                <div>
+                  <p
+                    style="font-family:Palatino Linotype; font-size:18px; text-align: justify"
+                  >Please be advised that we are returning the items listed hereunder for as stated. A copy of the signed Property Acknowledgement Receipt (PAR) is likewise attached for your ready reference. Please make the necessary adjustment in our records of property accountability.</p>
                 </div>
               </div>
               <!-- /.col -->
@@ -330,7 +336,7 @@
                       <th width="8%">Qty.</th>
                       <th width="8%">Unit</th>
                       <th width="30%">Description</th>
-                      <th width="14%">Property No.</th>
+                      <th width="14%">Memo Receipt</th>
                       <th width="10%">Date Acquired</th>
                       <th width="15%">Unit Cost</th>
                       <th width="15%">Total Cost</th>
@@ -358,38 +364,55 @@
             <!-- /.row -->
 
             <div class="row">
-              <div class="col-6">
+              <div class="col-4">
                 <p class="lead" style="margin-top: 50px;">
-                  <i>Received by:</i>
+                  <strong>RETURNED BY:</strong>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{assets.asset.accountable_officer}}</strong>
+                  <strong class="underline-text">{{assets.asset.accountable_officer}}</strong>
                   <br />Signature over Printed Name of End User
                 </p>
                 <p class="receiving-side" style="margin-top: 30px;  ">
-                  <strong>{{assets.asset.service}}</strong>
+                  <strong class="underline-text">{{assets.asset.service}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
               <!-- 2nd Column -->
-              <div class="col-6" v-for="property in property_officers.data" :key="property.id">
+              <div class="col-4" v-for="property in property_officers.data" :key="property.id">
                 <p class="lead" style="margin-top: 50px;">
-                  <i>Received from:</i>
+                  <strong>RECEIVED BY:</strong>
                 </p>
                 <p class="receiving-side" style="margin-top: 50px;  ">
-                  <strong>{{property.name}}</strong>
+                  <strong class="underline-text">{{property.name}}</strong>
                   <br />Signature over Printed Name
                 </p>
                 <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
-                  <strong>{{property.designation}}</strong>
+                  <strong class="underline-text">{{property.designation}}</strong>
                   <br />Position / Office
                 </p>
                 <p class="receiving-side" style="margin-top: 10px;">
-                  <span>{{assets.asset.date}}</span>
+                  <span class="underline-text">{{assets.asset.date}}</span>
+                  <br />Date
+                </p>
+              </div>
+              <div class="col-4" v-for="property in property_officers.data" :key="property.id">
+                <p class="lead" style="margin-top: 50px;">
+                  <strong>NOTED BY:</strong>
+                </p>
+                <p class="receiving-side" style="margin-top: 50px;  ">
+                  <strong class="underline-text">{{property.name}}</strong>
+                  <br />Signature over Printed Name
+                </p>
+                <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
+                  <strong class="underline-text">{{property.designation}}</strong>
+                  <br />Position / Office
+                </p>
+                <p class="receiving-side" style="margin-top: 10px;">
+                  <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
               </div>
@@ -522,8 +545,11 @@ export default {
   font-family: Palatino Linotype;
   font-size: 16px;
   text-align: center;
+}
+.underline-text {
   text-decoration: underline;
 }
+
 .lead {
   font-family: Palatino Linotype;
   font-size: 16px;
