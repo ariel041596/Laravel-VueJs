@@ -281,6 +281,7 @@
                 <div class="col form-group" v-show="editmode">
                   <label>Status</label>
                   <input
+                    readonly
                     :disabled="!$gate.isSupply()"
                     v-model="form.remarks"
                     type="text"
@@ -399,6 +400,7 @@
                 <i class="material-icons fas fa-times">&nbsp;</i>Close
               </button>
               <button
+                @click="resetRemarks()"
                 :disabled="hasremarks"
                 v-if="$gate.isEmployee()"
                 v-show="editmode"
@@ -675,6 +677,9 @@ export default {
           }
         });
     },
+    resetRemarks() {
+      this.form.remarks = "Pending";
+    },
     loadPropertyOfficers() {
       if (this.$gate.isEmployeeOrSupply()) {
         axios
@@ -777,7 +782,7 @@ export default {
         .catch(() => {});
     });
     // SetInterval Function
-    // setInterval(() => this.loadUsers(), 3000);
+    // setInterval(() => this.loadAssets(), 5000);
   }
   // mounted() {
   //   axios.get("api/requests").then(response => {

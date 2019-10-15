@@ -121,7 +121,7 @@
                             title="Print ICS"
                           ></i>
                         </router-link>
-                        <!-- <a
+                        <a
                           class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           @click="deleteAsset(asset.id)"
@@ -130,7 +130,7 @@
                           title="Disposed"
                         >
                           <i class="material-icons fas fa-trash red"></i>
-                        </a>-->
+                        </a>
                       </td>
                     </tr>
                   </template>

@@ -254,6 +254,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 List of Accountabilities
               </p>
             </router-link>
+          </li>
+          <li class="nav-item">  
             <router-link to="/return-request" class="nav-link">
               <i class="nav-icon fas fa-thumbtack text-white"></i>
               <p>

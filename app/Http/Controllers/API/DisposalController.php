@@ -35,7 +35,13 @@ class DisposalController extends Controller
         // $pending = Asset::asset()->status->pending;
         if(\Gate::allows('isAdmin')){
             // return Asset::latest()->paginate(10);
-            return Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate(1);
+            // return Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate(50);
+            return Asset::where('status','LIKE',"%fordisposal%")->latest()->paginate(50);
+            // $disposal = Disposal::where('status','LIKE',"%fordisposal%")->latest()->paginate(50);
+            // return response()->json([
+            //     "asset" => $asset,
+            //     "disposal" => $disposal
+            // ],200);
         }else{
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)

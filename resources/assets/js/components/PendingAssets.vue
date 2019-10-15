@@ -1367,6 +1367,7 @@ export default {
     });
     // SetInterval Function
     // setInterval(() => this.loadUsers(), 3000);
+    // setInterval(() => this.loadPendingAssets(), 5000);
   }
   // mounted() {
   //   axios.get("api/asset").then(response => {

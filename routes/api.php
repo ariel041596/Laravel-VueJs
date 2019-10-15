@@ -68,6 +68,14 @@ Route::middleware('auth:api')->get('/total_inventories', function (Request $requ
 // router for Usercontroller
 Route::apiResources(['total_inventories' => 'API\TotalInvetoriesController']);
 // ===============================================End For Total Entries==========================
+// ===============================================For Total items for Disposal==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/total_disposal', function (Request $request) {
+    return $request->total_disposal();
+});
+// router for Usercontroller
+Route::apiResources(['total_disposal' => 'API\TotalForDisposalController']);
+// ===============================================End For Total Total items for Disposal==========================
 
 
 // ===============================================For Assets==========================

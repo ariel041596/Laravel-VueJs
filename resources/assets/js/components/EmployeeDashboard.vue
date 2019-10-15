@@ -888,7 +888,7 @@ export default {
       });
     },
     returnedStatus() {
-      this.form.remarks = "For Returned ";
+      this.form.remarks = "For Returned";
     },
     cancelStatus() {
       this.form.remarks = "Cancel Returned";
@@ -900,7 +900,7 @@ export default {
       this.$Progress.start();
       this.form.createdBy = this.profiles.id;
       this.form.property_type = "IIRUP";
-      this.form.status = "Pending";
+      this.form.status = "processing";
       this.form
         .post("api/disposal")
         // let request2 = this.form.put("api/asset/" + this.form.id);
@@ -951,6 +951,7 @@ export default {
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
     });
+    // setInterval(() => this.loadAssets(), 5000);
   }
 };
 </script>

@@ -88,7 +88,8 @@
                       <!-- <td>{{asset.property_type | upText}}</td> -->
                       <td>
                         <a
-                          @click="editModal(asset)"
+                          v-if="$gate.isEmployee()"
+                          @click="editModal2(asset)"
                           class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           href="#"
                           data-toggle="tooltip"
@@ -96,6 +97,18 @@
                           title="Edit"
                         >
                           <i class="material-icons fas fa-pen"></i>
+                          <!-- <i class="material-icons">add</i> -->
+                        </a>
+                        <a
+                          v-if="$gate.isAdminOrUserOrAuthor()"
+                          @click="editModal3(asset)"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          href="#"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Edit"
+                        >
+                          <i class="material-icons fas fa-eye"></i>
                           <!-- <i class="material-icons">add</i> -->
                         </a>
                         <router-link
@@ -164,6 +177,370 @@
             </button>
           </div>
           <form @submit.prevent="editmode ? updateAsset2() : createAsset()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col form-group">
+                  <label>PAR/ICS Number</label>
+                  <input
+                    readonly
+                    v-model="form.number"
+                    type="text"
+                    id="number"
+                    placeholder="Enter PAR/ICS Number"
+                    name="number"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('number') }"
+                  />
+                  <has-error :form="form" field="number"></has-error>
+                </div>
+                <div class="col form-group">
+                  <label>Article</label>
+                  <input
+                    readonly
+                    v-model="form.article"
+                    type="text"
+                    id="article"
+                    placeholder="Enter article"
+                    name="article"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('article') }"
+                  />
+                  <has-error :form="form" field="article"></has-error>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <textarea
+                  :readonly="!$gate.isEmployee()"
+                  v-model="form.description"
+                  type="text"
+                  id="description"
+                  placeholder="Enter description"
+                  name="description"
+                  class="form-control"
+                  :class="{ 'is-invalid': form.errors.has('description') }"
+                ></textarea>
+                <has-error :form="form" field="description"></has-error>
+              </div>
+              <div class="row">
+                <!-- first col -->
+                <div class="col form-group">
+                  <label>Property Number</label>
+                  <input
+                    readonly
+                    v-model="form.property_number"
+                    type="text"
+                    id="property_number"
+                    placeholder="Property Number"
+                    name="property_number"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('property_number') }"
+                  />
+                  <has-error :form="form" field="property_number"></has-error>
+                </div>
+                <!-- Second col -->
+                <div class="col form-group">
+                  <label>Unit of Measure</label>
+                  <select
+                    readonly
+                    name="unit_of_measure"
+                    v-model="form.unit_of_measure"
+                    id="unit_of_measure"
+                    class="form-control"
+                    :class="{'is-invalid': form.errors.has('unit_of_measure')}"
+                  >
+                    <option value>Select Unit of Measure</option>
+                    <option value="pc.">Piece</option>
+                    <option value="pcs.">Pieces</option>
+                    <option value="unit">Unit</option>
+                    <option value="units">Units</option>
+                    <option value="lot">Lot</option>
+                    <has-error :form="form" field="unit_of_measure"></has-error>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <!-- third col Remove also the v-model-->
+                <div class="col form-group">
+                  <label>Unit Price</label>
+                  <input
+                    readonly
+                    min="0"
+                    currency="P"
+                    separator=","
+                    :value="form.price"
+                    step="any"
+                    type="number"
+                    id="price"
+                    placeholder="Enter price"
+                    name="price"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('price') }"
+                  />
+                  <has-error :form="form" field="price"></has-error>
+                </div>
+                <!-- fourth col  Trying to remove the v-model first  -->
+                <div class="col form-group">
+                  <label>Quantity</label>
+                  <input
+                    :readonly="!$gate.isEmployee()"
+                    min="1"
+                    separator=","
+                    v-model="form.quantity"
+                    type="number"
+                    id="quantity"
+                    placeholder="Enter quantity"
+                    name="quantity"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('quantity') }"
+                  />
+                  <has-error :form="form" field="quantity"></has-error>
+                </div>
+              </div>
+              <div class="row">
+                <!-- firt col -->
+                <div class="col form-group">
+                  <label>Total Value</label>
+                  <input
+                    readonly
+                    disabled
+                    currency="P"
+                    separator=","
+                    v-model="form.total_value"
+                    step="any"
+                    type="number"
+                    id="total_value"
+                    placeholder="Total Value"
+                    name="total_value"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('total_value') }"
+                  />
+                  <has-error :form="form" field="total_value"></has-error>
+                </div>
+                <!-- Second col -->
+                <div class="col form-group">
+                  <label>Date Acquired</label>
+                  <input
+                    readonly
+                    v-model="form.date"
+                    type="date"
+                    id="date"
+                    placeholder="Total Date"
+                    name="date"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('date') }"
+                  />
+                  <has-error :form="form" field="date"></has-error>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label>Accountable Officer</label>
+                  <input
+                    readonly
+                    v-model="form.accountable_officer"
+                    type="text"
+                    id="accountable_officer"
+                    placeholder="Accountable Officer"
+                    name="accountable_officer"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
+                  />
+
+                  <has-error :form="form" field="accountable_officer"></has-error>
+                </div>
+                <!-- firt col -->
+                <div class="col form-group">
+                  <label>Remarks</label>
+                  <input
+                    readonly
+                    v-model="form.remarks"
+                    type="text"
+                    id="remarks"
+                    placeholder="Remarks"
+                    name="remarks"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('remarks') }"
+                  />
+                  <has-error :form="form" field="remarks"></has-error>
+                </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    readonly
+                    v-model="form.createdBy"
+                    type="text"
+                    id="createdBy"
+                    placeholder="createdBy"
+                    name="createdBy"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    readonly
+                    value="pending"
+                    type="text"
+                    id="status"
+                    placeholder="Status"
+                    name="status"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col form-group" v-show="false">
+                  <input
+                    readonly
+                    value="PAR"
+                    type="text"
+                    id="property_type"
+                    placeholder="property_type"
+                    name="property_type"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col form-group">
+                  <label>Position</label>
+                  <input
+                    readonly
+                    v-model="form.service"
+                    type="text"
+                    id="service"
+                    placeholder="Service"
+                    name="service"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('service') }"
+                  />
+                  <has-error :form="form" field="service"></has-error>
+                </div>
+                <!-- <div class="col form-group" v-if="editmode">
+                  <label>Status</label>
+                  <select
+                    type="text"
+                    name="status"
+                    placeholder="Status"
+                    v-model="form.status"
+                    id="status"
+                    class="form-control"
+                    :class="{'is-invalid': form.errors.has('status')}"
+                  >
+                <option value>Select Status</option>-->
+                <!-- <option value="approved">Approved</!-->
+                <!-- <option value="fordisposal">For Disposal</option>
+                    <option value="disposed">Disposed</option>
+                  </select>
+                  <has-error :form="form" field="status"></has-error>
+                </div>-->
+                <div class="col form-group">
+                  <label>Account Name</label>
+                  <input
+                    readonly
+                    class="form-control"
+                    id="account_name"
+                    name="account_name"
+                    placeholder="Please select Account"
+                    v-model="form.account_name"
+                    :class="{'is-invalid': form.errors.has('account_name')}"
+                  />
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col form-group">
+                  <label>Purpose</label>
+                  <textarea
+                    class="form-control"
+                    id="comments"
+                    name="comments"
+                    placeholder="Please input reason for return"
+                    v-model="form.comments"
+                    :class="{'is-invalid': form.errors.has('comments')}"
+                  />
+                </div>
+              </div>-->
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>-->
+              <button
+                data-dismiss="modal"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>
+              <!-- <button
+                v-if="$gate.isAdminOrUserOrAuthor()"
+                v-show="editmode"
+                @click="approvedStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-thumbs-up">&nbsp;</i>Approved
+              </button>-->
+              <!-- <button
+                :disabled="noremarks"
+                v-show="editmode"
+                @click="cancelStatus()"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-undo">&nbsp;</i>Cancel
+              </button>-->
+              <button
+                v-if="$gate.isEmployee()"
+                v-show="editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-pen"></i>&nbsp;Update
+              </button>
+
+              <!-- <button v-show="editmode" type="submit" class="update-create btn">
+                <i class="fas fa-pen">&nbsp;</i>Update RPCPPE
+              </button>-->
+              <!-- <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
+                <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
+              </button>-->
+              <button
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-plus">&nbsp;</i>RPCPPE
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Div for errors -->
+      <div class="errors" v-if="errors">
+        <ul>
+          <li v-for="(fieldError, fieldName) in errors" :key="fieldName">
+            <strong>{{ fieldName }}</strong>
+            {{ fieldError.join('\n') }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="modal fade bd-example-modal-lg"
+      id="addNew3"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addNewModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
+            <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Request For Returned</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="modal-close-button" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="editmode ? updateAsset3() : createAsset()">
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
@@ -460,7 +837,7 @@
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-thumbs-up">&nbsp;</i>Approved
+                <i class="fas fa-thumbs-up">&nbsp;</i>For Disposal
               </button>
               <!-- <button
                 :disabled="noremarks"
@@ -472,6 +849,7 @@
                 <i class="fas fa-undo">&nbsp;</i>Cancel
               </button>-->
               <button
+                v-if="$gate.isEmployee()"
                 v-show="editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
@@ -528,6 +906,7 @@ export default {
       profiles: {},
       assets: {},
       total_assets: {},
+      total_disposals: {},
       article_categories: {},
       assetCount: null,
       form: new Form({
@@ -561,6 +940,58 @@ export default {
         }
       }
     },
+
+    updateAsset2() {
+      this.$Progress.start();
+      // let request1 = this.form.post("api/asset/");
+      this.form
+        .put("api/return-request/" + this.form.id)
+        // let request2 = this.form.put("api/asset/" + this.form.id);
+        // this.form
+        //   .put("api/asset/" + this.form.id)
+        // $.when(request1, request2)
+        .then(() => {
+          $("#addNew2").modal("hide");
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
+          this.$Progress.finish();
+          Fire.$emit("AfterCreate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
+    updateAsset3() {
+      this.$Progress.start();
+      // let request1 = this.form.post("api/asset/");
+      let today = new Date();
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      let createdby = this.profiles.id;
+      today = yyyy;
+      let totalDisposal = this.total_disposals + 1;
+      this.form.number =
+        "IIRUP-" + today + "-" + createdby + "-" + totalDisposal;
+      let request1 = this.form.post("api/asset");
+      let request2 = this.form.put("api/return-request/" + this.form.id);
+      // let request2 = this.form.put("api/asset/" + this.form.id);
+      // this.form
+      //   .put("api/asset/" + this.form.id)
+      $.when(request1, request2)
+        .then(() => {
+          $("#addNew3").modal("hide");
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
+          this.$Progress.finish();
+          Fire.$emit("AfterCreate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
+    },
     getStatus() {
       this.assets.data.status == "seen";
     },
@@ -575,8 +1006,15 @@ export default {
     },
 
     approvedStatus() {
-      this.form.status = "approved";
-      this.form.remarks = "Available";
+      let today = new Date();
+      let yyyy = String(today.getFullYear()).padStart(1, "0");
+      let createdby = this.profiles.id;
+      today = yyyy;
+      let totalDisposal = this.total_disposals + 1;
+      this.form.number =
+        "IIRUP-" + today + "-" + createdby + "-" + totalDisposal;
+      this.form.createdBy = this.profiles.id;
+      this.form.status = "fordisposal";
     },
     getProfileid(event) {
       this.form.description = event.target.value;
@@ -633,11 +1071,18 @@ export default {
       $("#printing").modal("show");
     },
     // Show modal and hide
-    editModal(asset) {
+    editModal2(asset) {
       this.editmode = true;
       this.form.reset();
       this.form.clear();
       $("#addNew2").modal("show");
+      this.form.fill(asset);
+    },
+    editModal3(asset) {
+      this.editmode = true;
+      this.form.reset();
+      this.form.clear();
+      $("#addNew3").modal("show");
       this.form.fill(asset);
     },
     // Show modal for add Account Name
@@ -705,6 +1150,11 @@ export default {
     loadUsers() {
       axios.get("api/profile").then(({ data }) => (this.profiles = data));
     },
+    loadTotalDisposal() {
+      axios
+        .get("api/total_disposal")
+        .then(({ data }) => (this.total_disposals = data));
+    },
     // LoadUser to display in the tbody
     loadAssets() {
       if (this.$gate.isAdminOrUserOrAuthorOrEmployee()) {
@@ -712,6 +1162,11 @@ export default {
           .get("api/return-request")
           .then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
       }
+    },
+    loadTotals() {
+      axios
+        .get("api/total_assets")
+        .then(({ data }) => (this.total_assets = data));
     },
     // LoadAccountname to display in the options datalist
     loadAcctName() {
@@ -781,12 +1236,16 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
-    this.loadUsers();
-    this.loadAcctName();
     this.loadAssets();
+    this.loadUsers();
+    this.loadTotals();
+    this.loadAcctName();
     this.loadPropertyOfficers();
+    this.loadTotalDisposal();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
+      this.loadTotals();
+      this.loadTotalDisposal();
       this.loadAcctName();
     });
     Fire.$on("searching", () => {
@@ -799,7 +1258,7 @@ export default {
         .catch(() => {});
     });
     // SetInterval Function
-    // setInterval(() => this.loadUsers(), 3000);
+    // setInterval(() => this.loadAssets(), 5000);
   }
   // mounted() {
   //   axios.get("api/requests").then(response => {
