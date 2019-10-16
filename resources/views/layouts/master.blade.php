@@ -132,8 +132,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
               <li class="nav-item">
               <router-link to="/iirup" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-recycle text-white"></i>&nbsp;
+                <i class="fas fa-trash-restore-alt text-white"></i>&nbsp;
                  <p>IIRUP</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/for-reissue" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-recycle text-white"></i>&nbsp;
+                 <p>For Re-issue</p>
               </router-link>
               </li>
             </ul>

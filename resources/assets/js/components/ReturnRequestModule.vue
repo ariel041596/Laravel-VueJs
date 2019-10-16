@@ -1379,7 +1379,7 @@ export default {
       let request2 = this.form.put("api/return-request/" + this.form.id);
       $.when(request1, request2)
         .then(() => {
-          $("#addNew3").modal("hide");
+          $("#addNew4").modal("hide");
           toast.fire({
             type: "success",
             title: "Updated Successfully"
@@ -1413,6 +1413,7 @@ export default {
         "IIRUP-" + today + "-" + createdby + "-" + totalDisposal;
       this.form.createdBy = this.profiles.id;
       this.form.status = "forReissue";
+      this.form.remarks = "Serviceable";
     },
     approvedStatus() {
       let today = new Date();
@@ -1424,6 +1425,7 @@ export default {
         "IIRUP-" + today + "-" + createdby + "-" + totalDisposal;
       this.form.createdBy = this.profiles.id;
       this.form.status = "fordisposal";
+      this.form.remarks = "Unserviceable";
     },
     getProfileid(event) {
       this.form.description = event.target.value;
@@ -1447,7 +1449,7 @@ export default {
       this.form.total_value = this.form.quantity * this.form.price;
     },
     getResults(page = 1) {
-      axios.get("api/requests?page=" + page).then(response => {
+      axios.get("api/return-request?page=" + page).then(response => {
         this.assets = response.data;
       });
     },

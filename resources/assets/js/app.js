@@ -101,6 +101,7 @@ const routes = [
     { path: '/property-officers', component: require('./components/PropertyOfficer.vue') },
     { path: '/article-category', component: require('./components/ArticleCategory.vue') },
     { path: '/return-request', component: require('./components/ReturnRequestModule.vue') },
+    { path: '/for-reissue', component: require('./components/ForReissue.vue') },
     // { path: 'inventory/:id', component: require('./components/ICS.vue') },
     { path: '/', component: require('./components/Profile.vue') },
     // { path: '/assets/par', component: require('./components/PAR.vue') },
