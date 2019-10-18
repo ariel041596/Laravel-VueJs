@@ -28,7 +28,7 @@ class ReturnRequestController extends Controller
        // $pending = Asset::asset()->status->pending;
        if(\Gate::allows('isAdminOrUser')){
            // return Asset::latest()->paginate(10);
-           return Disposal::where('status','LIKE',"%processing%")->latest()->paginate(1);
+           return Disposal::where('status','LIKE',"%processing%")->latest()->paginate(10);
        }else{
            $createdBy = Auth::user()->id;
            return Disposal::where('createdBy', $createdBy)

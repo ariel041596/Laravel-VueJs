@@ -479,6 +479,13 @@ export default {
           .then(({ data }) => (this.assets = data));
       }
     },
+    // loadForReissue() {
+    //   if (this.$gate.isAdminOrUserOrAuthorOrSupply()) {
+    //     axios
+    //       .get(`api/re-issue/${this.$route.params.id}`)
+    //       .then(({ data }) => (this.assets = data));
+    //   }
+    // },
     printme() {
       window.print();
     },
@@ -488,6 +495,7 @@ export default {
     }
   },
   created() {
+    // this.loadForReissue();
     this.loadPropertyOfficers();
     this.loadAssets();
   }

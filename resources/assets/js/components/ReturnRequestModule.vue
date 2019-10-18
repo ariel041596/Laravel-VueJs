@@ -1375,7 +1375,7 @@ export default {
       let totalDisposal = this.total_disposals + 1;
       this.form.number =
         "IIRUP-" + today + "-" + createdby + "-" + totalDisposal;
-      let request1 = this.form.post("api/asset");
+      let request1 = this.form.post("api/re-issue");
       let request2 = this.form.put("api/return-request/" + this.form.id);
       $.when(request1, request2)
         .then(() => {
