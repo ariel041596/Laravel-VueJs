@@ -144,6 +144,13 @@ Route::middleware('auth:api')->get('/re-issue', function (Request $request) {
 });
 // router for Asset Controller
 Route::apiResources(['re-issue' => 'API\ForReIssueController']);
+// ===============================================For Transfer Controller==========================
+// Middleware to get Asset
+Route::middleware('auth:api')->get('/transfer', function (Request $request) {
+    return $request->transfer();
+});
+// router for Asset Controller
+Route::apiResources(['transfer' => 'API\ForTransferController']);
 // ===============================================End Re-issue Controller==========================
 // ===============================================For PAR Printing==========================
 // Middleware to get Asset

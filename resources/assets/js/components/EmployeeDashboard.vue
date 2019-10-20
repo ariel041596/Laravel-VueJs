@@ -386,11 +386,11 @@
                   <select
                     v-model="form.transfer_to"
                     type="text"
-                    id="accountable_officer"
+                    id="transfer_to"
                     placeholder="Accountable Officer"
-                    name="accountable_officer"
+                    name="transfer_to"
                     class="form-control"
-                    :class="{ 'is-invalid': form.errors.has('accountable_officer') }"
+                    :class="{ 'is-invalid': form.errors.has('transfer_to') }"
                   >
                     <option value>Select Accountable Officer</option>
                     <option
@@ -398,7 +398,20 @@
                       :key="officer.id"
                     >{{officer.name}}</option>
                   </select>
-                  <has-error :form="form" field="accountable_officer"></has-error>
+                  <has-error :form="form" field="transfer_to"></has-error>
+                </div>
+                <div class="col form-group">
+                  <label>Received From</label>
+                  <input
+                    readonly
+                    class="form-control"
+                    id="received_from"
+                    name="received_from"
+                    placeholder="Please select Account"
+                    v-model="form.received_from"
+                    :class="{'is-invalid': form.errors.has('received_from')}"
+                  />
+                  <has-error :form="form" field="received_from"></has-error>
                 </div>
               </div>
             </div>
@@ -422,6 +435,7 @@
                 <i class="fas fa-thumbs-up">&nbsp;</i>Approved
               </button>
               <button
+                @click="transferAccountability()"
                 v-show="transfermode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
@@ -862,6 +876,7 @@ export default {
         status: "",
         property_type: "",
         transfer_to: "",
+        received_from: "",
         comments: "",
         null: ""
       })
@@ -895,6 +910,27 @@ export default {
     },
     setShowDate(d) {
       this.showDate = d;
+    },
+    transferAccountability() {
+      this.form.received_from = this.form.accountable_officer;
+      this.form.accountable_officer = this.form.transfer_to;
+    },
+    updateAsset() {
+      this.$Progress.start();
+      this.form
+        .post("api/transfer")
+        .then(() => {
+          $("#addNew").modal("hide");
+          toast.fire({
+            type: "success",
+            title: "Updated Successfully"
+          });
+          this.$Progress.finish();
+          Fire.$emit("AfterCreate");
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
     },
     updateAsset2() {
       this.$Progress.start();
