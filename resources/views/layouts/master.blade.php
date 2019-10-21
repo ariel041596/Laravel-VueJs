@@ -119,6 +119,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="/for-transfer" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-exchange-alt text-white"></i>&nbsp;
+                  <p> Transfer Request</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
               <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
               <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>RPCPPE</p>
@@ -267,6 +273,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <p>
                 Return Request
               </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/for-transfer" class="nav-link">
+              <i class="nav-icon fas fa-exchange-alt text-white"></i>
+               <p> Transfer Request</p>
             </router-link>
           </li>
           @endcan

@@ -17,6 +17,18 @@ class ForTransferController extends Controller
         // make an auth: to use the api passport
         $this->middleware('auth:api');
     }
+    public function index()
+    {
+        
+        if(\Gate::allows('isAdminOrUser')){
+            // return Asset::latest()->paginate(10);
+            return ForReissue::where('status','LIKE',"%ForTransfer%")->latest()->paginate(10);
+        }else{
+            $createdBy = Auth::user()->id;
+            return ForReissue::where('createdBy', $createdBy)
+            ->where('status','LIKE',"%ForTransfer%")->latest()->paginate(); //get or paginate?
+        }
+    }
     public function store(Request $request)
     {
     

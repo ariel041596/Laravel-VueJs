@@ -130,6 +130,8 @@ class AssetController extends Controller
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
+            'transfer_to' => 'max:191', //13
+            'received_from' => 'max:191', //13
             
 
             
@@ -153,6 +155,8 @@ class AssetController extends Controller
             'property_type' => $request['property_type'], //12
             'createdBy' => $request['createdBy'], //12
             'status' => $request['status'], //13
+            'transfer_to' => $request['transfer_to'], //13
+            'received_from' => $request['received_from'], //13
         ]);
     }
 
@@ -236,6 +240,8 @@ class AssetController extends Controller
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
+            'transfer_to' => 'max:191', //13
+            'received_from' => 'max:191', //13
             
 
             

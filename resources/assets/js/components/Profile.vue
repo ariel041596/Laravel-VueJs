@@ -81,7 +81,7 @@
                       <has-error :form="form" field="email"></has-error>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
                     <div class="col-sm-12">
@@ -94,7 +94,7 @@
                       ></textarea>
                       <has-error :form="form" field="bio"></has-error>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- Choose File Starts here -->
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Upload Photo</label>
@@ -118,7 +118,7 @@
                     </div>
                   </div>
                   <!-- Choose File Ends Here -->
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
                     <div class="col-sm-12">
@@ -132,7 +132,7 @@
                       />
                       <has-error :form="form" field="bio"></has-error>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 

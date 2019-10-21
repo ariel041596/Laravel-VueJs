@@ -147,7 +147,6 @@
               <div class="form-group">
                 <label>Description</label>
                 <textarea
-                  readonly
                   v-model="form.description"
                   type="text"
                   id="description"
@@ -219,7 +218,6 @@
                 <div class="col form-group">
                   <label>Quantity</label>
                   <input
-                    readonly
                     min="1"
                     separator=","
                     :value="form.quantity"
@@ -912,6 +910,8 @@ export default {
       this.showDate = d;
     },
     transferAccountability() {
+      this.form.status = "ForTransfer";
+      this.form.createdBy = this.profiles.id;
       this.form.received_from = this.form.accountable_officer;
       this.form.accountable_officer = this.form.transfer_to;
     },

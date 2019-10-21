@@ -4,7 +4,7 @@
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthorOrEmployee()">
       <div id="rpcppe" class="card-header">
         <h3 class="card-title mt-1 text-white">
-          <i class="fas fa-thumbtack"></i>&nbsp;REQUEST RETURN
+          <i class="fas fa-thumbtack"></i>&nbsp;RETURN REQUESTS
         </h3>
       </div>
 
