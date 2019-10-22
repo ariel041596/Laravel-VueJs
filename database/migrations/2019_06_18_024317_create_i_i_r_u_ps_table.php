@@ -32,6 +32,7 @@ class CreateIIRUPsTable extends Migration
             $table->string('status'); //16
             $table->string('property_type'); //17
             $table->string('received_from'); //18
+            $table->string('transfer_to_designation')->nullable(); //18
             $table->timestamps(); //19
         });
     }

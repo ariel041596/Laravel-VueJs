@@ -1669,7 +1669,7 @@ export default {
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios
-        .get("api/findRequest?q=" + query)
+        .get("api/findRequestReturn?q=" + query)
         .then(data => {
           this.assets = data.data;
         })

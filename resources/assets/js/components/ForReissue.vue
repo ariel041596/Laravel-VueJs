@@ -2275,7 +2275,7 @@ export default {
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios
-        .get("api/findAsset?q=" + query)
+        .get("api/findForReissue?q=" + query)
         .then(data => {
           this.assets = data.data;
         })

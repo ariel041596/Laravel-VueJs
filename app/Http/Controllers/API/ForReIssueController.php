@@ -82,6 +82,9 @@ class ForReIssueController extends Controller
             'property_type' => $request['property_type'], //12
             'createdBy' => $request['createdBy'], //12
             'status' => $request['status'], //13
+            'transfer_to' => $request['transfer_to'], //13
+            'received_from' => $request['received_from'], //13
+            'transfer_to_designation' => $request['transfer_to_designation'], //13
         ]);
     }
     public function update(Request $request, $id)

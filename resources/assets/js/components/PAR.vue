@@ -122,7 +122,7 @@
                     <br />Signature over Printed Name
                   </p>
                   <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
-                    <strong class="underline-text">{{assets.asset.received_from}}</strong>
+                    <strong class="underline-text">{{assets.asset.transfer_to_designation}}</strong>
                     <br />Position / Office
                   </p>
                   <p class="receiving-side" style="margin-top: 10px;">
@@ -256,7 +256,7 @@
                 </p>
               </div>
               <!-- 2nd Column -->
-              <div class="col-6" v-for="property in property_officers.data" :key="property.id">
+              <!-- <div class="col-6" v-for="property in property_officers.data" :key="property.id">
                 <p class="lead" style="margin-top: 50px;">
                   <i>Received from:</i>
                 </p>
@@ -272,7 +272,45 @@
                   <span class="underline-text">{{assets.asset.date}}</span>
                   <br />Date
                 </p>
-              </div>
+              </div>-->
+              <template v-if="assets.asset.received_from==null">
+                <div class="col-6" v-for="property in property_officers.data" :key="property.id">
+                  <p class="lead" style="margin-top: 50px;">
+                    <i>Received from:</i>
+                  </p>
+                  <p class="receiving-side" style="margin-top: 50px;  ">
+                    <strong class="underline-text">{{property.name}}</strong>
+                    <br />Signature over Printed Name
+                  </p>
+                  <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
+                    <strong class="underline-text">{{property.designation}}</strong>
+                    <br />Position / Office
+                  </p>
+                  <p class="receiving-side" style="margin-top: 10px;">
+                    <span class="underline-text">{{assets.asset.date}}</span>
+                    <br />Date
+                  </p>
+                </div>
+              </template>
+              <template v-else>
+                <div class="col-6">
+                  <p class="lead" style="margin-top: 50px;">
+                    <i>Received from:</i>
+                  </p>
+                  <p class="receiving-side" style="margin-top: 50px;  ">
+                    <strong class="underline-text">{{assets.asset.received_from}}</strong>
+                    <br />Signature over Printed Name
+                  </p>
+                  <p class="receiving-side mdl-selectfield__box" style="margin-top: 30px;  ">
+                    <strong class="underline-text">{{assets.asset.transfer_to_designation}}</strong>
+                    <br />Position / Office
+                  </p>
+                  <p class="receiving-side" style="margin-top: 10px;">
+                    <span class="underline-text">{{assets.asset.date}}</span>
+                    <br />Date
+                  </p>
+                </div>
+              </template>
             </div>
             <!-- /.row -->
 

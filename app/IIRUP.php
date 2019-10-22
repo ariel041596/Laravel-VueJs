@@ -20,10 +20,11 @@ class iirups extends Model
         'accountable_officer', //10
         'remarks', //11
         'account_name', //12
-        // 'service', //13
+        'service', //13
         'createdBy', //14
         'status', //15
         'property_type',//16
         'received_from', //17
+        'transfer_to_designation', //19
     ];
 }

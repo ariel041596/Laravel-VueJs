@@ -33,6 +33,7 @@ class CreateForReissuesTable extends Migration
             $table->string('property_type'); //17
             $table->string('received_from')->nullable(); //18
             $table->string('transfer_to')->nullable(); //18
+            $table->string('transfer_to_designation')->nullable(); //18
             $table->timestamps(); //19
         });
     }

@@ -157,6 +157,7 @@ class AssetController extends Controller
             'status' => $request['status'], //13
             'transfer_to' => $request['transfer_to'], //13
             'received_from' => $request['received_from'], //13
+            'transfer_to_designation' => $request['transfer_to_designation'], //13
         ]);
     }
 
@@ -225,7 +226,7 @@ class AssetController extends Controller
     {
         $this->validate($request, [
             'number' => 'required|max:191', //1
-            'article' => 'required|string|max:191', //1
+            'article' => 'required|string', //1
             'description' => 'required|string', //2
             'property_number' => 'max:191', //3
             'unit_of_measure' => 'required|string|max:191', //4

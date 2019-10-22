@@ -198,6 +198,18 @@ Route::get('findDisposal', 'API\DisposalController@search');
 Route::get('findRequest', 'API\RequestPropertyController@search');
 // End for Request property to supply search
 
+// Return request Search
+Route::get('findRequestReturn', 'API\ReturnRequestController@search');
+// End for Return Request Search
+
+// Transfer request Search
+Route::get('findRequestTransfer', 'API\ForTransferController@search');
+// End for Transfer Request Search
+
+// Reissue request Search
+Route::get('findForReissue', 'API\ForReIssueController@search');
+// End for Reissue Request Search
+
 // Route::get(':id', 'API\AssetController@show');
 // Route::get(':id', 'API\PrintAssetController@show');
 Route::get('profile', 'API\UserController@profile');

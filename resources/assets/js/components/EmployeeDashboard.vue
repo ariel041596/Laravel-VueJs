@@ -399,6 +399,25 @@
                   <has-error :form="form" field="transfer_to"></has-error>
                 </div>
                 <div class="col form-group">
+                  <label>Designation of Receiving Officer</label>
+                  <select
+                    v-model="form.transfer_to_designation"
+                    type="text"
+                    id="transfer_to_designation"
+                    placeholder="Designation"
+                    name="transfer_to_designation"
+                    class="form-control"
+                    :class="{ 'is-invalid': form.errors.has('transfer_to_designation') }"
+                  >
+                    <option value>Select Designation</option>
+                    <option
+                      v-for="officer in accountable_officers.data"
+                      :key="officer.id"
+                    >{{officer.designation}}</option>
+                  </select>
+                  <has-error :form="form" field="transfer_to_designation"></has-error>
+                </div>
+                <!-- <div class="col form-group" v-show="false">
                   <label>Received From</label>
                   <input
                     readonly
@@ -410,7 +429,7 @@
                     :class="{'is-invalid': form.errors.has('received_from')}"
                   />
                   <has-error :form="form" field="received_from"></has-error>
-                </div>
+                </div>-->
               </div>
             </div>
             <div class="modal-footer">
@@ -874,6 +893,7 @@ export default {
         status: "",
         property_type: "",
         transfer_to: "",
+        transfer_to_designation: "",
         received_from: "",
         comments: "",
         null: ""
@@ -910,6 +930,7 @@ export default {
       this.showDate = d;
     },
     transferAccountability() {
+      this.form.remarks = "For Transfer";
       this.form.status = "ForTransfer";
       this.form.createdBy = this.profiles.id;
       this.form.received_from = this.form.accountable_officer;

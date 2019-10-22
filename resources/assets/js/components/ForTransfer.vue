@@ -38,6 +38,7 @@
                     <th>TOTAL VALUE</th>
                     <th>DATE</th>
                     <th>ACCOUNTABLE OFFICER</th>
+                    <th>FOR TRANSFER TO</th>
                     <th>STATUS</th>
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">ACCOUNT NAME</th>
                     <!-- <th>Status</th>
@@ -71,14 +72,15 @@
                       <td class="text-center">{{asset.quantity | numberComma}}</td>
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
-                      <td>{{asset.accountable_officer | upText}}</td>
+                      <td>{{asset.received_from | upText}}</td>
+                      <td>{{asset.transfer_to | upText}}</td>
                       <td>
                         <span
-                          v-if="asset.remarks=='For Returned'"
+                          v-if="asset.remarks=='For Transfer'"
                           class="badge badge-pill badge-danger"
                         >{{asset.remarks }}</span>
                         <span
-                          v-if="asset.remarks=='Cancel Returned'"
+                          v-if="asset.remarks=='Cancel Transfer'"
                           class="badge badge-pill badge-dark"
                         >{{asset.remarks }}</span>
                         <!-- <span v-else>{{asset.remarks}}</span> -->
@@ -1301,7 +1303,9 @@ export default {
         createdBy: "",
         status: "",
         property_type: "",
-        designation: ""
+        transfer_to: "",
+        transfer_to_designation: "",
+        received_from: ""
       })
     };
   },
@@ -1411,6 +1415,7 @@ export default {
     approvedStatus() {
       this.form.status = "approved";
       this.form.createdBy = this.profiles.id;
+      this.form.remarks = "Transferred from" + " " + this.form.received_from;
       //   this.form.received_from = this.form.accountable_officer;
       //   this.form.accountable_officer = this.form.transfer_to;
     },
@@ -1654,7 +1659,7 @@ export default {
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios
-        .get("api/findRequest?q=" + query)
+        .get("api/findRequestTransfer?q=" + query)
         .then(data => {
           this.assets = data.data;
         })

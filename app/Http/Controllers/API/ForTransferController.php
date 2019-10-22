@@ -52,8 +52,9 @@ class ForTransferController extends Controller
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
-            'transfer_to' => 'max:191', //13
+            'transfer_to' => 'required|max:191', //13
             'received_from' => 'max:191', //13
+            'transfer_to_designation' => 'required|max:191', //13
             
 
             
@@ -79,14 +80,15 @@ class ForTransferController extends Controller
             'status' => $request['status'], //13
             'transfer_to' => $request['transfer_to'], //13
             'received_from' => $request['received_from'], //13
+            'transfer_to_designation' => $request['transfer_to_designation'], //13
         ]);
     }
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'number' => 'required|string|max:191', //1
-            'article' => 'required|string|max:191', //1
-            'description' => 'required|string|max:191', //2
+            'article' => 'required|string', //1
+            'description' => 'required|string', //2
             'property_number' => 'max:191', //3
             'unit_of_measure' => 'required|string|max:191', //4
             'price' => 'max:191', //5
@@ -96,7 +98,7 @@ class ForTransferController extends Controller
             'accountable_officer' => 'required|string|max:191', //9
             'remarks' => 'max:191', //10
             'account_name' => 'required|string|max:191', //11
-            // 'service' => 'required|string|max:191', //12 
+            'service' => 'required|string|max:191', //12 
             'property_type' => 'required|string|max:191', //12 
             'createdBy' => 'max:191', //12 
             'status' => 'max:191', //13
@@ -110,5 +112,27 @@ class ForTransferController extends Controller
         $asset = ForReissue::findOrFail($id);
         $asset->update($request->all());
         return ['message' => 'Updated the assets info'];
+    }
+    public function search(){
+
+        if ($search = \Request::get('q')) {
+            $pendings = ForReissue::where('status','LIKE',"%ForTransfer%")
+            ->where(function($query) use ($search){
+                $query->where('article','LIKE',"%$search%")
+                        ->orWhere('description','LIKE',"%$search%")
+                        ->orWhere('property_number','LIKE',"%$search%")
+                        ->orWhere('price','LIKE',"%$search%")
+                        ->orWhere('accountable_officer','LIKE',"%$search%")
+                        ->orWhere('remarks','LIKE',"%$search%")
+                        ->orWhere('account_name','LIKE',"%$search%");
+                        // orWhere to use other search like for type or description
+            })->paginate(20);
+        }else{
+            // if the users do not found any data after delete all search words
+            $pendings = ForReissue::where('status','LIKE',"%ForTransfer%")->latest()->paginate();
+        }
+
+        return $pendings;
+
     }
 }

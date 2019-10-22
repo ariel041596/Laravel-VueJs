@@ -25,5 +25,6 @@ class ForReissue extends Model
         'property_type',//16
         'received_from', //17
         'transfer_to', //17
+        'transfer_to_designation', //19
     ];
 }
