@@ -145,7 +145,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Description</label>
+                <label class="descLabel">Description</label>
                 <textarea
                   v-model="form.description"
                   type="text"
@@ -478,14 +478,14 @@
       </div>
 
       <!-- Div for errors -->
-      <div class="errors" v-if="errors">
+      <!-- <div class="errors" v-if="errors">
         <ul>
           <li v-for="(fieldError, fieldName) in errors" :key="fieldName">
             <strong>{{ fieldName }}</strong>
             {{ fieldError.join('\n') }}
           </li>
         </ul>
-      </div>
+      </div>-->
     </div>
     <div
       class="modal fade bd-example-modal-lg"
@@ -537,7 +537,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Description</label>
+                <label class="descLabel">Description</label>
                 <textarea
                   v-model="form.description"
                   type="text"
@@ -849,14 +849,14 @@
       </div>
 
       <!-- Div for errors -->
-      <div class="errors" v-if="errors">
+      <!-- <div class="errors" v-if="errors">
         <ul>
           <li v-for="(fieldError, fieldName) in errors" :key="fieldName">
             <strong>{{ fieldName }}</strong>
             {{ fieldError.join('\n') }}
           </li>
         </ul>
-      </div>
+      </div>-->
     </div>
   </div>
   <!-- End for Employee -->
@@ -867,7 +867,6 @@
 // import "vue-sweet-calendar/dist/SweetCalendar.css";
 export default {
   name: "empdashboard",
-
   data() {
     return {
       assets: {},
@@ -1038,17 +1037,42 @@ export default {
 .update-create:hover {
   opacity: 1;
 }
-.mdl-btn {
+/* .mdl-btn {
   background-color: #ececec;
-}
+} */
 .modal-close-button {
   color: white;
 }
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.modal-content {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
+}
+.descLabel {
+  margin-top: 80px;
 }
 #description {
   height: 160px;
+  margin-top: 20px;
 }
 </style>

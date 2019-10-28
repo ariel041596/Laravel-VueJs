@@ -718,3 +718,28 @@ form.status = forprocessing --> for tommorow
 
 
 For Dagdag === Add text for hovering
+
+
+
+LARAVEL WEBSOCKETS 
+
+▼ ▼ ▼  CODE SNIPPETS  ▼ ▼ ▼
+
+This was a straightforward setup tutorial, so no GitHub repo is provided.
+
+To install in an existing Laravel app
+1) Install via composer:
+composer require beyondcode/laravel-websockets
+
+2) Publish migration files:
+php artisan vendor:publish —provider=“BeyondCode\LaravelWebSockets\WebSocketsServiceProvider” —tag=“migrations”
+
+3) Publish Configuration Files:
+php artisan vendor:publish —provider=“BeyondCode\LaravelWebSockets\WebSocketsServiceProvider” —tag=“config”
+
+4) Run Migrations:
+php artisan migrate
+
+
+To start your web socket server run:
+php artisan websockets:serve

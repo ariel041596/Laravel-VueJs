@@ -2308,9 +2308,33 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
 }
 #description {
-  height: 100px;
+  height: 160px;
 }
 @media screen {
   #print {
@@ -2364,11 +2388,14 @@ export default {
 .material-icons {
   font-size: 15px;
 }
-.mdl-btn {
+/* .mdl-btn {
   background-color: #ececec;
-}
+} */
 .badge {
   font-size: 11px;
+}
+.btn-danger {
+  margin-top: -5px;
 }
 </style>
 

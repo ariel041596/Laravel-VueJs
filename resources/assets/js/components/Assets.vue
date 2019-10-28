@@ -652,6 +652,9 @@
                 <i class="fas fa-plus">&nbsp;</i>Add RPCPPE
               </button>-->
               <button
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Add Report on Physical Count of Property Plant and Equipment"
                 v-show="!editmode"
                 type="submit"
                 class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
@@ -909,6 +912,7 @@ export default {
       today = yyyy;
       let parnumber = this.total_assets + 1;
       let createdby = this.profiles.id;
+      this.form.property_type = "PAR";
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
     },
@@ -987,6 +991,8 @@ export default {
       today = yyyy;
       let parnumber = this.total_assets + 1;
       let createdby = this.profiles.id;
+      this.form.property_type = "PAR";
+      this.form.status = "approved";
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
 
@@ -1008,7 +1014,6 @@ export default {
         })
         .catch(() => {
           this.$Progress.fail();
-          swal("Failed", "There was something wrong", "warning");
         });
     },
     createAcct() {
@@ -1098,9 +1103,33 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
 }
 #description {
-  height: 100px;
+  height: 160px;
 }
 @media screen {
   #print {
@@ -1154,11 +1183,14 @@ export default {
 .material-icons {
   font-size: 15px;
 }
-.mdl-btn {
+/* .mdl-btn {
   background-color: #ececec;
-}
+} */
 .badge {
   font-size: 11px;
+}
+.btn-danger {
+  margin-top: -5px;
 }
 </style>
 

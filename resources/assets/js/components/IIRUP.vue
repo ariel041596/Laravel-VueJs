@@ -1008,9 +1008,33 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.modal-content {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
 }
 #description {
-  height: 100px;
+  height: 160px;
 }
 @media screen {
   #print {
@@ -1063,6 +1087,9 @@ export default {
 }
 .material-icons {
   font-size: 15px;
+}
+.btn-danger {
+  margin-top: -5px;
 }
 </style>
 

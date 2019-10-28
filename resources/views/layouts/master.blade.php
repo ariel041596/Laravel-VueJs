@@ -148,6 +148,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                  <p>For Re-issue</p>
               </router-link>
               </li>
+              <li class="nav-item">
+              <router-link to="/approved-transfers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-thumbs-up text-white"></i>&nbsp;
+                 <p>Approved Transfers</p>
+              </router-link>
+              </li>
             </ul>
           </li>
           @endcan
@@ -279,6 +285,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <router-link to="/for-transfer" class="nav-link">
               <i class="nav-icon fas fa-exchange-alt text-white"></i>
                <p> Transfer Request</p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/approved-transfers" class="nav-link">
+              <i class="nav-icon fas fa-thumbs-up text-white"></i>
+               <p>Approved Transfers</p>
             </router-link>
           </li>
           @endcan

@@ -47,22 +47,22 @@
                     <!-- <th>
                       <input type="checkbox" v-model="selectAll" @click="select" />
                     </!-->
-                    <th>PAR/ICS Number</th>
-                    <th>Article</th>
-                    <th width="20%">Description</th>
-                    <th width="5%">Property Number</th>
-                    <th>Unit</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Total Value</th>
-                    <th>Date</th>
-                    <th>Accountable Officer</th>
-                    <th>Remarks</th>
-                    <th v-if="$gate.isAdminOrAuthor()" width="8%">Account Name</th>
+                    <th>PAR/ICS #</th>
+                    <th>ARTICLE</th>
+                    <th>DESCRIPTION</th>
+                    <th class="thPropNo">PROPERTY #</th>
+                    <th>UNIT</th>
+                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th>TOTAL VALUE</th>
+                    <th>DATE</th>
+                    <th class="thAccOfficer">ACCOUNTABLE OFFICER</th>
+                    <th>REMARKS</th>
+                    <th v-if="$gate.isAdminOrAuthor()">ACCOUNT NAME</th>
                     <!-- <th>Service</th> -->
                     <!-- <th>Status</th> -->
-                    <th>Property Type</th>
-                    <th>Actions</th>
+                    <th>TYPE</th>
+                    <th>ACTION</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -196,21 +196,20 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
-                  <label>PAR/ICS Number</label>
                   <input
                     readonly
                     v-model="form.number"
                     type="text"
                     id="number"
-                    placeholder="Enter PAR/ICS Number"
+                    placeholder="Enter PAR Number"
                     name="number"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('number') }"
                   />
                   <has-error :form="form" field="number"></has-error>
+                  <label>PAR Number</label>
                 </div>
                 <div class="col form-group">
-                  <label>Article</label>
                   <select
                     v-model="form.article"
                     @change="getProfileid"
@@ -227,6 +226,7 @@
                       :key="article.id"
                     >{{article.article}}</option>
                   </select>
+                  <label>Article</label>
                   <has-error :form="form" field="article"></has-error>
                 </div>
               </div>
@@ -246,7 +246,6 @@
               <div class="row">
                 <!-- first col -->
                 <div class="col form-group">
-                  <label>Property Number</label>
                   <input
                     v-model="form.property_number"
                     type="text"
@@ -256,11 +255,11 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('property_number') }"
                   />
+                  <label>Property Number</label>
                   <has-error :form="form" field="property_number"></has-error>
                 </div>
                 <!-- Second col -->
                 <div class="col form-group">
-                  <label>Unit of Measure</label>
                   <select
                     name="unit_of_measure"
                     v-model="form.unit_of_measure"
@@ -276,12 +275,12 @@
                     <option value="lot">Lot</option>
                     <has-error :form="form" field="unit_of_measure"></has-error>
                   </select>
+                  <label>Unit of Measure</label>
                 </div>
               </div>
               <div class="row">
                 <!-- third col Remove also the v-model-->
                 <div class="col form-group">
-                  <label>Unit Price</label>
                   <input
                     min="0"
                     currency="P"
@@ -296,6 +295,7 @@
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('price') }"
                   />
+                  <label>Unit Price</label>
                   <has-error :form="form" field="price"></has-error>
                 </div>
                 <!-- fourth col  Trying to remove the v-model first  -->
@@ -561,13 +561,13 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col form-group">
-                  <label>PAR/ICS Number</label>
+                  <label>ICS Number</label>
                   <input
                     readonly
                     v-model="form.number"
                     type="text"
                     id="number"
-                    placeholder="Enter PAR/ICS Number"
+                    placeholder="Enter ICS Number"
                     name="number"
                     class="form-control"
                     :class="{ 'is-invalid': form.errors.has('number') }"
@@ -1384,6 +1384,9 @@ export default {
   opacity: 0.9;
   margin-top: -5px;
 }
+.btn-danger {
+  margin-top: -5px;
+}
 .update-create:hover {
   opacity: 1;
 }
@@ -1393,6 +1396,14 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
 }
 #description {
   height: 100px;
@@ -1417,9 +1428,9 @@ export default {
     top: 0;
   }
 }
-.mdl-btn {
+/* .mdl-btn {
   background-color: #ececec;
-}
+} */
 .widget-user-header {
   background-position: center center;
   background-size: contain;
@@ -1429,6 +1440,12 @@ export default {
 }
 .widget-user {
   padding: 0;
+}
+.thPropNo {
+  width: 90px;
+}
+.thAccOfficer {
+  width: 170px;
 }
 
 .rpcppe {
@@ -1454,6 +1471,38 @@ export default {
 } */
 .material-icons {
   font-size: 15px;
+}
+/* .form-group input:focus + label {
+  color: red !important;
+} */
+/* .row .form-group {
+} */
+/* .row .form-group input:focus,
+.row .form-group select:focus,
+.row .form-group textarea:focus {
+  border-bottom: 1px solid red !important;
+  box-shadow: 0 1px 0 0 red !important;
+}
+.row .form-group input:focus ~ label,
+.row .form-group input:valid ~ label,
+.row .form-group select:focus ~ label {
+  color: #3c8dbc !important;
+} */
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
+}
+#description {
+  height: 160px;
 }
 </style>
 

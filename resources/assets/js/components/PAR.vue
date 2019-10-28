@@ -138,7 +138,12 @@
             <!-- this row will not appear when printing -->
             <div class="row no-print">
               <div class="col-12">
-                <a href @click.prevent="printme" target="_blank" class="btn btn-default">
+                <a
+                  href
+                  @click.prevent="printme"
+                  target="_blank"
+                  class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                >
                   <i class="fa fa-print"></i> Print
                 </a>
                 <!-- <button type="button" class="btn btn-success float-right">
@@ -146,17 +151,17 @@
                 Submit Payment
                 </button>-->
 
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-primary float-right"
                   style="margin-right: 5px; "
-                >
-                  <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
+                >-->
+                <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
 
-                  <router-link to="/assets" class="router">
+                <!-- <router-link to="/assets" class="router">
                     <i class="rpcppe-btn fas fa-undo">&nbsp;</i>Back to RPCPPE
                   </router-link>
-                </button>
+                </button>-->
               </div>
             </div>
           </div>
@@ -317,7 +322,12 @@
             <!-- this row will not appear when printing -->
             <div class="row no-print">
               <div class="col-12">
-                <a href @click.prevent="printme" target="_blank" class="btn btn-default">
+                <a
+                  href
+                  @click.prevent="printme"
+                  target="_blank"
+                  class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                >
                   <i class="fa fa-print"></i> Print
                 </a>
                 <!-- <button type="button" class="btn btn-success float-right">
@@ -325,17 +335,17 @@
                 Submit Payment
                 </button>-->
 
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-primary float-right"
                   style="margin-right: 5px; "
-                >
-                  <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
+                >-->
+                <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
 
-                  <router-link to="/assets" class="router">
+                <!-- <router-link to="/assets" class="router">
                     <i class="rpcppe-btn fas fa-undo">&nbsp;</i>Back to RPCPPE
-                  </router-link>
-                </button>
+                </!-->
+                <!-- </button>  -->
               </div>
             </div>
           </div>
@@ -481,7 +491,12 @@
             <!-- this row will not appear when printing -->
             <div class="row no-print">
               <div class="col-12">
-                <a href @click.prevent="printme" target="_blank" class="btn btn-default">
+                <a
+                  href
+                  @click.prevent="printme"
+                  target="_blank"
+                  class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                >
                   <i class="fa fa-print"></i> Print
                 </a>
                 <!-- <button type="button" class="btn btn-success float-right">
@@ -489,17 +504,17 @@
                 Submit Payment
                 </button>-->
 
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-primary float-right"
                   style="margin-right: 5px; "
-                >
-                  <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
+                >-->
+                <!-- <i @click.prevent="exportPDF" class="fa fa-download"></i> Generate PDF -->
 
-                  <router-link to="/assets" class="router">
+                <!-- <router-link to="/assets" class="router">
                     <i class="rpcppe-btn fas fa-undo">&nbsp;</i>Back to RPCPPE
                   </router-link>
-                </button>
+                </button>-->
               </div>
             </div>
           </div>
@@ -517,6 +532,7 @@ export default {
     return {
       show: false,
       assets: {},
+      transfers: {},
       property_officers: {},
       form: new Form({
         received_from: ""
@@ -536,8 +552,19 @@ export default {
         axios
           .get(`api/asset/${this.$route.params.id}`)
           .then(({ data }) => (this.assets = data));
+      } else {
+        if (this.$gate.isEmployee()) {
+          axios
+            .get(`api/transfer/${this.$route.params.id}`)
+            .then(({ data }) => (this.assets = data));
+        }
       }
     },
+    // loadTransfers() {
+    //   axios
+    //     .get(`api/transfer/${this.$route.params.id}`)
+    //     .then(({ data }) => (this.assets = data));
+    // },
     // loadForReissue() {
     //   if (this.$gate.isAdminOrUserOrAuthorOrSupply()) {
     //     axios
@@ -555,8 +582,9 @@ export default {
   },
   created() {
     // this.loadForReissue();
-    this.loadPropertyOfficers();
     this.loadAssets();
+    // this.loadTransfers();
+    this.loadPropertyOfficers();
   }
 };
 </script>
@@ -624,6 +652,14 @@ export default {
 select {
   border: 0px;
   outline: 0px;
+}
+.update-create {
+  background: rgb(22, 70, 143);
+  color: white;
+}
+.update-create:hover {
+  opacity: 1;
+  text-decoration: none;
 }
 </style>
 

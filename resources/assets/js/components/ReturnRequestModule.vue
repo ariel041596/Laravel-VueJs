@@ -19,7 +19,7 @@
             <div class="col-sm-12">
               <table
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table table-bordered dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
@@ -184,7 +184,16 @@
           <div class="modal-header">
             <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
             <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Request For Returned</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">0000 -->
+            <button
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Close"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -1269,6 +1278,8 @@ export default {
   name: "list",
   data() {
     return {
+      sortBy: "price",
+      sortDesc: false,
       errors: null,
       selected: [],
       selected_officer: "",
@@ -1705,32 +1716,32 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.modal-content {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
 }
 #description {
-  height: 100px;
+  height: 160px;
 }
-@media screen {
-  #print {
-    display: none;
-  }
-}
-
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #print,
-  #print * {
-    visibility: visible;
-  }
-  #print {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}
-
-.widget-user-header {
+/* .widget-user-header {
   background-position: center center;
   background-size: contain;
   height: 130px !important;
@@ -1739,7 +1750,7 @@ export default {
 }
 .widget-user {
   padding: 0;
-}
+} */
 
 #footer {
   margin-top: -40px;
@@ -1758,17 +1769,20 @@ export default {
 .material-icons {
   font-size: 15px;
 }
-.mdl-btn {
-  background-color: #ececec;
+/* .mdl-btn {
+  background-color: #fff;
 }
+.mdl-btn:hover {
+  background-color: #924545;
+} */
 #showEntries {
   padding-bottom: 10px;
 }
 /* #requestedPropertyvue {
   font-size: 11px;
 } */
-#description {
-  height: 160px;
+.btn-danger {
+  margin-top: -1px;
 }
 </style>
 

@@ -26,7 +26,7 @@
             <div class="col-sm-12">
               <table
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table table-bordered dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
@@ -68,7 +68,24 @@
                       <td>{{asset.unit_of_measure}}</td>
                       <td>{{asset.description | upText}}</td>
                       <td class="text-center">{{asset.quantity | numberComma}}</td>
-                      <td>{{asset.remarks }}</td>
+                      <td>
+                        <span
+                          v-if="asset.remarks=='Ready for Release'"
+                          class="badge badge-pill badge-info"
+                        >{{asset.remarks }}</span>
+                        <span
+                          v-if="asset.remarks=='Claimed'"
+                          class="badge badge-pill badge-success"
+                        >{{asset.remarks }}</span>
+                        <span
+                          v-if="asset.remarks=='For Processing'"
+                          class="badge badge-pill badge-info"
+                        >{{asset.remarks }}</span>
+                        <span
+                          v-if="asset.remarks=='No Available / Insuficient Quantity'"
+                          class="badge badge-pill badge-warning"
+                        >{{asset.remarks }}</span>
+                      </td>
                       <td>{{asset.purpose | upText}}</td>
                       <td>{{asset.accountable_officer}}</td>
                       <td v-if="$gate.isSupply()">{{asset.issued_by }}</td>
@@ -558,7 +575,7 @@ export default {
     },
     approvedStatus() {
       this.form.status = "approved";
-      this.form.remarks = "Available";
+      this.form.remarks = "Claimed";
     },
     getProfileid(event) {
       this.form.description = event.target.value;
@@ -812,7 +829,19 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
+.modal-content {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.form-control {
+  border-radius: 0;
+}
+
 #description {
   height: 100px;
 }
@@ -865,12 +894,23 @@ export default {
 .material-icons {
   font-size: 15px;
 }
-.mdl-btn {
+/* .mdl-btn {
   background-color: #ececec;
-}
+} */
 #showEntries {
   padding-bottom: 10px;
 }
+.btn-danger {
+  margin-top: -4px;
+}
+.badge-info {
+  background-color: #15aabf;
+}
+.badge {
+  font-size: 11px;
+}
+/* baguhin nalang natin yung col as form-group pag ayaw gumana */
+
 /* #requestedPropertyvue {
   font-size: 11px;
 } */

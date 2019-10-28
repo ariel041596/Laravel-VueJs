@@ -117,6 +117,10 @@ const routes = [
     },
     { path: "/for-reissue", component: require("./components/ForReissue.vue") },
     {
+        path: "/approved-transfers",
+        component: require("./components/ApprovedTransfers.vue")
+    },
+    {
         path: "/for-transfer",
         component: require("./components/ForTransfer.vue")
     },

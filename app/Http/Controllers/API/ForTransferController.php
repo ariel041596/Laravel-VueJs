@@ -113,6 +113,14 @@ class ForTransferController extends Controller
         $asset->update($request->all());
         return ['message' => 'Updated the assets info'];
     }
+    public function show($id)
+    {
+    //     // return auth('api')->asset();
+        $asset = ForReissue::whereId($id)->first();
+        return response()->json([
+            "asset" => $asset   
+        ], 200);
+    }
     public function search(){
 
         if ($search = \Request::get('q')) {

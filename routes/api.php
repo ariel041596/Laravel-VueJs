@@ -76,6 +76,14 @@ Route::middleware('auth:api')->get('/total_disposal', function (Request $request
 // router for Usercontroller
 Route::apiResources(['total_disposal' => 'API\TotalForDisposalController']);
 // ===============================================End For Total Total items for Disposal==========================
+// ===============================================Get all Approved Transfers==========================
+// Middleware to get user
+Route::middleware('auth:api')->get('/approved_transfer', function (Request $request) {
+    return $request->approved_transfer();
+});
+// router for Usercontroller
+Route::apiResources(['approved_transfer' => 'API\ApprovedTransferController']);
+// ===============================================End For Approved Transfers==========================
 
 
 // ===============================================For Assets==========================
@@ -208,6 +216,10 @@ Route::get('findRequestTransfer', 'API\ForTransferController@search');
 
 // Reissue request Search
 Route::get('findForReissue', 'API\ForReIssueController@search');
+// End for Reissue Request Search
+
+// Reissue request Search
+Route::get('findApprovedTransfer', 'API\ApprovedTransferController@search');
 // End for Reissue Request Search
 
 // Route::get(':id', 'API\AssetController@show');

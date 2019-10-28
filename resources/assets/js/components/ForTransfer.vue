@@ -19,7 +19,7 @@
             <div class="col-sm-12">
               <table
                 id="example2"
-                class="table table-bordered table-hover dataTable"
+                class="table table-bordered dataTable"
                 role="grid"
                 aria-describedby="example2_info"
               >
@@ -101,6 +101,33 @@
                           <i class="material-icons fas fa-pen"></i>
                           <!-- <i class="material-icons">add</i> -->
                         </a>
+                        <router-link
+                          v-if="$gate.isEmployee()"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price>15000"
+                          :to="{name: 'par', params: { id: asset.id }}"
+                        >
+                          <!-- <router-link v-show="asset.price>15000" :to="`${asset.id}`"> -->
+                          <i
+                            class="material-icons fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print PAR Transfer"
+                          ></i>
+                        </router-link>
+                        <router-link
+                          v-if="$gate.isEmployee()"
+                          class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
+                          v-show="asset.price<=15000"
+                          :to="`${asset.id}`"
+                        >
+                          <i
+                            class="material-icons fas fa-print"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Print ICS Transfer"
+                          ></i>
+                        </router-link>
                         <a
                           v-if="$gate.isAdminOrUserOrAuthor()"
                           @click="editModal3(asset)"
@@ -108,7 +135,7 @@
                           href="#"
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Approved"
+                          title="View"
                         >
                           <i class="material-icons fas fa-eye blue"></i>
                           <!-- <i class="material-icons">add</i> -->
@@ -1695,9 +1722,33 @@ export default {
 .modal-header {
   background: rgb(22, 70, 143);
   color: aliceblue;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+}
+.form-control {
+  border-radius: 0;
+}
+.form-control {
+  border-radius: 0;
+}
+.row .form-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 18px;
+}
+.row .form-group input,
+.row .form-group select {
+  margin-top: 20px;
 }
 #description {
-  height: 100px;
+  height: 160px;
 }
 @media screen {
   #print {
@@ -1748,9 +1799,12 @@ export default {
 .material-icons {
   font-size: 15px;
 }
-.mdl-btn {
-  background-color: #ececec;
+/* .mdl-btn {
+  background-color: #fff;
 }
+.mdl-btn:hover {
+  background-color: #ececec;
+} */
 #showEntries {
   padding-bottom: 10px;
 }
@@ -1759,6 +1813,9 @@ export default {
 } */
 #description {
   height: 160px;
+}
+.btn-danger {
+  margin-top: -1px;
 }
 </style>
 

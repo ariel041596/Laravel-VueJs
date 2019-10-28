@@ -1,8 +1,5 @@
 <template>
   <div class>
-    <!-- /.row -->
-
-    <!-- div for  isAdminOrUserOrAuthor-->
     <div class="row mt-2" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="col-md-12">
         <!-- Content Header (Page header) -->
@@ -11,6 +8,14 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Dashboard</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                  </li>
+                  <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
               </div>
             </div>
             <!-- /.row -->
@@ -28,17 +33,14 @@
                 <!-- small box -->
                 <div class="small-box" id="totalpar">
                   <div class="inner">
-                    <h3>150</h3>
-
+                    <p class="card-box-title">
+                      <strong>{{assets.total}}</strong>
+                    </p>
                     <p>Total PAR</p>
+                    <la-cartesian :width="250" :height="50" :data="values" id="la-cartesian">
+                      <la-area animated prop="value"></la-area>
+                    </la-cartesian>
                   </div>
-                  <div class="icon">
-                    <i class="fas fa-chart-line"></i>
-                  </div>
-                  <router-link to="/assets" class="nav-link small-box-footer">
-                    More info
-                    <i class="fas fa-arrow-circle-right"></i>
-                  </router-link>
                 </div>
               </div>
               <!-- ./col -->
@@ -164,17 +166,37 @@
 </template>
 
 <script>
+import { Cartesian, Area } from "laue";
 import { Calendar } from "vue-sweet-calendar";
 import "vue-sweet-calendar/dist/SweetCalendar.css";
 export default {
   name: "app",
   data: function() {
     return {
+      // cards: [],
+      assets: {},
+      values: [{ value: 0 }, { value: 1 }, { value: 10 }],
       showDate: new Date()
     };
   },
   components: {
-    Calendar
+    Calendar,
+    LaCartesian: Cartesian,
+    LaArea: Area
+  },
+  methods: {
+    loadAssets() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
+      }
+    }
+    // axios.get('/api/dashboard')
+    // 		.then((res) => {
+    // 			this.$set(this.$data, 'cards', res.data.cards)
+    // 		})
+  },
+  created() {
+    this.loadAssets();
   }
 };
 </script>
@@ -195,7 +217,12 @@ export default {
   margin-right: auto;
 }
 #totalpar {
-  background-color: #15aabf;
-  color: aliceblue;
+  background-color: #fff;
+  color: rgb(5, 12, 19);
+}
+.card-box-title {
+  margin-top: 5px;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>
