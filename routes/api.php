@@ -180,6 +180,15 @@ Route::middleware('auth:api')->get('/accountcode', function (Request $request) {
 Route::apiResources(['accountcode' => 'API\AccountCodeController']);
 // ===============================================End For Account Code==========================
 
+// ===============================================For Importing Data==========================
+// Middleware to [functions] to get/post import data
+Route::middleware('auth:api')->get('/import_data', function (Request $request) {
+    return $request->import_data();
+});
+// router for Import Data Controller
+Route::apiResources(['import_data' => 'API\ImportDataController']);
+// ===============================================End For Importing Data==========================
+
 // Router to get the data of the certain id
 // Route::get('asset', 'API\AssetController');
 // Route::get('/api/asset', 'API\AssetController@index');

@@ -124,6 +124,10 @@ const routes = [
         path: "/for-transfer",
         component: require("./components/ForTransfer.vue")
     },
+    {
+        path: "/import-data",
+        component: require("./components/ImportData.vue")
+    },
     { path: "/", component: require("./components/Profile.vue") },
     { path: "/:id", name: "par", component: require("./components/PAR.vue") },
     { path: "*", component: require("./components/404NotFound.vue") }
