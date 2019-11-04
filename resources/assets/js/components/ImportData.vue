@@ -28,6 +28,7 @@
                         <div class="form-group">
                           <div class="col-sm-12">
                             <!-- Class name maybe -form-input -->
+
                             <input
                               type="file"
                               class="form-control-file"
@@ -45,6 +46,7 @@
                         </div>
                         <div class="form-group">
                           <button
+                            @click="checkForm"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Please fill up fields"
@@ -209,7 +211,7 @@ export default {
   name: "list",
   data() {
     return {
-      errors: null,
+      errors: [],
       selected: [],
       selectAll: false,
       acctMode: false,
@@ -245,6 +247,7 @@ export default {
     }
   },
   methods: {
+    checkForm() {},
     createAsset() {
       this.$Progress.start();
       this.form
