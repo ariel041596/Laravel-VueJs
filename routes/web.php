@@ -16,6 +16,15 @@
 // Route::get('/', function () {
 //     return view('invoice');
 // });
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('import', function () {
+    return view('import');
+});
+
+Route::get('config/asset/import', 'ImportDataController@index')->name('import-asset');
+Route::post('config/asset/import', 'ImportDataController@store')->name('bulk-import-asset');
 
 Auth::routes();
 
@@ -23,9 +32,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 // // Route::get('/path', 'HomeController@index')->where('path','([A-z\d-\/_.]+)?');
 Route::get('/{path}', 'HomeController@index')->where( 'path' , '([A-z\d\-\/_.]+)?' );
 
-// route for invoice receipt
-Route::get('invoice', function(){
-    return view('invoice');
-});
 
 

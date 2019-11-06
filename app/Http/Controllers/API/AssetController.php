@@ -35,7 +35,7 @@ class AssetController extends Controller
             if(\Gate::allows('isAdmin')){
                 // return Asset::latest()->paginate(10);
                 return Asset::where('status','LIKE',"%approved%")
-                ->where('property_type','LIKE',"%PAR%")->latest()->paginate(1);
+                ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50);
                 // $allasssetwithcount = [
                 //     'asset' => $asset,
                 //     'asset_count' => $asset->count()
@@ -46,7 +46,7 @@ class AssetController extends Controller
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)
             ->where('status','LIKE',"%approved%")
-            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(); //get or paginate?
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50); //get or paginate?
             // return response()->json([
             //     "asset" => $asset
             // ],200);

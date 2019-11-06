@@ -1,6 +1,5 @@
 <template>
   <div class id>
-    <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthor()">
       <div id="rpcppe" class="rpcppe card-header">
         <h3 class="card-title mt-1 text-white">
@@ -10,9 +9,7 @@
       <section class="content mt-4">
         <div class="container-fluid">
           <div class="row">
-            <!-- Left col -->
             <section class="col-lg-4 connectedSortable">
-              <!-- Custom tabs (Charts with tabs)-->
               <div class="card card-content">
                 <div class="card-header d-flex p-0">
                   <h5 class="card-box-title p-2">
@@ -20,186 +17,119 @@
                     Import RPCPPE or ICS
                   </h5>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <div class id style="position: relative; height: 200px;">
-                      <form @submit.prevent="createAsset()" enctype="multipart/from-data">
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <!-- Class name maybe -form-input -->
-
-                            <input
+                      <div class="form-group">
+                        <div class="col-sm-12">
+                          <!-- <input
                               type="file"
+                              @change="updateFile"
                               class="form-control-file"
                               name="file"
                               id="file"
                               aria-describedby="fileHelp"
                               :class="{ 'is-invalid': form.errors.has('file') }"
-                            />
-                            <has-error :form="form" field="file"></has-error>
-                            <small
-                              id="fileHelp"
-                              class="form-text text-muted"
-                            >Please upload a valid CSV file. File should be formatted on tables</small>
-                          </div>
+                          />-->
+                          <small
+                            id="fileHelp"
+                            class="form-text text-muted"
+                          >Please upload a valid CSV file. File should be formatted on tables</small>
+                          <has-error :form="form" field="file"></has-error>
                         </div>
-                        <div class="form-group">
-                          <button
-                            @click="checkForm"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Please fill up fields"
-                            class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                          >
-                            <i class="fas fa-upload">&nbsp;</i>RPCPPE/ICS
-                          </button>
-                        </div>
-                      </form>
+                      </div>
+                      <div class="form-group">
+                        <button
+                          @click="newModal"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="Please fill up fields"
+                          class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                        >
+                          <i class="fas fa-upload">&nbsp;</i>RPCPPE/ICS
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
-
-              <!-- /.card -->
-            </section>
-            <section class="col-lg-4 connectedSortable">
-              <!-- Custom tabs (Charts with tabs)-->
-              <div class="card card-content">
-                <div class="card-header d-flex p-0">
-                  <h5 class="card-box-title p-2">
-                    <i class="fas fa-upload"></i>
-                    Import For Disposal (IIRUP)
-                  </h5>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class id style="position: relative; height: 200px;">
-                      <form @submit.prevent="createForDisposal()" enctype="multipart/from-data">
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <!-- Class name maybe -form-input -->
-                            <input
-                              type="file"
-                              class="form-control-file"
-                              name="file"
-                              id="file"
-                              aria-describedby="fileHelp2"
-                              :class="{ 'is-invalid': form.errors.has('file') }"
-                            />
-                            <has-error :form="form" field="file"></has-error>
-                            <small
-                              id="fileHelp2"
-                              class="form-text text-muted"
-                            >Please upload a valid CSV file. File should be formatted on tables</small>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <button
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Please fill up fields"
-                            class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                          >
-                            <i class="fas fa-upload">&nbsp;</i>IIRUP
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-
-              <!-- /.card -->
-            </section>
-            <section class="col-lg-4 connectedSortable">
-              <!-- Custom tabs (Charts with tabs)-->
-              <div class="card card-content">
-                <div class="card-header d-flex p-0">
-                  <h5 class="card-box-title p-2">
-                    <i class="fas fa-upload"></i>
-                    Import For Items Ready for Re-issue
-                  </h5>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <div class id style="position: relative; height: 200px;">
-                      <form @submit.prevent="createForReissue()" enctype="multipart/from-data">
-                        <div class="form-group">
-                          <div class="col-sm-12">
-                            <!-- Class name maybe -form-input -->
-                            <input
-                              type="file"
-                              class="form-control-file"
-                              name="file"
-                              id="file"
-                              aria-describedby="fileHelp3"
-                              :class="{ 'is-invalid': form.errors.has('file') }"
-                            />
-                            <has-error :form="form" field="file"></has-error>
-                            <small
-                              id="fileHelp3"
-                              class="form-text text-muted"
-                            >Please upload a valid CSV file. File should be formatted on tables</small>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <button
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Please fill up fields"
-                            class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-                          >
-                            <i class="fas fa-upload">&nbsp;</i>For Re-issues
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-
-              <!-- /.card -->
             </section>
           </div>
-          <!-- /.row (main row) -->
         </div>
-        <!-- /.container-fluid -->
       </section>
-      <!-- <div class="row">
-        <div class="col-sm-3">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Configurations</h3>
+    </div>
+    <div v-if="!$gate.isAdminOrUserOrAuthorOrSupply()">
+      <NotFound></NotFound>
+    </div>
+    <div
+      class="modal fade bd-example-modal-sm"
+      id="addNew"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addNewModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 v-show="!editmode" class="modal-title" id="addNewModalLabel">Add New</h5>
+            <h5 v-show="editmode" class="modal-title" id="addNewModalLabel">Update Asset</h5>
+            <button
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Close"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span class="modal-close-button" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form
+            @submit.prevent="editmode ? updateAsset() : createAsset()"
+          >
+            <div class="modal-body">
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <input
+                    type="file"
+                    @change="updateFile"
+                    class="form-control-file"
+                    name="file"
+                    id="file"
+                    aria-describedby="fileHelp"
+                    :class="{ 'is-invalid': form.errors.has('file') }"
+                  />
+                  <small
+                    id="fileHelp"
+                    class="form-text text-muted"
+                  >Please upload a valid CSV file. File should be formatted on tables</small>
+                  <has-error :form="form" field="file"></has-error>
+                </div>
+              </div>
             </div>
-            <div class="box-body">
+            <div class="modal-footer">
+              <button
+                data-dismiss="modal"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                <i class="fas fa-times">&nbsp;</i>Close
+              </button>
               <button
                 data-toggle="tooltip"
                 data-placement="bottom"
-                title="Unit Price Exceeds P15,000.00"
-                @click="newModal"
-                class="ml-1 update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                title="Add Report on Physical Count of Property Plant and Equipment"
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
               >
-                <i class="fas fa-plus">&nbsp;</i>RPCPPE
+                <i class="fas fa-upload">&nbsp;</i>Upload Data
               </button>
             </div>
-          </div>
+          </form>
         </div>
-      </div>-->
-    </div>
-    <!-- End for Admin -->
-
-    <!-- /.row -->
-    <div v-if="!$gate.isAdminOrUserOrAuthorOrSupply()">
-      <NotFound></NotFound>
+      </div>
     </div>
     <router-view></router-view>
   </div>
@@ -217,44 +147,35 @@ export default {
       acctMode: false,
       editmode: false,
       form: new Form({
-        id: "",
-        number: "",
-        article: "",
-        description: "",
-        property_number: "",
-        unit_of_measure: "",
-        price: "",
-        quantity: "",
-        total_value: "",
-        date: "",
-        accountable_officer: "",
-        remarks: "",
-        account_name: "",
-        service: "",
-        createdBy: "",
-        status: "",
-        property_type: ""
+        // file: ""
       })
     };
   },
-  computed: {},
-  watch: {
-    total_value: function(newValue) {
-      const result = newValue
-        .replace(/\D/g, "")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      Vue.nextTick(() => (this.price = result));
-    }
-  },
   methods: {
-    checkForm() {},
+    newModal() {
+      this.editmode = false;
+      this.form.reset();
+      this.form.clear();
+      $("#addNew").modal("show");
+    },
+    updateFile(e) {
+      let file = e.target.files[0];
+      let reader = new FileReader();
+      if (file["size"] < 21117755) {
+        reader.onloadend = file => {
+          this.form.file = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire("Opps", "Your file was too large", "error");
+      }
+    },
     createAsset() {
       this.$Progress.start();
       this.form
         .post("api/import_data")
         .then(() => {
           Fire.$emit("AfterCreate");
-          // Sweet Alert message from sweetalert2
           toast.fire({
             type: "success",
             title: "Created successfully"
@@ -265,9 +186,7 @@ export default {
           this.$Progress.fail();
         });
     }
-  },
-
-  created() {}
+  }
 };
 </script>
 

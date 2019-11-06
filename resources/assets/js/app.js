@@ -22,6 +22,9 @@ import Vuetify from "vuetify";
 import StoreData from "./store";
 
 // import { routes } from './routes';
+import VueAxios from "vue-axios";
+import axios from "axios";
+Vue.use(VueAxios, axios);
 
 Vue.use(Vuetify);
 

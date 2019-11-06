@@ -94,7 +94,7 @@
                       ></textarea>
                       <has-error :form="form" field="bio"></has-error>
                     </div>
-                  </div> -->
+                  </div>-->
                   <!-- Choose File Starts here -->
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Upload Photo</label>
@@ -132,7 +132,7 @@
                       />
                       <has-error :form="form" field="bio"></has-error>
                     </div>
-                  </div> -->
+                  </div>-->
                   <div class="form-group">
                     <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 
@@ -200,9 +200,6 @@ export default {
         photo: ""
       })
     };
-  },
-  mounted() {
-    console.log("Component mounted.");
   },
   methods: {
     // retrieve profile photo on the database
