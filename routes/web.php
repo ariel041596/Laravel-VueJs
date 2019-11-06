@@ -22,6 +22,9 @@ Route::get('/', function () {
 Route::get('import', function () {
     return view('import');
 });
+Route::get('config/asset/import', function () {
+    return view('import');
+});
 
 Route::get('config/asset/import', 'ImportDataController@index')->name('import-asset');
 Route::post('config/asset/import', 'ImportDataController@store')->name('bulk-import-asset');

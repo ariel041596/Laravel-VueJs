@@ -86,9 +86,7 @@
               <span class="modal-close-button" aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form
-            @submit.prevent="editmode ? updateAsset() : createAsset()"
-          >
+          <form @submit.prevent="editmode ? updateAsset() : createAsset()">
             <div class="modal-body">
               <div class="form-group">
                 <div class="col-sm-12">

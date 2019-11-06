@@ -1388,6 +1388,7 @@ export default {
   margin-top: -5px;
 }
 .update-create:hover {
+  background: rgb(22, 70, 143);
   opacity: 1;
 }
 .modal-close-button {
@@ -1462,7 +1463,7 @@ export default {
   border: 1px solid #3c8dbc;
 }
 #rpcppe {
-  background: #3c8dbc;
+  background: #000507;
   height: 50px;
 }
 /* #pendingAssetsVue {

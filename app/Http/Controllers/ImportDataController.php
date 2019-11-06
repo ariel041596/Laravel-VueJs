@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Asset;
 use App\User;
@@ -11,8 +9,6 @@ use Excel;
 use DB;
 use Validator;
 use Input;
-
-
 class ImportDataController extends Controller
 {
     public function index()
@@ -34,9 +30,10 @@ class ImportDataController extends Controller
         $rows = array_map("str_getcsv", explode("\n", $csvData));
         // dd($csvData);
         $header = array_shift($rows);
+
         foreach($rows as $row){
             $row = array_combine($header, $row);
-
+            
             Asset::create([
             'number' => $row['number'], //1
             'article' => $row['article'], //1
@@ -51,15 +48,16 @@ class ImportDataController extends Controller
             'remarks' => $row['remarks'], //10
             'account_name' => $row['accountname'], //11
             'service' => $row['service'], //12
-            'property_type' => $row['propertytype'], //12
-            'createdBy' => $row['createdBy'], //12
+            'property_type' => $row['propertytype'], //12   
+            'createdBy' => Auth::user()->id,
             'status' => $row['status'], //13
             'transfer_to' => $row['transferto'], //13
             'received_from' => $row['receivedfrom'], //13
             'transfer_to_designation' => $row['transfertodesignation'], //13
-        ]);
-        
-        return redirect()->back();
-    }
+             ]);
+            
+        }
+        return redirect('import');
+   
     }
 }
