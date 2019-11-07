@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="/css/app.css">
         <title>Asset Management System</title>
 
         <!-- Fonts -->
@@ -69,11 +69,11 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/profile') }}">Home</a>
+                        <a href="{{ url('/profile') }}"><i class="fa fa-home">&nbsp;</i>Home</a>
                         <!-- <router-link to="/dashboard" class="nav-link">Home
                         </router-link> -->
                     @else
-                        <a href="{{ url('/profile') }}">Login</a>
+                        <a href="{{ url('/profile') }}"><i class="fas fa-sign-in-alt">&nbsp;</i>Login</a>
                         <!-- <a href="{{ route('register') }}">Register</a> -->
                     @endauth
                 </div>

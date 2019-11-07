@@ -155,10 +155,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </router-link>
               </li>
               <li class="nav-item">
-              <router-link to="/import" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
-                <i class="fas fa-upload text-white"></i>&nbsp;
-                 <p>Import Data</p>
-              </router-link>
+              <a href="/import" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-upload text-white"></i>&nbsp;
+                <p>Import</p>
+              </a>
               </li>
             </ul>
           </li>

@@ -1463,7 +1463,7 @@ export default {
   border: 1px solid #3c8dbc;
 }
 #rpcppe {
-  background: #000507;
+  background: #3c8dbc;
   height: 50px;
 }
 /* #pendingAssetsVue {

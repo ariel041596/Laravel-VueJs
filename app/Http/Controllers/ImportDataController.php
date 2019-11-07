@@ -11,6 +11,10 @@ use Validator;
 use Input;
 class ImportDataController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         return view('import');
@@ -33,31 +37,32 @@ class ImportDataController extends Controller
 
         foreach($rows as $row){
             $row = array_combine($header, $row);
-            
+
             Asset::create([
             'number' => $row['number'], //1
             'article' => $row['article'], //1
             'description' => $row['description'], //2
-            'property_number' => $row['propertynumber'], //3
-            'unit_of_measure' => $row['unit'], //4
+            'property_number' => $row['property_number'], //3
+            'unit_of_measure' => $row['unit_of_measure'], //4
             'price' => $row['price'], //5   
             'quantity' => $row['quantity'], //6
-            'total_value' => $row['totalvalue'], //7
+            'total_value' => $row['total_value'], //7
             'date' => $row['date'], //8 
-            'accountable_officer' => $row['accountableofficer'], //9
+            'accountable_officer' => $row['accountable_officer'], //9
             'remarks' => $row['remarks'], //10
-            'account_name' => $row['accountname'], //11
+            'account_name' => $row['account_name'], //11
             'service' => $row['service'], //12
-            'property_type' => $row['propertytype'], //12   
+            'property_type' => $row['property_type'], //12   
             'createdBy' => Auth::user()->id,
             'status' => $row['status'], //13
-            'transfer_to' => $row['transferto'], //13
-            'received_from' => $row['receivedfrom'], //13
-            'transfer_to_designation' => $row['transfertodesignation'], //13
-             ]);
+            'transfer_to' => $row['transfer_to'], //13
+            'received_from' => $row['received_from'], //13
+            'transfer_to_designation' => $row['transfer_to_designation'], //13
+            ]);
             
         }
-        return redirect('import');
+        // return redirect('import');
+        return back();
    
     }
 }
