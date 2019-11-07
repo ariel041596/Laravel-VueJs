@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <div class="row mt-2" v-if="$gate.isAdminOrUserOrAuthor()">
+    <div class="row mt-1" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="col-md-12">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -267,7 +267,23 @@
                   </div>
                 </div>
                 <!-- /.card -->
+                <!-- <section class="col-lg-4 connectedSortable"> -->
+                <div id="time" class="card">
+                  <div id="clock-header" class="card-header no-border">
+                    <h3 class="card-title text-white">
+                      <i id="calendar-icon" class="fas fa-clock"></i>&nbsp;
+                      Time
+                    </h3>
+                  </div>
+                  <div id="clock">
+                    <p id="date_value">{{ date }}</p>
+                    <p id="time_value">{{ time }}</p>
+                  </div>
+                </div>
+                <!-- /.card -->
+                <!-- </section> -->
               </section>
+
               <!-- right col -->
             </div>
             <!-- /.row (main row) -->
@@ -300,13 +316,42 @@ export default {
       showDate: new Date()
     };
   },
-
   components: {
     Calendar,
     LaCartesian: Cartesian,
     LaArea: Area
   },
   methods: {
+    zeroPadding(num, digit) {
+      var zero = "";
+      for (var i = 0; i < digit; i++) {
+        zero += "0";
+      }
+      return (zero + num).slice(-digit);
+    },
+    currentTime() {
+      var week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      var timerID = setInterval(updateTime, 1000);
+    },
+    updateTime() {
+      var week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      // var timerID = setInterval(updateTime, 1000);
+      var cd = new Date();
+      this.time =
+        this.zeroPadding(cd.getHours(), 2) +
+        ":" +
+        this.zeroPadding(cd.getMinutes(), 2) +
+        ":" +
+        this.zeroPadding(cd.getSeconds(), 2);
+      this.date =
+        this.zeroPadding(cd.getFullYear(), 4) +
+        "-" +
+        this.zeroPadding(cd.getMonth() + 1, 2) +
+        "-" +
+        this.zeroPadding(cd.getDate(), 2) +
+        " " +
+        week[cd.getDay()];
+    },
     loadAssets() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
@@ -319,15 +364,31 @@ export default {
   },
   created() {
     this.loadAssets();
+    this.updateTime();
+    // setInterval(updateTime, 1000);
+    setInterval(() => this.updateTime(), 1000);
+    // this.currentTime();
   }
 };
 </script>
 
 <style scoped>
+#time_value {
+  letter-spacing: 0.05em;
+  font-size: 80px;
+  padding: 5px 0;
+}
+#date_value {
+  letter-spacing: 0.1em;
+  font-size: 24px;
+}
 #calendar-icon {
   color: white;
 }
 #calendar-header {
+  background: rgb(68, 83, 184);
+}
+#clock-header {
   background: rgb(68, 83, 184);
 }
 #app {
