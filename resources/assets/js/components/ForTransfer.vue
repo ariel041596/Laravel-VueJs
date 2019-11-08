@@ -4,7 +4,7 @@
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrUserOrAuthorOrEmployee()">
       <div id="rpcppe" class="card-header">
         <h3 class="card-title mt-1 text-white">
-          <i class="fas fa-thumbtack"></i>&nbsp;TRANSFER REQUESTS
+          <i class="fas fa-exchange-alt"></i>&nbsp;TRANSFER REQUESTS
         </h3>
       </div>
 
@@ -138,8 +138,8 @@
                           title="View"
                         >
                           <i class="material-icons fas fa-eye blue"></i>
-                          <!-- <i class="material-icons">add</i> -->
                         </a>
+                        <span class="view_action">VIEW</span>
                         <!-- <a
                           v-if="$gate.isAdminOrUserOrAuthor()"
                           @click="editModal4(asset)"
@@ -1781,7 +1781,10 @@ export default {
 .widget-user {
   padding: 0;
 }
-
+.view_action {
+  font-size: 12px;
+  text-align: center;
+}
 #footer {
   margin-top: -40px;
   margin-bottom: -5px;

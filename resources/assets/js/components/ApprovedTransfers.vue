@@ -9,7 +9,7 @@
           title="Serviceable items ready for re-issue"
           class="card-title mt-1 text-white"
         >
-          <i class="fas fa-recycle">&nbsp;</i>FOR RE-ISSUE
+          <i class="fas fa-thumbs-up">&nbsp;</i>APPROVED TRANSFERS
         </h3>
       </div>
 
@@ -47,7 +47,7 @@
                     <th v-if="$gate.isAdminOrAuthor()" width="8%">ACCOUNT NAME</th>
                     <!-- <th>Status</th>
                     <th>Property Type</th>-->
-                    <th>ACTION</th>
+                    <th v-if="$gate.isEmployee()">ACTION</th>
                   </tr>
                 </tbody>
                 <tbody>
@@ -79,8 +79,8 @@
                       <td class="text-center">{{asset.quantity | numberComma}}</td>
                       <td class="text-right">{{asset.total_value | numberComma}}</td>
                       <td>{{asset.date | myDate}}</td>
-                      <td v-if="!$gate.isEmployee()">{{asset.received_from | upText}}</td>
-                      <td>{{asset.transfer_to | upText}}</td>
+                      <td v-if="!$gate.isEmployee()">{{asset.received_from }}</td>
+                      <td>{{asset.transfer_to }}</td>
                       <td v-if="$gate.isAdminOrAuthor()">{{asset.account_name | upText}}</td>
                       <td>{{asset.status | upText}}</td>
                       <!-- <td>
@@ -96,7 +96,7 @@
                       <!-- </!-->
                       <!-- <td>{{asset.status | upText}}</td> -->
                       <!-- <td>{{asset.property_type | upText}}</td> -->
-                      <td>
+                      <td v-if="$gate.isEmployee()">
                         <router-link
                           data-toggle="tooltip"
                           data-placement="bottom"

@@ -97,7 +97,7 @@
                   <div class="inner">
                     <h3>65</h3>
 
-                    <p>Items Ready for Re-issue</p>
+                    <p>Items for Re-issue</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-recycle"></i>

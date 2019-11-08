@@ -93,7 +93,7 @@
                 </p>
               </div>
               <!-- 2nd Column -->
-              <template v-if="assets.asset.received_from==null">
+              <template v-if="assets.asset.received_from==null||assets.asset.received_from==''">
                 <div class="col-6" v-for="property in property_officers.data" :key="property.id">
                   <p class="lead" style="margin-top: 50px;">
                     <i>Received from:</i>
