@@ -40,6 +40,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
               </li>
+              <button
+                type="button"
+                class="btn btn-success toastrDefaultSuccess"
+              >Launch Success Toast</button>
             </ul>
           </div>
           <!-- /.card-header -->
@@ -162,7 +166,7 @@
                       <button
                         @click.prevent="updateInfo"
                         type="submit"
-                        class="update-create btn col-lg-2 col-sm-6"
+                        class="update-create toastrDefaultSuccess btn col-lg-2 col-sm-6"
                       >
                         <i class="fas fa-save"></i>&nbsp;Save
                       </button>

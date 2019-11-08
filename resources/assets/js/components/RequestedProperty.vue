@@ -779,12 +779,12 @@ export default {
   },
 
   created() {
-    // console.log(this.$_.isEmpty(null));
-    // Progressbar before
+    this.$Progress.start();
     this.loadUsers();
     this.loadAcctName();
     this.loadAssets();
     this.loadPropertyOfficers();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadAcctName();

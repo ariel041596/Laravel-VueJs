@@ -1001,9 +1001,11 @@ export default {
   },
 
   created() {
+    this.$Progress.start();
     this.loadAssets();
     this.loadAccountableOfficers();
     this.loadUsers();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
     });

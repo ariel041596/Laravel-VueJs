@@ -84,10 +84,7 @@
                     Property Management System
                 </div>
             </div>
-                        <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-            <div class="content">
-            <div class="container-fluid">
+                      
             <!-- Router -->
                 <router-view></router-view>
             <!-- Vue Progressbar -->
@@ -95,7 +92,6 @@
             </div>
             </div>
             </div>
-            <!-- /.content-wrapper -->
         </div>
     </body>
 </html>

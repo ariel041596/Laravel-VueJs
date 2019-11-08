@@ -280,9 +280,9 @@ export default {
   },
 
   created() {
-    // console.log(this.$_.isEmpty(null));
-    // Progressbar before
+    this.$Progress.start();
     this.loadAssets();
+    this.$Progress.finish();
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios

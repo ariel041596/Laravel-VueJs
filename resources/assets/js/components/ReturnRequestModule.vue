@@ -1663,14 +1663,14 @@ export default {
   },
 
   created() {
-    // console.log(this.$_.isEmpty(null));
-    // Progressbar before
+    this.$Progress.start();
     this.loadAssets();
     this.loadUsers();
     this.loadTotals();
     this.loadAcctName();
     this.loadPropertyOfficers();
     this.loadTotalDisposal();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadTotals();

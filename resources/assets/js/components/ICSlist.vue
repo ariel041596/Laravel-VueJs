@@ -1028,13 +1028,13 @@ export default {
   },
 
   created() {
-    // console.log(this.$_.isEmpty(null));
-    // Progressbar before
+    this.$Progress.start();
     this.loadInventories();
     this.loadTotalInventories();
     this.loadUsers();
     this.loadArticleCategory();
     this.loadAcctName();
+    this.$Progress.finish();
     this.loadAccountableOfficers();
     Fire.$on("AfterCreate", () => {
       this.loadInventories();

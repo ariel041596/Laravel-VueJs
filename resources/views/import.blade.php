@@ -172,10 +172,7 @@
             <!-- end 1st -->
             @endauth
             @endif
-                        <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-            <div class="content">
-            <div class="container-fluid">
+                      
             <!-- Router -->
                 <router-view></router-view>
             <!-- Vue Progressbar -->

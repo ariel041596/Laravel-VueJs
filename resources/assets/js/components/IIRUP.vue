@@ -963,10 +963,12 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
+    this.$Progress.start();
     this.loadUsers();
     this.loadAcctName();
     this.loadAssets();
     this.loadAccountableOfficers();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadAcctName();

@@ -1,13 +1,13 @@
 <template>
   <div class>
-    <div class="row mt-1" v-if="$gate.isAdminOrUserOrAuthor()">
+    <div class="row" v-if="$gate.isAdminOrUserOrAuthor()">
       <div class="col-md-12">
         <!-- Content Header (Page header) -->
         <div class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Dashboard</h1>
+                <h2 class="m-0 text-dark">Dashboard</h2>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -120,7 +120,7 @@
                   <div class="card-header no-border d-flex p-0" id="summary_header">
                     <h3 class="card-title p-2 mt-2">
                       <i class="fas fa-bars mr-1 ml-1"></i>
-                      SUMMARY OF PROPERTY, PLANT AND EQUIPMENT
+                      SUMMARY OF PROPERTY, PLANT AND EQUIPMENT FOR CENTRAL OFFICE
                     </h3>
                   </div>
                   <!-- /.card-header -->
@@ -304,6 +304,7 @@
 import { Cartesian, Area } from "laue";
 import { Calendar } from "vue-sweet-calendar";
 import "vue-sweet-calendar/dist/SweetCalendar.css";
+
 export default {
   name: "app",
   data: function() {
@@ -363,24 +364,37 @@ export default {
     // 		})
   },
   created() {
+    this.$Progress.start();
     this.loadAssets();
     this.updateTime();
-    // setInterval(updateTime, 1000);
     setInterval(() => this.updateTime(), 1000);
-    // this.currentTime();
+    this.$Progress.finish();
   }
 };
 </script>
 
 <style scoped>
+#clock {
+  font-family: "Share Tech Mono", monospace;
+  color: #000000;
+  text-align: center;
+  /* text-shadow: 0 0 20px rgb(5, 186, 247), 0 0 20px rgba(10, 175, 230, 0); */
+
+  height: 100px;
+  background-size: 100%;
+}
 #time_value {
   letter-spacing: 0.05em;
-  font-size: 80px;
+  font-size: 60px;
   padding: 5px 0;
+  margin-top: 20px;
+  padding: 0;
 }
 #date_value {
   letter-spacing: 0.1em;
   font-size: 24px;
+  margin-top: 10px;
+  padding: 0;
 }
 #calendar-icon {
   color: white;
@@ -390,6 +404,7 @@ export default {
 }
 #clock-header {
   background: rgb(68, 83, 184);
+  height: 40px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -423,6 +438,9 @@ export default {
   margin-top: 5px;
   font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
+}
+.content {
+  margin-top: -15px;
 }
 table {
   padding: 0;

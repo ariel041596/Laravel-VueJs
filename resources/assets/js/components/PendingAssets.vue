@@ -1340,6 +1340,7 @@ export default {
   created() {
     // console.log(this.$_.isEmpty(null));
     // Progressbar before
+    this.$Progress.start();
     this.loadPendingAssets();
     this.loadInventories();
     this.loadAssets();
@@ -1349,6 +1350,7 @@ export default {
     this.loadAcctName();
     this.loadAccountableOfficers();
     this.loadArticleCategory();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadPendingAssets();
       this.loadAssets();

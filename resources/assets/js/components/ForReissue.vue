@@ -2255,8 +2255,7 @@ export default {
   },
 
   created() {
-    // console.log(this.$_.isEmpty(null));
-    // Progressbar before
+    this.$Progress.start();
     this.loadAssets();
     this.loadTotals();
     this.loadTotalInventories();
@@ -2265,6 +2264,7 @@ export default {
     this.loadAcctName();
     this.loadArticleCategory();
     this.loadAccountableOfficers();
+    this.$Progress.finish();
     Fire.$on("AfterCreate", () => {
       this.loadAssets();
       this.loadTotals();
