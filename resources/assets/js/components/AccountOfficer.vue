@@ -64,22 +64,24 @@
                     <td>
                       <!-- See for the function of edits and Deletes -->
                       <a
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                         href="#"
                         @click="editModal(officer)"
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Edit"
                       >
-                        <i class="fas fa-edit"></i>
+                        <i class="material-icons fas fa-pen"></i>
                       </a>
                       <a
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                         href="#"
                         @click="deleteAccountableOfficer(officer.id)"
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Disposed"
                       >
-                        <i class="fas fa-trash red"></i>
+                        <i class="material-icons fas fa-trash red"></i>
                       </a>
                     </td>
                   </tr>
@@ -404,6 +406,7 @@ export default {
   background: rgb(22, 70, 143);
   color: white;
   opacity: 0.9;
+  margin-top: -5px;
 }
 .update-create:hover {
   opacity: 1;
@@ -456,6 +459,12 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.btn-danger {
+  margin-top: -5px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

@@ -190,6 +190,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="/return-request" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-thumbtack text-white"></i>&nbsp;
+                  <p> Return Request</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/for-transfer" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i class="fas fa-exchange-alt text-white"></i>&nbsp;
+                  <p> Transfer Request</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
               <router-link to="/assets" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
               <i class="fas fa-clipboard-check text-white"></i>&nbsp;
                 <p>RPCPPE</p>
@@ -212,6 +224,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="fas fa-list-alt text-white"></i>&nbsp;
                  <p>Article Category</p>
               </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/for-reissue" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-recycle text-white"></i>&nbsp;
+                 <p>For Re-issue</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <router-link to="/approved-transfers" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+                <i class="fas fa-thumbs-up text-white"></i>&nbsp;
+                 <p>Approved Transfers</p>
+              </router-link>
+              </li>
+              <li class="nav-item">
+              <a href="/import" class="nav-link">&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fas fa-upload text-white"></i>&nbsp;
+                <p>Import</p>
+              </a>
               </li>
             </ul>
           </li>

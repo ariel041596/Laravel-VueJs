@@ -24,7 +24,8 @@
           title="Report on Physical Count of Property Plant and Equipment"
           class="card-title mt-1 text-white"
         >
-          <i class="fas fa-clipboard-check">&nbsp;</i>RPCPPE
+          <i class="fas fa-clipboard-check">&nbsp;</i>
+          RPCPPE
         </h3>
       </div>
 
@@ -722,20 +723,14 @@ export default {
     };
   },
   // Computed Properties
-  computed: {
-    // grandTotal() {
-    //   // return this.assets.reduce((sum, val) => sum + val.total_value, 0);
-    // }
-    // grandTotal: function() {
-    //   let total = [];
-    //   Object.entries(this.assets).forEach(([key, val]) => {
-    //     total.push(val.total_value);
-    //   });
-    //   return total.reduce(function(total, num) {
-    //     return total + num;
-    //   }, 0);
-    // }
-  },
+  // computed: {
+  //   grandTotal: function() {
+  //     console.log(this.assets.data.total_value);
+  //     return this.assets.data.total_value.reduce((total, asset) => {
+  //       return total + this.assets.data.total_value;
+  //     }, 0);
+  //   }
+  // },
 
   // Testing for watch method to add commas while typing
   watch: {
@@ -782,7 +777,7 @@ export default {
     // datas() {
     //   return this.$store.getters.assets;
     // },
-    // grandTotal: function() {
+    // grandTotal() {
     //   console.log(this.assets.data.total_value);
     //   return this.assets.data.total_value.reduce((total, asset) => {
     //     return total + this.assets.data.total_value;

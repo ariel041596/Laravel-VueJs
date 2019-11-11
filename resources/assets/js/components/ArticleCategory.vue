@@ -3,7 +3,10 @@
     <!-- For Admin -->
     <div id="card-content" class="card row mt-4" v-if="$gate.isAdminOrAuthor()">
       <div id="rpcppe" class="card-header">
-        <button class="update-create btn float-right" @click="newModal">
+        <button
+          class="update-create float-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+          @click="newModal"
+        >
           <i class="fas fa-plus">&nbsp;</i>Add Article
         </button>
         <h3 class="card-title mt-1 text-white">Article Category{{selecteds}} {{selected}}</h3>
@@ -58,22 +61,24 @@
                     <td>
                       <!-- See for the function of edits and Deletes -->
                       <a
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                         href="#"
                         @click="editModal(article)"
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Edit"
                       >
-                        <i class="fas fa-edit"></i>
+                        <i class="material-icons fas fa-pen"></i>
                       </a>
                       <a
+                        class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                         href="#"
                         @click="deleteArticleCategory(article.id)"
                         data-toggle="tooltip"
                         data-placement="bottom"
                         title="Disposed"
                       >
-                        <i class="fas fa-trash red"></i>
+                        <i class="material-icons fas fa-trash red"></i>
                       </a>
                     </td>
                   </tr>
@@ -178,13 +183,25 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <button
+                type="button"
+                class="btn-danger mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                data-dismiss="modal"
+              >
                 <i class="fas fa-times">&nbsp;</i>Close
               </button>
-              <button v-show="editmode" type="submit" class="update-create btn">
+              <button
+                v-show="editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-pen">&nbsp;</i>Update Article Category
               </button>
-              <button v-show="!editmode" type="submit" class="update-create btn btn-primary">
+              <button
+                v-show="!editmode"
+                type="submit"
+                class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 <i class="fas fa-plus">&nbsp;</i>Add Article Category
               </button>
             </div>
@@ -411,6 +428,10 @@ export default {
   background: rgb(22, 70, 143);
   color: white;
   opacity: 0.9;
+  margin-top: -5px;
+}
+.btn-danger {
+  margin-top: -5px;
 }
 .update-create:hover {
   opacity: 1;
@@ -463,6 +484,9 @@ export default {
 #rpcppe {
   background: #3c8dbc;
   height: 50px;
+}
+.material-icons {
+  font-size: 15px;
 }
 </style>
 

@@ -37,13 +37,13 @@
               <!-- <li class="nav-item">
                 <a class="nav-link active" href="#activity" data-toggle="tab">Activity</a>
               </li>-->
-              <li class="nav-item">
-                <a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
-              </li>
-              <button
+              <!-- <li class="nav-item"> -->
+              <a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
+              <!-- </li> -->
+              <!-- <button
                 type="button"
                 class="btn btn-success toastrDefaultSuccess"
-              >Launch Success Toast</button>
+              >Launch Success Toast</button>-->
             </ul>
           </div>
           <!-- /.card-header -->
@@ -166,7 +166,7 @@
                       <button
                         @click.prevent="updateInfo"
                         type="submit"
-                        class="update-create toastrDefaultSuccess btn col-lg-2 col-sm-6"
+                        class="update-create mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect btn col-lg-2 col-sm-6"
                       >
                         <i class="fas fa-save"></i>&nbsp;Save
                       </button>
@@ -263,6 +263,7 @@ export default {
   background: rgb(22, 70, 143);
   color: white;
   opacity: 0.9;
+  border-radius: 1px !important;
 }
 .update-create:hover {
   opacity: 1;

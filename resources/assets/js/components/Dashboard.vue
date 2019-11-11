@@ -146,22 +146,22 @@
                                   <tr>
                                     <td>1-06-01-010</td>
                                     <td>LAND</td>
-                                    <td>21321</td>
+                                    <td>{{totals.LAND|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-04-010</td>
                                     <td>BUILDINGS</td>
-                                    <td>21321</td>
+                                    <td>{{totals.BUILDINGS|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-020</td>
                                     <td>OFFICE EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td>{{totals.OFFICE_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-030</td>
                                     <td>ICT EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td>{{totals.ICT_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-070</td>
@@ -313,6 +313,7 @@ export default {
       date: "",
       // cards: [],
       assets: {},
+      totals: {},
       values: [{ value: 0 }, { value: 1 }, { value: 10 }],
       showDate: new Date()
     };
@@ -357,6 +358,11 @@ export default {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
       }
+    },
+    loadDashboard() {
+      if (this.$gate.isAdminOrUserOrAuthor()) {
+        axios.get("api/dashboard").then(({ data }) => (this.totals = data)); //Remove the previous (this.users =data.data) into data only
+      }
     }
     // axios.get('/api/dashboard')
     // 		.then((res) => {
@@ -365,6 +371,7 @@ export default {
   },
   created() {
     this.$Progress.start();
+    this.loadDashboard();
     this.loadAssets();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
