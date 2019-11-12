@@ -61,7 +61,7 @@ class DashboardController extends Controller
 
        $medical = Asset::where('status', 'approved')
        ->where('property_type', 'PAR')
-       ->where('account_name', 'MEDICAL_EQUIPMENT')->get();
+       ->where('account_name', 'MEDICAL EQUIPMENT')->get();
        $MEDICAL_EQUIPMENT = $medical->sum->total_value;
 
        $techsci = Asset::where('status', 'approved')
@@ -81,7 +81,7 @@ class DashboardController extends Controller
 
        $ff = Asset::where('status', 'approved')
        ->where('property_type', 'PAR')
-       ->where('account_name', 'FURNITURE & FIXTURES')->get();
+       ->where('account_name', 'FURNITURE AND FIXTURES')->get();
        $FURNITURE_FIXTURES = $ff->sum->total_value;
 
        $books = Asset::where('status', 'approved')
@@ -118,6 +118,53 @@ class DashboardController extends Controller
        ->where('property_type', 'PAR')
        ->where('account_name', 'OFFICE SUPPLIES INVENTORY')->get();
        $OFFICE_SUPPLIES_INVENTORY = $officeSupply->sum->total_value;
+
+       $grandTotal = collect([
+           $LAND, 
+           $BUILDINGS, 
+           $OFFICE_EQUIPMENT, 
+           $ICT_EQUIPMENT, 
+           $COMMUNICATION_EQUIPMENT,
+           $DISASTER_RESPONSE_AND_RESCUE_EQUIPMENT,
+           $MEDICAL_EQUIPMENT,
+           $TECHNICAL_AND_SCIENTIFIC_EQUIPMENT,
+           $OTHER_MACHINERY_AND_EQUIPMENT,
+           $MOTOR_VEHICLES,
+           $FURNITURE_FIXTURES,
+           $BOOKS,
+           $COMPUTER_SOFTWARE,
+           $OTHER_PPE,
+           $OTHER_TRANSPORTATION_EQUIPMENT,
+           $MACHINERY,
+           $OTHER_SUPPLIES_MATERIAL_EXPENSES,
+           $OFFICE_SUPPLIES_INVENTORY
+        ])->sum();
+
+    //    $total = Asset::where('account_name', 'LAND')
+    //    ->orWhere('account_name', 'BUILDINGS')
+    //    ->orWhere('account_name', 'OFFICE EQUIPMENT')
+    //    ->orWhere('account_name', 'ICT EQUIPMENT')
+    //    ->orWhere('account_name', 'COMMUNICATION EQUIPMENT')
+    //    ->orWhere('account_name', 'DISASTER RESPONSE AND RESCUE EQUIPMENT')
+    //    ->orWhere('account_name', 'MEDICAL EQUIPMENT')
+    //    ->orWhere('account_name', 'TECHNICAL AND SCIENTIFIC EQUIPMENT')
+    //    ->orWhere('account_name', 'OTHER MACHINERY AND EQUIPMENT')
+    //    ->orWhere('account_name', 'MOTOR VEHICLES')
+    //    ->orWhere('account_name', 'FURNITURE & FIXTURES')
+    //    ->orWhere('account_name', 'BOOKS')
+    //    ->orWhere('account_name', 'COMPUTER SOFTWARE')
+    //    ->orWhere('account_name', 'OTHER PROPERTY, PLANT AND EQUIPMENT')
+    //    ->orWhere('account_name', 'OTHER TRANSPORTATION EQUIPMENT')
+    //    ->orWhere('account_name', 'MACHINERY')
+    //    ->orWhere('account_name', 'OTHER SUPPLIES AND MATERIAL EXPENSES')
+    //    ->orWhere('account_name', 'OFFICE SUPPLIES INVENTORY')
+    //    ->where('property_type', 'PAR')->get();
+        // $grandTotal = $officeSupply->$otherSupplies->sum->total_value;
+
+        $pending = Asset::where('status', 'pending')->count();
+        $return_request = Disposal::where('status', 'processing')->count();
+        $transfer_request = ForReissue::where('status', 'ForTransfer')->count();
+        $for_reissue = Asset::where('status', 'forReissue')->count();
         
 
        return response()->json([
@@ -138,7 +185,12 @@ class DashboardController extends Controller
            "OTHER_TRANSPORTATION_EQUIPMENT" => $OTHER_TRANSPORTATION_EQUIPMENT,
            "MACHINERY" => $MACHINERY,
            "OTHER_SUPPLIES_MATERIAL_EXPENSES" => $OTHER_SUPPLIES_MATERIAL_EXPENSES,
-           "OFFICE_SUPPLIES_INVENTORY" => $OFFICE_SUPPLIES_INVENTORY
+           "OFFICE_SUPPLIES_INVENTORY" => $OFFICE_SUPPLIES_INVENTORY,
+           "GRAND_TOTAL" => $grandTotal,
+           "Pending" => $pending,
+           "Return_Request" => $return_request,
+           "Transfer_Request" => $transfer_request,
+           "For_Reissue" => $for_reissue,
        ], 200);
 
     }

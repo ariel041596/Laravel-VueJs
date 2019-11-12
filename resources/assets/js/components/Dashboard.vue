@@ -18,16 +18,12 @@
                 </ol>
               </div>
             </div>
-            <!-- /.row -->
           </div>
           <!-- /.container-fluid -->
         </div>
-        <!-- /.content-header -->
-
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
             <div class="row">
               <!-- <div class="col-lg-3 col-6">
                 <div class="small-box bg-success" id="totalpar">
@@ -46,7 +42,7 @@
               <div class="col-lg-3 col-6">
                 <div class="small-box" id="totalpar">
                   <div class="inner">
-                    <h3>53</h3>
+                    <h3>{{totals.Pending}}</h3>
                     <p>Pendings</p>
                   </div>
                   <div class="icon">
@@ -61,7 +57,7 @@
               <div class="col-lg-3 col-6">
                 <div class="small-box" id="return_request">
                   <div class="inner">
-                    <h3>53</h3>
+                    <h3>{{totals.Return_Request}}</h3>
                     <p>Return Request</p>
                   </div>
                   <div class="icon">
@@ -78,7 +74,7 @@
                 <!-- small box -->
                 <div class="small-box" id="transfer_request">
                   <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{totals.Transfer_Request}}</h3>
                     <p>Transfer Request</p>
                   </div>
                   <div class="icon">
@@ -95,7 +91,7 @@
                 <!-- small box -->
                 <div class="small-box" id="for_reissue">
                   <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{totals.For_Reissue}}</h3>
 
                     <p>Items for Re-issue</p>
                   </div>
@@ -146,99 +142,113 @@
                                   <tr>
                                     <td>1-06-01-010</td>
                                     <td>LAND</td>
-                                    <td>{{totals.LAND|numberComma}}</td>
+                                    <td class="text-right">{{totals.LAND|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-04-010</td>
                                     <td>BUILDINGS</td>
-                                    <td>{{totals.BUILDINGS|numberComma}}</td>
+                                    <td class="text-right">{{totals.BUILDINGS|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-020</td>
                                     <td>OFFICE EQUIPMENT</td>
-                                    <td>{{totals.OFFICE_EQUIPMENT|numberComma}}</td>
+                                    <td class="text-right">{{totals.OFFICE_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-030</td>
                                     <td>ICT EQUIPMENT</td>
-                                    <td>{{totals.ICT_EQUIPMENT|numberComma}}</td>
+                                    <td class="text-right">{{totals.ICT_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-070</td>
                                     <td>COMMUNICATION EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.COMMUNICATION_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-090</td>
                                     <td>DISASTER RESPONSE AND RESCUE EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.DISASTER_RESPONSE_AND_RESCUE_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-110</td>
                                     <td>MEDICAL EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.MEDICAL_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-140</td>
                                     <td>TECHNICAL AND SCIENTIFIC EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.TECHNICAL_AND_SCIENTIFIC_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-990</td>
                                     <td>OTHER MACHINERY AND EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.OTHER_MACHINERY_AND_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-06-010</td>
                                     <td>MOTOR VEHICLES</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.MOTOR_VEHICLES|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-07-010</td>
                                     <td>FURNITURE & FIXTURES</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.FURNITURE_FIXTURES|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-07-020</td>
                                     <td>BOOKS</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.BOOKS|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-08-01-020</td>
                                     <td>COMPUTER SOFTWARE</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.COMPUTER_SOFTWARE|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-99-990</td>
                                     <td>OTHER PROPERTY, PLANT AND EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.OTHER_PPE|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-06-990</td>
                                     <td>OTHER TRANSPORTATION EQUIPMENT</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.OTHER_TRANSPORTATION_EQUIPMENT|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-06-05-010</td>
                                     <td>MACHINERY</td>
-                                    <td>21321</td>
+                                    <td class="text-right">{{totals.MACHINERY|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>5-02-03-990</td>
                                     <td>OTHER SUPPLIES AND MATERIAL EXPENSES</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.OTHER_SUPPLIES_MATERIAL_EXPENSES|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>1-04-04-010</td>
                                     <td>OFFICE SUPPLIES INVENTORY</td>
-                                    <td>21321</td>
+                                    <td
+                                      class="text-right"
+                                    >{{totals.OFFICE_SUPPLIES_INVENTORY|numberComma}}</td>
                                   </tr>
                                   <tr>
                                     <td>
                                       <strong>GRAND TOTAL</strong>
                                     </td>
-                                    <td colspan="2">
-                                      <strong>DUMMY TOTAL</strong>
+                                    <td colspan="2" class="text-right">
+                                      <strong>{{totals.GRAND_TOTAL|numberComma}}</strong>
                                     </td>
                                   </tr>
                                 </tbody>
@@ -354,11 +364,6 @@ export default {
         " " +
         week[cd.getDay()];
     },
-    loadAssets() {
-      if (this.$gate.isAdminOrUserOrAuthor()) {
-        axios.get("api/asset").then(({ data }) => (this.assets = data)); //Remove the previous (this.users =data.data) into data only
-      }
-    },
     loadDashboard() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         axios.get("api/dashboard").then(({ data }) => (this.totals = data)); //Remove the previous (this.users =data.data) into data only
@@ -372,7 +377,6 @@ export default {
   created() {
     this.$Progress.start();
     this.loadDashboard();
-    this.loadAssets();
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
     this.$Progress.finish();
