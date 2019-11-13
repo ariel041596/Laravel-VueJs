@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Asset;
 use App\User;
 use App\Disposal;
+use App\ForReissue;
 use \Auth;
 class DashboardController extends Controller
 {

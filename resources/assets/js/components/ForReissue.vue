@@ -171,7 +171,7 @@
                         <router-link
                           data-toggle="tooltip"
                           data-placement="bottom"
-                          title="Print IIRP"
+                          title="Print IIRUP"
                           class="mdl-btn mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect mdl-color-text--blue"
                           v-show="asset.price<=15000"
                           :to="`${asset.id}`"

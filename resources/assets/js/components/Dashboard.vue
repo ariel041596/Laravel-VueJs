@@ -61,7 +61,7 @@
                     <p>Return Request</p>
                   </div>
                   <div class="icon">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-clipboard"></i>
                   </div>
                   <router-link to="/return-request" class="nav-link small-box-footer">
                     More info
@@ -341,20 +341,26 @@ export default {
       }
       return (zero + num).slice(-digit);
     },
-    currentTime() {
-      var week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-      var timerID = setInterval(updateTime, 1000);
-    },
     updateTime() {
       var week = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-      // var timerID = setInterval(updateTime, 1000);
       var cd = new Date();
-      this.time =
-        this.zeroPadding(cd.getHours(), 2) +
-        ":" +
-        this.zeroPadding(cd.getMinutes(), 2) +
-        ":" +
-        this.zeroPadding(cd.getSeconds(), 2);
+      var hours = cd.getHours();
+      var AmOrPm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12 || 12;
+      var minutes = cd.getMinutes();
+      var seconds = cd.getSeconds();
+      var finalTime = hours + ":" + minutes + ":" + seconds + AmOrPm;
+      this.time = finalTime;
+      // hours = (hours % 12 ) || 12;
+      // var minutes  = dt.getMinutes();
+      // var finalTime = hours + ":" + minutes + " " + AmOrPm;
+      // this.time =
+      //   this.zeroPadding(cd.getHours(), 2) +
+      //   ":" +
+      //   this.zeroPadding(cd.getMinutes(), 2) +
+      //   ":" +
+      //   this.zeroPadding(cd.getSeconds(), 2) +
+      //   AmOrPm;
       this.date =
         this.zeroPadding(cd.getFullYear(), 4) +
         "-" +
@@ -363,6 +369,9 @@ export default {
         this.zeroPadding(cd.getDate(), 2) +
         " " +
         week[cd.getDay()];
+
+      // var AmOrPm = this.time >= 12 ? "pm" : "am";
+      // var hours = (this.time % 12 ) || 12 ;
     },
     loadDashboard() {
       if (this.$gate.isAdminOrUserOrAuthor()) {

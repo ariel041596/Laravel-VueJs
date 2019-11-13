@@ -139,7 +139,7 @@
                         >
                           <i class="material-icons fas fa-eye blue"></i>
                         </a>
-                        <span class="view_action">VIEW</span>
+                        <span class="view_action"></span>
                         <!-- <a
                           v-if="$gate.isAdminOrUserOrAuthor()"
                           @click="editModal4(asset)"
