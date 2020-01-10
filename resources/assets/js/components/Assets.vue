@@ -731,7 +731,6 @@ export default {
   //     }, 0);
   //   }
   // },
-
   // Testing for watch method to add commas while typing
   watch: {
     total_value: function(newValue) {
@@ -797,15 +796,12 @@ export default {
     },
     // print(elem) {
     //   var domClone = elem.cloneNode(true);
-
     //   var $printSection = document.getElementById("printSection");
-
     //   if (!$printSection) {
     //     var $printSection = document.createElement("div");
     //     $printSection.id = "printSection";
     //     document.body.appendChild($printSection);
     //   }
-
     //   $printSection.innerHTML = "";
     //   $printSection.appendChild(domClone);
     //   window.print();
@@ -842,7 +838,6 @@ export default {
       this.form.article = event.target.value;
       this.form.createdBy = this.profiles.id;
     },
-
     updateQuantity(event) {
       this.form.quantity = event.target.value;
       this.form.total_value = this.form.quantity * this.form.price;
@@ -990,13 +985,11 @@ export default {
       this.form.status = "approved";
       this.form.number = "PAR-" + today + "-" + createdby + "-" + parnumber;
       this.form.createdBy = this.profiles.id;
-
       this.$Progress.start();
       this.form
         .post("api/asset")
         .then(() => {
           // Custom event to fire
-
           Fire.$emit("AfterCreate");
           // Sweet Alert message from sweetalert2
           toast.fire({
@@ -1046,7 +1039,6 @@ export default {
       //   .catch(() => {});
     }
   },
-
   created() {
     this.$Progress.start();
     this.loadAssets();
@@ -1061,7 +1053,6 @@ export default {
       this.loadTotals();
       // this.loadAcctName();
     });
-
     Fire.$on("searching", () => {
       let query = this.$parent.search;
       axios
@@ -1131,7 +1122,6 @@ export default {
     display: none;
   }
 }
-
 @media print {
   body * {
     visibility: hidden;
@@ -1146,7 +1136,6 @@ export default {
     top: 0;
   }
 }
-
 .widget-user-header {
   background-position: center center;
   background-size: contain;
@@ -1157,7 +1146,6 @@ export default {
 .widget-user {
   padding: 0;
 }
-
 .rpcppe {
   background-color: rgb(242, 242, 242);
 }

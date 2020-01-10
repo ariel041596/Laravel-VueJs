@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper"  id="app">
-
+  
   <!-- Navbar -->
   <nav id="navigation-header" class="main-header navbar navbar-expand navbar-light border-bottom ">
 
@@ -37,7 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </button>
         </div>
       </div>
-
+    
   </nav>
   <!-- /.navbar -->
 
@@ -58,6 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="./img/boy.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
+         
           <router-link to="/profile">
           <a  class="d-block text-white">{{ Auth::user()->name }} <p>{{ Auth::user()->type}}</p> </a>
           </router-link>
@@ -330,6 +331,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
           </li>
           @endcan
+         
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user-cog text-white"></i>
@@ -378,7 +380,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
    <div class="container-fluid">
    <!-- Router -->
     <router-view></router-view>
-   <!-- Vue Progressbar -->
+    
+   <!-- Vue Progressbar <chat-apps :user="{{ auth()->user() }}"></chat-apps> -->
    <vue-progress-bar></vue-progress-bar>
    </div>
    </div>

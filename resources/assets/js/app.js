@@ -20,10 +20,12 @@ import _ from "lodash";
 import jspdf from "jspdf";
 import Vuetify from "vuetify";
 import StoreData from "./store";
+import TextareaAutosize from "vue-textarea-autosize";
 
 // import { routes } from './routes';
 import VueAxios from "vue-axios";
 import axios from "axios";
+Vue.use(TextareaAutosize);
 Vue.use(VueAxios, axios);
 
 Vue.use(Vuetify);
@@ -67,6 +69,9 @@ Vue.component("vueloadash", require("vue-lodash"));
 // Vue.component('mdbootstrap', require('mdbootstrap'));
 Vue.component("jspdf", require("jspdf"));
 Vue.component("vuetify", require("vuetify"));
+
+Vue.component("chat-apps", require("./components/ChatApps.vue"));
+// Vue.component("chat-app", require("./components/ChatApp.vue"));
 
 // Vue.use(VueLodash) // options is optional
 // use the vue mdbootstrap in every inputs
@@ -127,12 +132,16 @@ const routes = [
         path: "/for-transfer",
         component: require("./components/ForTransfer.vue")
     },
+    // {
+    //     path: "/chat",
+    //     component: require("./components/ChatApps.vue")
+    // },
     {
         path: "/import-data",
         component: require("./components/ImportData.vue")
     },
     { path: "/", component: require("./components/Profile.vue") },
-    { path: "/:id", name: "par", component: require("./components/PAR.vue") },
+    // { path: "/:id", name: "par", component: require("./components/PAR.vue") },
     { path: "*", component: require("./components/404NotFound.vue") }
 ];
 // To remove the home e.g home/dashboard after the refresh page
@@ -177,6 +186,7 @@ window.Fire = new Vue();
  */
 
 //  Import the vue auth from passport
+
 Vue.component("passport-clients", require("./components/passport/Clients.vue"));
 
 Vue.component(

@@ -30,93 +30,75 @@ class DashboardController extends Controller
     //    $asset = Asset::where('status', 'approved')->get();
     //    return $asset->sum->total_value;
 
-       $land = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $land = Asset::where('property_type', 'PAR')
        ->where('account_name', 'LAND')->get();
        $LAND = $land->sum->total_value;
 
-       $building = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $building = Asset::where('property_type', 'PAR')
        ->where('account_name', 'BUILDINGS')->get();
        $BUILDINGS = $building->sum->total_value;
 
-       $office = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $office = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OFFICE EQUIPMENT')->get();
        $OFFICE_EQUIPMENT = $office->sum->total_value;
 
-       $ict = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $ict = Asset::where('property_type', 'PAR')
        ->where('account_name', 'ICT EQUIPMENT')->get();
        $ICT_EQUIPMENT = $ict->sum->total_value;
 
-       $communication = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $communication = Asset::where('property_type', 'PAR')
        ->where('account_name', 'COMMUNICATION EQUIPMENT')->get();
        $COMMUNICATION_EQUIPMENT = $communication->sum->total_value;
 
-       $drre = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $drre = Asset::where('property_type', 'PAR')
        ->where('account_name', 'DISASTER RESPONSE AND RESCUE EQUIPMENT')->get();
        $DISASTER_RESPONSE_AND_RESCUE_EQUIPMENT = $drre->sum->total_value;
 
-       $medical = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $medical = Asset::where('property_type', 'PAR')
        ->where('account_name', 'MEDICAL EQUIPMENT')->get();
        $MEDICAL_EQUIPMENT = $medical->sum->total_value;
 
-       $techsci = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $techsci = Asset::where('property_type', 'PAR')
        ->where('account_name', 'TECHNICAL AND SCIENTIFIC EQUIPMENT')->get();
        $TECHNICAL_AND_SCIENTIFIC_EQUIPMENT = $techsci->sum->total_value;
 
-       $othermachine = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $othermachine = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OTHER MACHINERY AND EQUIPMENT')->get();
        $OTHER_MACHINERY_AND_EQUIPMENT = $othermachine->sum->total_value;
 
-       $mv = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $mv = Asset::where('property_type', 'PAR')
        ->where('account_name', 'MOTOR VEHICLES')->get();
        $MOTOR_VEHICLES = $mv->sum->total_value;
 
-       $ff = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $ff = Asset::where('property_type', 'PAR')
        ->where('account_name', 'FURNITURE AND FIXTURES')->get();
        $FURNITURE_FIXTURES = $ff->sum->total_value;
 
-       $books = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $books = Asset::where('property_type', 'PAR')
        ->where('account_name', 'BOOKS')->get();
        $BOOKS = $books->sum->total_value;
 
-       $software = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $software = Asset::where('property_type', 'PAR')
        ->where('account_name', 'COMPUTER SOFTWARE')->get();
        $COMPUTER_SOFTWARE = $software->sum->total_value;
 
-       $otherPPE = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $otherPPE = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OTHER PROPERTY, PLANT AND EQUIPMENT')->get();
        $OTHER_PPE = $otherPPE->sum->total_value;
 
-       $otherTranspo = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $otherTranspo = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OTHER TRANSPORTATION EQUIPMENT')->get();
        $OTHER_TRANSPORTATION_EQUIPMENT = $otherTranspo->sum->total_value;
 
-       $machinery = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $machinery = Asset::where('property_type', 'PAR')
        ->where('account_name', 'MACHINERY')->get();
        $MACHINERY = $machinery->sum->total_value;
 
-       $otherSupplies = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $otherSupplies = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OTHER SUPPLIES AND MATERIAL EXPENSES')->get();
        $OTHER_SUPPLIES_MATERIAL_EXPENSES = $otherSupplies->sum->total_value;
 
-       $officeSupply = Asset::where('status', 'approved')
-       ->where('property_type', 'PAR')
+       $officeSupply = Asset::where('property_type', 'PAR')
        ->where('account_name', 'OFFICE SUPPLIES INVENTORY')->get();
        $OFFICE_SUPPLIES_INVENTORY = $officeSupply->sum->total_value;
 

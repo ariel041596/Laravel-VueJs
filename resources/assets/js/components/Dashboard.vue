@@ -347,7 +347,8 @@ export default {
       var hours = cd.getHours();
       var AmOrPm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
-      var minutes = cd.getMinutes();
+      // var minutes = (cd.getMinutes(),2);
+      var minutes = this.zeroPadding(cd.getMinutes(), 2);
       var seconds = cd.getSeconds();
       var finalTime = hours + ":" + minutes + ":" + seconds + AmOrPm;
       this.time = finalTime;

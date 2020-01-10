@@ -129,6 +129,7 @@
               
                 <!-- 1st -->
             <section class="col-lg-4 connectedSortable">
+                
                 <div class="card card-content">
                     <div class="card-header d-flex p-0">
                         <h5 class="card-box-title px-2">

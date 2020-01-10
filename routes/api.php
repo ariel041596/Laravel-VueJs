@@ -248,6 +248,17 @@ Route::get('findUser', 'API\UserController@search');
 // send to User Controller
 Route::put('profile', 'API\UserController@updateProfile');
 
+Route::get('contacts', 'API\ContactsController@get');
+Route::get('profileID', 'API\ContactsController@getID');
+Route::get('userObject', 'API\ContactsController@getUserObject');
+Route::post('conversation/send', 'API\ContactsController@send');
+Route::get('conversation/{id}', 'API\ContactsController@getMessagesFor');
+
+// Route::middleware('auth:api')->get('/asset', function (Request $request) {
+//     return $request->asset();
+// });
+// Route::apiResources(['asset' => 'API\AssetController']);
+
 
 // Route::get('{id}', 'API\PrintAssetController@edit');
 // Route::group(['middleware' => 'auth:api'], function ($router) {

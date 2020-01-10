@@ -746,8 +746,9 @@ php artisan websockets:serve
 
 ▼ ▼ ▼  COMMAND TO RUN  ▼ ▼ ▼
 php artisan serve 
-php artisan serve --host 192.168.91.14 --port 80 <- This is might the best command --- wifi best for forwarding
+php artisan serve --host 192.168.91.14 --port 80 (desktop) | 192.168.61.32 (wifi) <- This is might the best command --- wifi best for forwarding
 php artisan serve --host 0.0.0.0:8000
+
 
 npm run watch
 ▼ ▼ ▼  END  ▼ ▼ ▼

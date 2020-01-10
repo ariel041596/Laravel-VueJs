@@ -9,6 +9,10 @@ use App\Asset;
 use App\User;
 use App\Disposal;
 use \Auth;
+use App\AccountCode;
+use App\ArticleCategory;
+use App\AccountOfficer;
+
 class AssetController extends Controller
 {
     /**
@@ -30,74 +34,47 @@ class AssetController extends Controller
      */
     public function index()
     {
-        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
-            // $createdBy = User::where('id', Auth::user()->id);
-            if(\Gate::allows('isAdmin')){
-                // return Asset::latest()->paginate(10);
-                return Asset::where('status','LIKE',"%approved%")
-                ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50);
-                // $allasssetwithcount = [
-                //     'asset' => $asset,
-                //     'asset_count' => $asset->count()
-                // ];
-                // return $allasssetwithcount;
-            }
-            else{
+        if(\Gate::allows('isAdmin')){
+        return Asset::where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50);
+        }else{
             $createdBy = Auth::user()->id;
             return Asset::where('createdBy', $createdBy)
             ->where('status','LIKE',"%approved%")
             ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50); //get or paginate?
-            // return response()->json([
-            //     "asset" => $asset
-            // ],200);
-            }
+          
+        }
+        // $total_assets = Asset::where('property_type', '=', 'PAR')->count();
+        // $user = auth('api')->user();
+        // $account_code = AccountCode::latest()->get();
+        
+        // if(\Gate::allows('isAdminOrUserOrAuthorOrEmployeeOrSupply') ){
+        //     $article_category = ArticleCategory::latest()->get();
         // }
-        // $par = Asset::whereId($id)->first();
+        // if(\Gate::allows('isAdminOrUserOrAuthorOrEmployeeOrSupply') ){
+        //     $account_officer = AccountOfficer::latest()->get();
+        // }
+
         // return response()->json([
-        //     "par" => $par
+        //     "asset" => $assets,
+        //     "total_asset" => $total_assets,
+        //     "user" => $user,
+        //     "account_code" => $account_code,
+        //     "article_category" => $article_category,
+        //     "account_officer" => $account_officer,
         // ], 200);
-        // return Asset::find($id);
 
-    //     $results = Invoice::with(['customer'])
-    //     ->orderBy('created_at', 'desc')
-    //     ->paginate(15);
-
-    // return response()
-    //     ->json(['results' => $results]);
+            // if(\Gate::allows('isAdmin')){
+            //     return Asset::where('status','LIKE',"%approved%")
+            //     ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50);
+            // }
+            // else{
+            // $createdBy = Auth::user()->id;
+            // return Asset::where('createdBy', $createdBy)
+            // ->where('status','LIKE',"%approved%")
+            // ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50); //get or paginate?
+            // }
         
-
-        // if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor') || \Gate::allows('isUser')){
-            // $createdBy = User::user()->id;
-            // $asset = Asset::where('createdBy', $createdBy)->get(); 
-            // return response()->json([
-            //             "asset" => $asset
-            //         ],200);
-                
-            // return Asset::latest()->paginate(10);
-        // }
-
-        // return Asset::where('creator', $creator)->paginate();
-
-        // if(\Gate::allows('isAdmin')){
-        //     return Inventories:Asset:Disposal::latest()->paginate(10);
-
-        //     return Inventories::latest()->paginate(10);
-        //     return Asset::latest()->paginate(10);
-        //     return Disposal::latest()->paginate(10);
-            
-        // }else{
-        //     if(\Gate::allows('isAuthor')){
-        //         return Asset::latest()->paginate(10);
-        //     }
-        //     else{
-        //         if(\Gate::allows('isUser')){
-        //             return Disposal::latest()->paginate(10);
-        //         }
-        //     }
-        // }
-        
-       
-
     }
 
 
@@ -244,8 +221,6 @@ class AssetController extends Controller
             'transfer_to' => 'max:191', //13
             'received_from' => 'max:191', //13
             
-
-            
         ]);
         //
         $asset = Asset::findOrFail($id);
@@ -269,8 +244,10 @@ class AssetController extends Controller
     }
     public function search(){
 
+        $createdBy = Auth::user()->id;
         if ($search = \Request::get('q')) {
-            $assets = Asset::where('status','LIKE',"%approved%")
+            $assets = Asset::where('createdBy', $createdBy)
+            ->where('status','LIKE',"%approved%")
             ->where('property_type','LIKE',"%PAR%")
             ->where(function($query) use ($search){
                 $query->where('article','LIKE',"%$search%")
@@ -284,11 +261,15 @@ class AssetController extends Controller
             })->paginate(20);
         }else{
             // if the users do not found any data after delete all search words
-            $assets = Asset::where('status','LIKE',"%approved%")
-            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(20);
+            $assets = Asset::where('createdBy', $createdBy)
+            ->where('status','LIKE',"%approved%")
+            ->where('property_type','LIKE',"%PAR%")->latest()->paginate(50);
         }
 
         return $assets;
+        // return response()->json([
+        //     "asset" => $assets,
+        // ], 200);
 
     }
 }

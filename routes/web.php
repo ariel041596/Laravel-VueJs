@@ -19,6 +19,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/chat', function () {
+    return view('chat');
+});
 Route::get('import', function () {
     return view('import');
 });
@@ -31,7 +34,7 @@ Route::post('config/asset/import', 'ImportDataController@store')->name('bulk-imp
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 // // Route::get('/path', 'HomeController@index')->where('path','([A-z\d-\/_.]+)?');
 Route::get('/{path}', 'HomeController@index')->where( 'path' , '([A-z\d\-\/_.]+)?' );
 

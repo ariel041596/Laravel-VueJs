@@ -1083,6 +1083,7 @@ export default {
     cancelStatus() {
       if (this.$gate.isAdminOrUserOrAuthor()) {
         this.form.status = "cancel";
+        this.form.property_type = "cancel";
         this.form.createdBy = this.profiles.id;
       }
     },
