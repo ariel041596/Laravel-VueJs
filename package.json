@@ -22,7 +22,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.8.2",
         "admin-lte": "^3.0.0-alpha.2",
-        "jspdf": "^1.5.3",
+        "jspdf": "^2.5.1",
         "laravel-echo": "^1.6.1",
         "laravel-vue-pagination": "^2.3.0",
         "laue": "^0.2.1",
